@@ -1,24 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import {
+  createMuiTheme,
+  ThemeProvider,
+  responsiveFontSizes,
+} from '@material-ui/core/styles';
+import { teal } from '@material-ui/core/colors';
+import Home from './views/Home';
+
+let theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#fefefe',
+    },
+    secondary: {
+      main: teal[500],
+    },
+  },
+  typography: {
+    fontFamily: 'Raleway',
+    fontWeightLight: 300,
+    fontWeightRegular: 500,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
+  },
+});
+theme = responsiveFontSizes(theme);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Home />
+      </div>
+    </ThemeProvider>
   );
 }
 
