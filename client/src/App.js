@@ -7,7 +7,7 @@ import {
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { teal } from '@material-ui/core/colors';
 import Home from './views/Home';
-import Parks from './views/Parks';
+import NatureSpots from './views/NatureSpots';
 import Signup from './views/Authentication/Signup';
 import Login from './views/Authentication/Login';
 
@@ -39,7 +39,7 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/" children={<Home />} />
-            <Route exact path="/parks" children={<Parks />} />
+            <Route exact path="/naturespots" children={<NatureSpots />} />
 
             {/* Authentication */}
             <Route exact path="/signup" children={<Signup />} />

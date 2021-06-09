@@ -2,6 +2,8 @@ const express = require('express');
 const db = require('./keys').mongoURI;
 const mongoose = require('mongoose');
 const cors = require('cors');
+const natureSpotRoute = require('./routes/natureSpots');
+const userRoute = require('./routes/users');
 
 // initialize express app
 const app = express();
@@ -22,7 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.use('/users', require('./routes/users'));
+app.use('/api/users', userRoute);
+app.use('/api/naturespots', natureSpotRoute);
 
 app.post('/signup', async (req, res) => {
   res.send(req.body);

@@ -33,13 +33,15 @@ export default function Home() {
         <Typography variant="h4">Find 🌿 Share 🌿 Nature</Typography>
       </Box>
       <Box mt={10}>
-        <Button
-          className={classes.buttonWidth}
-          variant="contained"
-          color="primary"
-        >
-          Nature MAP
-        </Button>
+        <Link to="/naturespots" style={{ textDecoration: 'none' }}>
+          <Button
+            className={classes.buttonWidth}
+            variant="contained"
+            color="primary"
+          >
+            Nature MAP
+          </Button>
+        </Link>
       </Box>
       <Box mt={4}>
         <Link to="/signup" style={{ textDecoration: 'none' }}>
