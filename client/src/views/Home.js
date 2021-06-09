@@ -4,6 +4,7 @@ import TreePic from '../img/landing_pic.png';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   background: {
@@ -41,13 +42,15 @@ export default function Home() {
         </Button>
       </Box>
       <Box mt={4}>
-        <Button
-          className={classes.buttonWidth}
-          variant="contained"
-          color="secondary"
-        >
-          Login / Signup
-        </Button>
+        <Link to="/signup" style={{ textDecoration: 'none' }}>
+          <Button
+            className={classes.buttonWidth}
+            variant="contained"
+            color="secondary"
+          >
+            Login / Signup
+          </Button>
+        </Link>
       </Box>
     </Box>
   );

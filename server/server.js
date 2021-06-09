@@ -1,19 +1,13 @@
 const express = require('express');
-const app = express();
-const port = process.env.PORT || 5000;
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const db = require('./keys').mongoURI;
 const mongoose = require('mongoose');
+const cors = require('cors');
 
-app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
-app.use(cors());
+// initialize express app
+const app = express();
+const port = process.env.PORT || 5000;
 
+// connect to DB
 mongoose
   .connect(db, {
     useNewUrlParser: true,
@@ -24,8 +18,16 @@ mongoose
   .then(() => console.log('Connection to Mongo DB established'))
   .catch((err) => console.log('error', err));
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
+
+app.use('/users', require('./routes/users'));
+
+app.post('/signup', async (req, res) => {
+  res.send(req.body);
+});
+
 app.listen(port, () => {
   console.log('Server is running on ' + port + 'port');
 });
-
-app.use('/users', require('./routes/users'));

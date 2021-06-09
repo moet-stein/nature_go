@@ -1,0 +1,39 @@
+// const User = require('../models/usersModel');
+
+// module.exports.renderRegister = (req, res) => {
+//   res.render('users/register');
+// };
+
+// module.exports.register = async (req, res, err) => {
+//   try {
+//     const { email, username, password } = req.body;
+//     const user = new User({ email, username });
+//     const registeredUser = await User.register(user, password);
+//     req.login(registeredUser, (err) => {
+//       if (err) return next(err);
+//       res.send('you did it!');
+//       req.flash('success', 'Welcome to Nature Go!');
+//       res.redirect('/parks');
+//     });
+//   } catch (e) {
+//     req.flash('error', e.message);
+//     res.redirect('register');
+//   }
+// };
+
+// module.exports.renderLogin = (req, res) => {
+//   res.render('users/login');
+// };
+
+// module.exports.login = (req, res) => {
+//   req.flash('success', 'welcome back!');
+//   const redirectUrl = req.session.returnTo || '/parks';
+//   delete req.session.returnTo;
+//   res.redirect(redirectUrl);
+// };
+
+// module.exports.logout = (req, res) => {
+//   req.logout();
+//   req.flash('success', 'Goodbye');
+//   res.redirect('/parks');
+// };

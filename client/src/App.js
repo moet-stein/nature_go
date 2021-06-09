@@ -4,8 +4,14 @@ import {
   ThemeProvider,
   responsiveFontSizes,
 } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { teal } from '@material-ui/core/colors';
 import Home from './views/Home';
+import Parks from './views/Parks';
+import Signup from './views/Authentication/Signup';
+import Login from './views/Authentication/Login';
+
+// context
 
 let theme = createMuiTheme({
   palette: {
@@ -30,7 +36,16 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <Home />
+        <Router>
+          <Switch>
+            <Route exact path="/" children={<Home />} />
+            <Route exact path="/parks" children={<Parks />} />
+
+            {/* Authentication */}
+            <Route exact path="/signup" children={<Signup />} />
+            <Route exact path="/login" children={<Login />} />
+          </Switch>
+        </Router>
       </div>
     </ThemeProvider>
   );
