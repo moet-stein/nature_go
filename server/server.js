@@ -27,10 +27,6 @@ app.use(cors());
 app.use('/api/users', userRoute);
 app.use('/api/naturespots', natureSpotRoute);
 
-app.post('/signup', async (req, res) => {
-  res.send(req.body);
-});
-
 app.listen(port, () => {
   console.log('Server is running on ' + port + 'port');
 });

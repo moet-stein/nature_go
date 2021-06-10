@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import Logo from '../../img/avatar1.png';
+import Room from '@material-ui/icons/Room';
 import Avatars from './Avatars';
 import Image from '../../img/landing_pic.png';
 import Avatar from '@material-ui/core/Avatar';
@@ -15,6 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 // import { useAuth } from '../context/AuthContext';
 import Alert from '@material-ui/lab/Alert';
+import teal from '@material-ui/core/colors/teal';
 import { Link, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     marginTop: theme.spacing(3),
-    backgroundColor: '#008B8B',
+    width: 60,
+    height: 60,
+    borderRadius: '30px',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -80,29 +85,21 @@ export default function Signup() {
       return setError(`Passwords do not match`);
     }
 
+    const newUser = {
+      username: userNameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+
     try {
+      await axios.post('/users/register', newUser);
       setError(``);
       setLoading(true);
-      //   await signup(
-      //     emailRef.current.value,
-      //     passwordRef.current.value,
-      //     userNameRef.current.value
-      //   );
-      //   const userInfo = {
-      //     username: userNameRef,
-      //     email: emailRef,
-      //     password: passwordRef,
-      //   };
-      //   axios.post('/signupdone', { username: userNameRef }).then((res) => {
-      //     console.log(res);
-      //     console.log(res.data);
-      //   });
-
-      //   history.push('/users/signup');
       console.log('signup form submitted');
-    } catch (e) {
-      console.log(e);
-      setError(`${e}, Failed to create an account`);
+      history.push('/naturespots');
+    } catch (err) {
+      console.log(err);
+      setError(`${err}, Failed to create an account`);
     }
     setLoading(false);
   };
@@ -112,12 +109,24 @@ export default function Signup() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+          <Box display="flex">
+            <Box mr={3}>
+              <img className={classes.avatar} src={Logo} />
+            </Box>
+            <Box mt={3} mr={2}>
+              <Typography
+                fontWeight="fontWeightBold"
+                component="h1"
+                variant="h2"
+                color={teal[900]}
+              >
+                Signup
+              </Typography>
+            </Box>
+            <Box>
+              <Room className={classes.avatar} color="secondary" />
+            </Box>
+          </Box>
           {error && <Alert severity="error">{error}</Alert>}
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <Grid container spacing={2}>

@@ -1,6 +1,9 @@
 import React, { useRef, useState } from 'react';
+import axios from 'axios';
 import Image from '../../img/landing_pic.png';
-import Avatar from '@material-ui/core/Avatar';
+import Logo from '../../img/avatar1.png';
+import Room from '@material-ui/icons/Room';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 // import { useAuth } from '../context/AuthContext';
 import Alert from '@material-ui/lab/Alert';
+import teal from '@material-ui/core/colors/teal';
 import { Link, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     marginTop: theme.spacing(3),
-    backgroundColor: '#008B8B',
+    width: 60,
+    height: 60,
+    borderRadius: '30px',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -44,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '20px',
   },
   textColor: {
-    color: '#008B8B',
+    color: teal[900],
   },
   flex: {
     display: 'flex',
@@ -69,15 +75,20 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const user = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
     try {
-      //   setError(``);
-      //   setLoading(true);
+      // await axios.post('/users/login', user);
+      // setError(``);
+      // setLoading(true);
       //   await login(emailRef.current.value, passwordRef.current.value);
       //   history.push('/notes');
       console.log('login submitted');
     } catch (e) {
       console.log(e);
-      setError(`Failed to log in`);
+      setError(`Email address or password is wrong`);
     }
     setLoading(false);
   };
@@ -86,12 +97,25 @@ export default function Signup() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
+          <Box display="flex">
+            <Box mr={3}>
+              <img className={classes.avatar} src={Logo} />
+            </Box>
+            <Box mt={3} mr={2}>
+              <Typography
+                fontWeight="fontWeightBold"
+                component="h1"
+                variant="h2"
+                color={teal[900]}
+              >
+                Login
+              </Typography>
+            </Box>
+            <Box>
+              <Room className={classes.avatar} color="secondary" />
+            </Box>
+          </Box>
+
           {error && <Alert severity="error">{error}</Alert>}
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <Grid container spacing={2}>
