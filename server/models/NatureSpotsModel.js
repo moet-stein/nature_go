@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 
+const naturePicSchema = new mongoose.Schema(
+  {
+    url: String,
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'author' },
+    likes: Number,
+    saved: Number,
+  },
+  { timestamps: true }
+);
+
 const NatureSpotSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      require: true,
-    },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     title: {
       type: String,
       require: true,
@@ -29,6 +36,7 @@ const NatureSpotSchema = new mongoose.Schema(
       type: Number,
       require: true,
     },
+    images: [naturePicSchema],
   },
   { timestamps: true }
 );

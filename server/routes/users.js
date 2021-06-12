@@ -39,6 +39,10 @@ router.post(
         username: req.body.username,
         email: req.body.email,
         password: hashedPassword,
+        avatarUrl: req.body.avatarUrl,
+        myPics: [],
+        favoritePics: [],
+        savedPics: [],
       });
 
       //  save user and send response

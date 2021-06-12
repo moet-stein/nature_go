@@ -79,6 +79,7 @@ export default function NatureSpots() {
       try {
         const res = await axios.get('/naturespots');
         setNatureSpots(res.data);
+        console.log(res.data[0]);
       } catch (err) {
         console.log(err);
       }
@@ -135,7 +136,7 @@ export default function NatureSpots() {
           onViewportChange={(nextViewport) => setViewport(nextViewport)}
           mapStyle="mapbox://styles/moepii/ckppic7c80e3b17pdh4k1pfvk"
           onDblClick={handleAddClick}
-          transitionDuration="200"
+          transitionDuration="50"
         >
           {natureSpots.map((spot) => (
             <>
@@ -199,7 +200,7 @@ export default function NatureSpots() {
                         color="textSecondary"
                         component="p"
                       >
-                        Created by <b>{spot.username}</b>
+                        Created by <b>{spot.author.username}</b>
                       </Typography>
                       <Typography
                         variant="body2"
