@@ -74,4 +74,52 @@ router.post('/login', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// Add Favroite Image to a spot
+router.post('/favorite', async (req, res) => {
+  const { url, user, author, natureSpot } = req.body;
+  try {
+    const favPic = await User.updateOne(
+      { _id: user },
+      {
+        $push: {
+          favoritePics: {
+            url: url,
+            natureSpot: natureSpot,
+            author: author,
+          },
+        },
+      },
+      { new: true, upsert: true }
+    ).exec();
+    res.status(200).json(favPic);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Add Saved Image to a spot
+router.post('/saved', async (req, res) => {
+  const { url, user, author, natureSpot } = req.body;
+  try {
+    const savePic = await User.updateOne(
+      { _id: user },
+      {
+        $push: {
+          savedPics: {
+            url: url,
+            natureSpot: natureSpot,
+            author: author,
+            matchedPic: '',
+          },
+        },
+      },
+      { new: true, upsert: true }
+    ).exec();
+    res.status(200).json(savePic);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const naturePicSchema = new mongoose.Schema(
   {
     url: String,
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'author' },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     likes: Number,
     saved: Number,
   },

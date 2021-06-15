@@ -4,7 +4,7 @@ const myPicSchema = new mongoose.Schema({
   url: String,
   naturespot: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'naturespot',
+    ref: 'Naturespot',
   },
 });
 
@@ -14,16 +14,16 @@ const favoritePicSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'naturespot',
   },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'author' },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
 const savedPicSchema = new mongoose.Schema({
   url: String,
   naturespot: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'naturespot',
+    ref: 'Naturespot',
   },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'author' },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   matchedPic: String,
 });
 
