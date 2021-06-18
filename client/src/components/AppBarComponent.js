@@ -12,10 +12,11 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ExploreIcon from '@material-ui/icons/Explore';
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import BookmarksIcon from '@material-ui/icons/Bookmarks';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,14 +70,48 @@ export default function AppBarComponent() {
       </Box>
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
+        <Link style={{ textDecoration: 'none' }} to="/naturespots">
+          <ListItem button key="Nature Spots">
+            <Box mr={1}>
+              <ExploreIcon color="primary" />
+            </Box>
+            <ListItemText
+              primary={
+                <Typography type="body2" style={{ color: '#008080' }}>
+                  Nature Spots
+                </Typography>
+              }
+            />
           </ListItem>
-        ))}
+        </Link>
+        <Link style={{ textDecoration: 'none' }} to="/mypage/userid123">
+          <ListItem button key="My Page">
+            <Box mr={1}>
+              <LoyaltyIcon color="primary" />
+            </Box>
+            <ListItemText
+              primary={
+                <Typography type="body2" style={{ color: '#008080' }}>
+                  My Page
+                </Typography>
+              }
+            />
+          </ListItem>
+        </Link>
+        <Link style={{ textDecoration: 'none' }} to="/savedtomatch/userid123">
+          <ListItem button key="Saved to Match">
+            <Box mr={1}>
+              <BookmarksIcon color="primary" />
+            </Box>
+            <ListItemText
+              primary={
+                <Typography type="body2" style={{ color: '#008080' }}>
+                  Saved to Match
+                </Typography>
+              }
+            />
+          </ListItem>
+        </Link>
       </List>
     </div>
   );
@@ -103,7 +138,7 @@ export default function AppBarComponent() {
               {list('left')}
             </Drawer>
             <Typography variant="h6" className={classes.title}>
-              News
+              Nature Go
             </Typography>
             <Button color="inherit">Login</Button>
           </Toolbar>

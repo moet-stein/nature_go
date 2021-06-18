@@ -9,6 +9,8 @@ import { teal } from '@material-ui/core/colors';
 import Home from './views/Home';
 import NatureSpots from './views/NatureSpots';
 import SpotDetails from './views/SpotDetails';
+import MyPage from './views/MyPage';
+import SavedToMatch from './views/SavedToMatch';
 import Signup from './views/Authentication/Signup';
 import Login from './views/Authentication/Login';
 
@@ -42,6 +44,12 @@ function App() {
             <Route exact path="/" children={<Home />} />
             <Route exact path="/naturespots" children={<NatureSpots />} />
             <Route exact path="/details/:spotId" children={<SpotDetails />} />
+            <Route exact path="/mypage/:userId" children={<MyPage />} />
+            <Route
+              exact
+              path="/savedtomatch/:userId"
+              children={<SavedToMatch />}
+            />
 
             {/* Authentication */}
             <Route exact path="/signup" children={<Signup />} />
