@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -16,7 +16,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExploreIcon from '@material-ui/icons/Explore';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
-import { Link } from 'react-router-dom';
+import grey from '@material-ui/core/colors/grey';
+import { Link, useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,22 +29,22 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  //   list: {
-  //     width: 250,
-  //   },
+
   fullList: {
     width: 'auto',
+  },
+  activeBg: {
+    backgroundColor: grey[300],
   },
 }));
 
 export default function AppBarComponent() {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    top: false,
+  const location = useLocation();
+  const [state, setState] = useState({
     left: false,
-    bottom: false,
-    right: false,
   });
+  const [active, setActive] = useState('');
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -71,7 +72,11 @@ export default function AppBarComponent() {
       <Divider />
       <List>
         <Link style={{ textDecoration: 'none' }} to="/naturespots">
-          <ListItem button key="Nature Spots">
+          <ListItem
+            button
+            key="Nature Spots"
+            className={active === 'naturespots' && classes.activeBg}
+          >
             <Box mr={1}>
               <ExploreIcon color="primary" />
             </Box>
@@ -85,7 +90,11 @@ export default function AppBarComponent() {
           </ListItem>
         </Link>
         <Link style={{ textDecoration: 'none' }} to="/mypage/userid123">
-          <ListItem button key="My Page">
+          <ListItem
+            button
+            key="My Page"
+            className={active === 'mypage' && classes.activeBg}
+          >
             <Box mr={1}>
               <LoyaltyIcon color="primary" />
             </Box>
@@ -99,7 +108,11 @@ export default function AppBarComponent() {
           </ListItem>
         </Link>
         <Link style={{ textDecoration: 'none' }} to="/savedtomatch/userid123">
-          <ListItem button key="Saved to Match">
+          <ListItem
+            button
+            key="Saved to Match"
+            className={active === 'savedtomatch' && classes.activeBg}
+          >
             <Box mr={1}>
               <BookmarksIcon color="primary" />
             </Box>
@@ -115,6 +128,12 @@ export default function AppBarComponent() {
       </List>
     </div>
   );
+
+  useEffect(() => {
+    if (location.pathname === '/naturespots') setActive('naturespots');
+    if (location.pathname.includes('/mypage')) setActive('mypage');
+    if (location.pathname.includes('/savedtomatch')) setActive('savedtomatch');
+  }, []);
 
   return (
     <div>
