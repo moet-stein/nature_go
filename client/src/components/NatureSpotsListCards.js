@@ -12,9 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
+  cardWidth: { width: '300px' },
   cardGrid: {
     height: 370,
   },
@@ -26,15 +24,56 @@ export default function NatureSpotsListCards({ natureSpots }) {
     <div>
       <Grid container>
         {natureSpots.map((spot) => (
-          <Grid className={classes.cardGrid} item xs={12} sm={6} lg={4}>
-            <Box
-              display="flex"
-              flexWrap="wrap"
-              justifyContent="center"
-              alignItems="center"
-              minHeight="100vh"
-            >
-              <Card className={classes.root}>
+          <Box
+            display="flex"
+            flexWrap="wrap"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="100vh"
+          >
+            <Card className={classes.cardWidth}>
+              <Link
+                to={{
+                  pathname: `details/${spot._id}`,
+                  state: {
+                    spot,
+                  },
+                }}
+                style={{ textDecoration: 'none' }}
+              >
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt={spot.title}
+                    height="140"
+                    src="https://images.unsplash.com/photo-1568480289356-5a75d0fd47fc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+                    title={spot.title}
+                  />
+                  <CardContent>
+                    <Typography
+                      gutterBottom
+                      color="secondary"
+                      variant="h5"
+                      component="h2"
+                    >
+                      {spot.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {spot.desc.length > 80
+                        ? spot.desc.slice(0, 80) + '...'
+                        : spot.desc}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Link>
+              <CardActions>
+                <Button size="small" color="primary">
+                  Share
+                </Button>
                 <Link
                   to={{
                     pathname: `details/${spot._id}`,
@@ -42,59 +81,16 @@ export default function NatureSpotsListCards({ natureSpots }) {
                       spot,
                     },
                   }}
+                  // to={`details/${spot._id}`}
                   style={{ textDecoration: 'none' }}
                 >
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      alt={spot.title}
-                      height="140"
-                      src="https://images.unsplash.com/photo-1568480289356-5a75d0fd47fc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-                      title={spot.title}
-                    />
-                    <CardContent>
-                      <Typography
-                        gutterBottom
-                        color="secondary"
-                        variant="h5"
-                        component="h2"
-                      >
-                        {spot.title}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        {spot.desc.length > 80
-                          ? spot.desc.slice(0, 80) + '...'
-                          : spot.desc}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Link>
-                <CardActions>
                   <Button size="small" color="primary">
-                    Share
+                    Learn More
                   </Button>
-                  <Link
-                    to={{
-                      pathname: `details/${spot._id}`,
-                      state: {
-                        spot,
-                      },
-                    }}
-                    // to={`details/${spot._id}`}
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <Button size="small" color="primary">
-                      Learn More
-                    </Button>
-                  </Link>
-                </CardActions>
-              </Card>
-            </Box>
-          </Grid>
+                </Link>
+              </CardActions>
+            </Card>
+          </Box>
         ))}
       </Grid>
     </div>

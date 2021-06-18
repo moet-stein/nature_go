@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
+import AppBarComponent from '../components/AppBarComponent';
 import Typography from '@material-ui/core/Typography';
 import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Room from '@material-ui/icons/Room';
 
@@ -34,6 +34,7 @@ export default function SpotDetails() {
   }, []);
   return (
     <div className={classes.root}>
+      <AppBarComponent />
       <Grid container direction="column" justify="center" alignItems="center">
         <Grid item xs={12}>
           <Typography variant="h2">{spot.title}</Typography>

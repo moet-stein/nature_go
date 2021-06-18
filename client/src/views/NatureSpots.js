@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AppBarComponent from '../components/AppBarComponent';
 import NatureSpotsListCards from '../components/NatureSpotsListCards';
 import axios from 'axios';
 import { format } from 'timeago.js';
@@ -67,7 +68,7 @@ export default function NatureSpots() {
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
   const [viewport, setViewport] = useState({
-    width: '80vw',
+    width: '100vw',
     height: '70vh',
     latitude: 52.52,
     longitude: 13.405,
@@ -121,187 +122,191 @@ export default function NatureSpots() {
   };
 
   return (
-    <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justify="center"
-      style={{ minHeight: '100vh' }}
-    >
-      <Grid item xs={12}>
-        <ReactMapGL
-          {...viewport}
-          mapboxApiAccessToken={mapBoxToken}
-          onViewportChange={(nextViewport) => setViewport(nextViewport)}
-          mapStyle="mapbox://styles/moepii/ckppic7c80e3b17pdh4k1pfvk"
-          onDblClick={handleAddClick}
-          transitionDuration="50"
-        >
-          {natureSpots.map((spot) => (
-            <>
-              <Marker
-                latitude={spot.lat}
-                longitude={spot.long}
-                offsetLeft={-viewport.zoom * 1.5}
-                offsetTop={-viewport.zoom * 3}
-              >
-                <Room
-                  style={{
-                    fontSize: viewport.zoom * 3,
-                    color:
-                      spot.username === currentUser ? 'tomato' : 'slateblue',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() =>
-                    handleMarkerClick(spot._id, spot.lat, spot.long)
-                  }
-                />
-              </Marker>
-              {spot._id === currentPlaceId && (
-                <Popup
-                  className={classes.comeTop}
+    <React.Fragment>
+      {' '}
+      <AppBarComponent />
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '100vh' }}
+      >
+        <Grid item xs={12}>
+          <ReactMapGL
+            {...viewport}
+            mapboxApiAccessToken={mapBoxToken}
+            onViewportChange={(nextViewport) => setViewport(nextViewport)}
+            mapStyle="mapbox://styles/moepii/ckppic7c80e3b17pdh4k1pfvk"
+            onDblClick={handleAddClick}
+            transitionDuration="50"
+          >
+            {natureSpots.map((spot) => (
+              <>
+                <Marker
                   latitude={spot.lat}
                   longitude={spot.long}
-                  closeButton={true}
-                  closeOnClick={false}
-                  anchor="right"
-                  onClose={() => setCurrentPlaceId(null)}
+                  offsetLeft={-viewport.zoom * 1.5}
+                  offsetTop={-viewport.zoom * 3}
                 >
-                  <div className={classes.flexColumn}>
-                    <label className={classes.label}>Place</label>
-                    <Box className={classes.textWidth}>
-                      <Typography gutterBottom vairant="h5">
-                        {spot.title}
-                      </Typography>
-                    </Box>
-                    <label className={classes.label}>Review</label>
-                    <Box className={classes.textWidth}>
-                      <Typography
-                        gutterBottom
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                        align="left"
-                      >
-                        {spot.desc.length > 80
-                          ? spot.desc.slice(0, 80) + '...'
-                          : spot.desc}
-                      </Typography>
-                    </Box>
-                    <label className={classes.label}>Rating</label>
-                    <Box component="fieldset" borderColor="transparent">
-                      <Rating name="read-only" value={spot.rating} readOnly />
-                    </Box>
-                    <label className={classes.label}>Infomation</label>
-                    <Box>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Created by <b>{spot.author.username}</b>
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        {format(spot.createdAt)}
-                      </Typography>
-                    </Box>
-                    <Box mt={2}>
-                      <Link
-                        to={{
-                          pathname: `details/${spot._id}`,
-                          state: {
-                            spot,
-                          },
-                        }}
-                        // to={`details/${spot._id}`}
-                        style={{ textDecoration: 'none' }}
-                      >
-                        <Button color="secondary" variant="outlined">
-                          See More
-                        </Button>
-                      </Link>
-                    </Box>
-                  </div>
-                </Popup>
-              )}
-            </>
-          ))}
-          {newSpot && (
-            <Popup
-              latitude={newSpot.lat}
-              longitude={newSpot.long}
-              closeButton={true}
-              closeOnClick={false}
-              anchor="right"
-              onClose={() => setNewSpot(null)}
-            >
-              <div>
-                <form className={classes.flexColumn} onSubmit={handleSubmit}>
-                  <label className={classes.label}>Title</label>
-                  <TextField
-                    id="outlined-basic"
-                    label="Enter a title"
-                    variant="outlined"
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-
-                  <label className={classes.label}>Review</label>
-                  <TextField
-                    id="outlined-basic"
-                    label="About this place"
-                    variant="outlined"
-                    multiline
-                    rows={4}
-                    onChange={(e) => setDesc(e.target.value)}
-                  />
-
-                  <label className={classes.label}>Rating</label>
-                  <Rating
-                    name="simple-controlled"
-                    value={rating}
-                    onChange={(event, newValue) => {
-                      setRating(newValue);
+                  <Room
+                    style={{
+                      fontSize: viewport.zoom * 3,
+                      color:
+                        spot.username === currentUser ? 'tomato' : 'slateblue',
+                      cursor: 'pointer',
                     }}
+                    onClick={() =>
+                      handleMarkerClick(spot._id, spot.lat, spot.long)
+                    }
                   />
-
-                  <Button
-                    className={classes.marginTop}
-                    variant="contained"
-                    color="primary"
-                    type="submit"
+                </Marker>
+                {spot._id === currentPlaceId && (
+                  <Popup
+                    className={classes.comeTop}
+                    latitude={spot.lat}
+                    longitude={spot.long}
+                    closeButton={true}
+                    closeOnClick={false}
+                    anchor="right"
+                    onClose={() => setCurrentPlaceId(null)}
                   >
-                    Add new spot
-                  </Button>
-                </form>
-              </div>
-            </Popup>
-          )}
-          {currentUser ? (
-            <Box className={classes.leftFloat}>
-              <Button variant="contained" className={classes.white}>
-                Log out
-              </Button>
-            </Box>
-          ) : (
-            <Box className={classes.leftFloat}>
-              <Button variant="contained" color="primary">
-                Login
-              </Button>
-              <Button variant="contained" color="secondary">
-                Register
-              </Button>
-            </Box>
-          )}
-        </ReactMapGL>
+                    <div className={classes.flexColumn}>
+                      <label className={classes.label}>Place</label>
+                      <Box className={classes.textWidth}>
+                        <Typography gutterBottom vairant="h5">
+                          {spot.title}
+                        </Typography>
+                      </Box>
+                      <label className={classes.label}>Review</label>
+                      <Box className={classes.textWidth}>
+                        <Typography
+                          gutterBottom
+                          variant="body2"
+                          color="textSecondary"
+                          component="p"
+                          align="left"
+                        >
+                          {spot.desc.length > 80
+                            ? spot.desc.slice(0, 80) + '...'
+                            : spot.desc}
+                        </Typography>
+                      </Box>
+                      <label className={classes.label}>Rating</label>
+                      <Box component="fieldset" borderColor="transparent">
+                        <Rating name="read-only" value={spot.rating} readOnly />
+                      </Box>
+                      <label className={classes.label}>Infomation</label>
+                      <Box>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          component="p"
+                        >
+                          Created by <b>{spot.author.username}</b>
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          component="p"
+                        >
+                          {format(spot.createdAt)}
+                        </Typography>
+                      </Box>
+                      <Box mt={2}>
+                        <Link
+                          to={{
+                            pathname: `details/${spot._id}`,
+                            state: {
+                              spot,
+                            },
+                          }}
+                          // to={`details/${spot._id}`}
+                          style={{ textDecoration: 'none' }}
+                        >
+                          <Button color="secondary" variant="outlined">
+                            See More
+                          </Button>
+                        </Link>
+                      </Box>
+                    </div>
+                  </Popup>
+                )}
+              </>
+            ))}
+            {newSpot && (
+              <Popup
+                latitude={newSpot.lat}
+                longitude={newSpot.long}
+                closeButton={true}
+                closeOnClick={false}
+                anchor="right"
+                onClose={() => setNewSpot(null)}
+              >
+                <div>
+                  <form className={classes.flexColumn} onSubmit={handleSubmit}>
+                    <label className={classes.label}>Title</label>
+                    <TextField
+                      id="outlined-basic"
+                      label="Enter a title"
+                      variant="outlined"
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+
+                    <label className={classes.label}>Review</label>
+                    <TextField
+                      id="outlined-basic"
+                      label="About this place"
+                      variant="outlined"
+                      multiline
+                      rows={4}
+                      onChange={(e) => setDesc(e.target.value)}
+                    />
+
+                    <label className={classes.label}>Rating</label>
+                    <Rating
+                      name="simple-controlled"
+                      value={rating}
+                      onChange={(event, newValue) => {
+                        setRating(newValue);
+                      }}
+                    />
+
+                    <Button
+                      className={classes.marginTop}
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                    >
+                      Add new spot
+                    </Button>
+                  </form>
+                </div>
+              </Popup>
+            )}
+            {/* {currentUser ? (
+              <Box className={classes.leftFloat}>
+                <Button variant="contained" className={classes.white}>
+                  Log out
+                </Button>
+              </Box>
+            ) : (
+              <Box className={classes.leftFloat}>
+                <Button variant="contained" color="primary">
+                  Login
+                </Button>
+                <Button variant="contained" color="secondary">
+                  Register
+                </Button>
+              </Box>
+            )} */}
+          </ReactMapGL>
+        </Grid>
+        <Grid item xs={12}>
+          <NatureSpotsListCards natureSpots={natureSpots} />
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <NatureSpotsListCards natureSpots={natureSpots} />
-      </Grid>
-    </Grid>
+    </React.Fragment>
   );
 }

@@ -30,6 +30,22 @@ router.post('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+// Increase Like
+// THIS DOES NOT WORK
+// It doesn't update the number in the object in the array of the docment
+// This post request creates a new document in the collection
+router.post('/increaselike', async (req, res) => {
+  const { parkId, picId } = req.body;
+  try {
+    const likedPic = await NatureSpot.findOneAndUpdate(
+      { _id: parkId, 'images._id': picId },
+      { $inc: { 'images.$.likes': 1 } }
+    );
+    res.status(200).json(likedPic);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // Get all spots
 router.get('/', async (req, res) => {
