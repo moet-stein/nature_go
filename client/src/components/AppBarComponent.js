@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
+import AppLogo from '../img/avatar1.png';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  logo: { width: '30px', height: '30px' },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -66,7 +68,16 @@ export default function AppBarComponent() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <Box m={2} display="flex" justifyContent="center" alignItems="center">
+      <Box
+        m={2}
+        display="flex"
+        flex-flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box mr={2}>
+          <img className={classes.logo} src={AppLogo} />
+        </Box>
         <Typography>Hello User</Typography>
       </Box>
       <Divider />
@@ -156,9 +167,23 @@ export default function AppBarComponent() {
             >
               {list('left')}
             </Drawer>
-            <Typography variant="h6" className={classes.title}>
-              Nature Go
-            </Typography>
+
+            {active === 'naturespots' && (
+              <Typography variant="h6" className={classes.title}>
+                Nature Spots
+              </Typography>
+            )}
+            {active === 'mypage' && (
+              <Typography variant="h6" className={classes.title}>
+                My Page
+              </Typography>
+            )}
+            {active === 'savedtomatch' && (
+              <Typography variant="h6" className={classes.title}>
+                Saved Pics
+              </Typography>
+            )}
+
             <Button color="inherit">Login</Button>
           </Toolbar>
         </AppBar>
