@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBarComponent from '../components/AppBarComponent';
 import ProfileSection from '../components/ProfileSection';
-import ImageList from '../components/ImageList';
+import Images from '../components/Images';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
@@ -34,11 +34,11 @@ export default function MyPage() {
       </Box>
       <Box mt={3}>
         <Typography variant="h5">My Nature Pics</Typography>
-        <ImageList picsArr={myPics} />
+        <Images picsArr={myPics} />
       </Box>
       <Box mt={3}>
         <Typography variant="h5">Favorites</Typography>
-        <ImageList picsArr={favorites} />
+        <Images picsArr={favorites} />
       </Box>
     </div>
   );
