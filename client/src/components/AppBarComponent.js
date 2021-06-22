@@ -183,8 +183,14 @@ export default function AppBarComponent() {
                 Saved Pics
               </Typography>
             )}
-
-            <Button color="inherit">Login</Button>
+            <Link
+              to="/login"
+              style={{ textDecoration: 'none', color: 'white' }}
+            >
+              <Typography variant="h6" color="inherit">
+                Login
+              </Typography>
+            </Link>
           </Toolbar>
         </AppBar>
       </div>
