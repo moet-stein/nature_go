@@ -117,8 +117,13 @@ router.get(
   '/profile',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    console.log(req.user);
-    res.send(req.user);
+    const userInfo = {
+      _id: req.user._id,
+      avatarUrl: req.user.avatarUrl,
+      username: req.user.username,
+    };
+    console.log(userInfo);
+    res.send(userInfo);
   }
 );
 

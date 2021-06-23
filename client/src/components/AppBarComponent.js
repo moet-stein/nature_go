@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import AppLogo from '../img/avatar1.png';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
@@ -19,6 +18,7 @@ import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import grey from '@material-ui/core/colors/grey';
 import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +47,7 @@ export default function AppBarComponent() {
     left: false,
   });
   const [active, setActive] = useState('');
+  const { userInfo } = useContext(AuthContext);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -144,6 +145,13 @@ export default function AppBarComponent() {
     if (location.pathname === '/naturespots') setActive('naturespots');
     if (location.pathname.includes('/mypage')) setActive('mypage');
     if (location.pathname.includes('/savedtomatch')) setActive('savedtomatch');
+
+    // const token = window.localStorage.getItem('token');
+    // const config = {
+    //   headers: { Authorization: `Bearer ${token}` },
+    // };
+    // const res = await axios.get('/users/profile', config);
+    // console.log(res.data);
   }, []);
 
   return (
@@ -187,9 +195,15 @@ export default function AppBarComponent() {
               to="/login"
               style={{ textDecoration: 'none', color: 'white' }}
             >
-              <Typography variant="h6" color="inherit">
-                Login
-              </Typography>
+              {userInfo ? (
+                <Typography variant="h6" color="inherit">
+                  Logout
+                </Typography>
+              ) : (
+                <Typography variant="h6" color="inherit">
+                  Login
+                </Typography>
+              )}
             </Link>
           </Toolbar>
         </AppBar>

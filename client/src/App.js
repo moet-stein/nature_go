@@ -13,6 +13,7 @@ import MyPage from './views/MyPage';
 import SavedToMatch from './views/SavedToMatch';
 import Signup from './views/Authentication/Signup';
 import Login from './views/Authentication/Login';
+import { AuthProvider } from './context/AuthContext';
 
 // context
 
@@ -40,21 +41,23 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Router>
-          <Switch>
-            <Route exact path="/" children={<Home />} />
-            <Route exact path="/naturespots" children={<NatureSpots />} />
-            <Route exact path="/details/:spotId" children={<SpotDetails />} />
-            <Route exact path="/mypage/:userId" children={<MyPage />} />
-            <Route
-              exact
-              path="/savedtomatch/:userId"
-              children={<SavedToMatch />}
-            />
+          <AuthProvider>
+            <Switch>
+              <Route exact path="/" children={<Home />} />
+              <Route exact path="/naturespots" children={<NatureSpots />} />
+              <Route exact path="/details/:spotId" children={<SpotDetails />} />
+              <Route exact path="/mypage/:userId" children={<MyPage />} />
+              <Route
+                exact
+                path="/savedtomatch/:userId"
+                children={<SavedToMatch />}
+              />
 
-            {/* Authentication */}
-            <Route exact path="/signup" children={<Signup />} />
-            <Route exact path="/login" children={<Login />} />
-          </Switch>
+              {/* Authentication */}
+              <Route exact path="/signup" children={<Signup />} />
+              <Route exact path="/login" children={<Login />} />
+            </Switch>
+          </AuthProvider>
         </Router>
       </div>
     </ThemeProvider>
