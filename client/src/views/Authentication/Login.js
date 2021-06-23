@@ -80,14 +80,15 @@ export default function Signup() {
       password: passwordRef.current.value,
     };
     try {
-      // await axios.post('/users/login', user);
-      // setError(``);
-      // setLoading(true);
-      //   await login(emailRef.current.value, passwordRef.current.value);
-      //   history.push('/notes');
+      const res = await axios.post('/users/login', user);
+
+      setError(``);
+      setLoading(true);
+      history.push('/naturespots');
       console.log('login submitted');
     } catch (e) {
       console.log(e);
+      console.log(user);
       setError(`Email address or password is wrong`);
     }
     setLoading(false);

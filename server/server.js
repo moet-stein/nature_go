@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const natureSpotRoute = require('./routes/natureSpots');
 const userRoute = require('./routes/users');
+const passport = require('passport');
+const { jwtStrategy } = require('./passport');
 
 // initialize express app
 const app = express();
@@ -23,6 +25,8 @@ mongoose
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(passport.initialize());
+passport.use('jwt', jwtStrategy);
 
 app.use('/api/users', userRoute);
 app.use('/api/naturespots', natureSpotRoute);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/usersModel');
+const User = require('../models/UsersModel');
 const catchAsync = require('../utils/catchAsync');
 const users = require('../controllers/users');
 const { body, validationResult } = require('express-validator');
@@ -83,7 +83,7 @@ router.post('/login', async (req, res) => {
           const options = {
             id: user._id,
           };
-          const token = jwt.sign(options, secretOrKey, { expiresIn: '8h' });
+          const token = jwt.sign(options, secretOrKey, { expiresIn: '30d' });
           console.log(token);
           res.json({
             success: true,
@@ -112,6 +112,15 @@ router.post('/login', async (req, res) => {
   //   res.status(500).json(err);
   // }
 });
+
+router.get(
+  '/profile',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    console.log(req.user);
+    res.send(req.user);
+  }
+);
 
 // Add Favroite Image to a spot
 router.post('/favorite', async (req, res) => {
