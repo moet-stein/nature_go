@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  logo: { width: '30px', height: '30px' },
+  logo: { width: '30px', height: '30px', borderRadius: '20px' },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -77,9 +77,17 @@ export default function AppBarComponent() {
         alignItems="center"
       >
         <Box mr={2}>
-          <img className={classes.logo} src={AppLogo} />
+          {userInfo ? (
+            <img className={classes.logo} src={userInfo.avatarUrl} />
+          ) : (
+            <img className={classes.logo} src={AppLogo} />
+          )}
         </Box>
-        <Typography>Hello User</Typography>
+        {userInfo ? (
+          <Typography>Hello {userInfo.username}</Typography>
+        ) : (
+          <Typography>Hello👋</Typography>
+        )}
       </Box>
       <Divider />
       <List>
@@ -101,42 +109,77 @@ export default function AppBarComponent() {
             />
           </ListItem>
         </Link>
-        <Link style={{ textDecoration: 'none' }} to="/mypage/userid123">
-          <ListItem
-            button
-            key="My Page"
-            className={active === 'mypage' && classes.activeBg}
-          >
-            <Box mr={1}>
-              <LoyaltyIcon color="primary" />
-            </Box>
+        {userInfo && (
+          <React.Fragment>
+            {' '}
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={`/mypage/${userInfo._id}`}
+            >
+              <ListItem
+                button
+                key="My Page"
+                className={active === 'mypage' && classes.activeBg}
+              >
+                <Box mr={1}>
+                  <LoyaltyIcon color="primary" />
+                </Box>
+                <ListItemText
+                  primary={
+                    <Typography type="body2" style={{ color: '#008080' }}>
+                      My Page
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            </Link>
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={`/savedtomatch/${userInfo._id}`}
+            >
+              <ListItem
+                button
+                key="Saved to Match"
+                className={active === 'savedtomatch' && classes.activeBg}
+              >
+                <Box mr={1}>
+                  <BookmarksIcon color="primary" />
+                </Box>
+                <ListItemText
+                  primary={
+                    <Typography type="body2" style={{ color: '#008080' }}>
+                      Saved to Match
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            </Link>
+          </React.Fragment>
+        )}
+        {userInfo ? (
+          <ListItem>
             <ListItemText
               primary={
                 <Typography type="body2" style={{ color: '#008080' }}>
-                  My Page
+                  Logout
                 </Typography>
               }
             />
           </ListItem>
-        </Link>
-        <Link style={{ textDecoration: 'none' }} to="/savedtomatch/userid123">
-          <ListItem
-            button
-            key="Saved to Match"
-            className={active === 'savedtomatch' && classes.activeBg}
-          >
-            <Box mr={1}>
-              <BookmarksIcon color="primary" />
-            </Box>
-            <ListItemText
-              primary={
-                <Typography type="body2" style={{ color: '#008080' }}>
-                  Saved to Match
-                </Typography>
-              }
-            />
-          </ListItem>
-        </Link>
+        ) : (
+          <Link style={{ textDecoration: 'none' }} to="/login">
+            <ListItem>
+              {' '}
+              <ListItemText
+                primary={
+                  <Typography type="body2" style={{ color: '#008080' }}>
+                    Login
+                  </Typography>
+                }
+              />
+            </ListItem>
+          </Link>
+        )}
       </List>
     </div>
   );
@@ -191,20 +234,18 @@ export default function AppBarComponent() {
                 Saved Pics
               </Typography>
             )}
-            <Link
-              to="/login"
-              style={{ textDecoration: 'none', color: 'white' }}
-            >
-              {userInfo ? (
-                <Typography variant="h6" color="inherit">
-                  Logout
-                </Typography>
-              ) : (
+
+            {userInfo ? (
+              <Typography variant="h6" color="inherit">
+                Logout
+              </Typography>
+            ) : (
+              <Link style={{ textDecoration: 'none' }} to="/login">
                 <Typography variant="h6" color="inherit">
                   Login
                 </Typography>
-              )}
-            </Link>
+              </Link>
+            )}
           </Toolbar>
         </AppBar>
       </div>

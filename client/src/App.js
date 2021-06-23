@@ -5,6 +5,7 @@ import {
   responsiveFontSizes,
 } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
 import { teal } from '@material-ui/core/colors';
 import Home from './views/Home';
 import NatureSpots from './views/NatureSpots';
@@ -46,8 +47,12 @@ function App() {
               <Route exact path="/" children={<Home />} />
               <Route exact path="/naturespots" children={<NatureSpots />} />
               <Route exact path="/details/:spotId" children={<SpotDetails />} />
-              <Route exact path="/mypage/:userId" children={<MyPage />} />
-              <Route
+              <PrivateRoute
+                exact
+                path="/mypage/:userId"
+                children={<MyPage />}
+              />
+              <PrivateRoute
                 exact
                 path="/savedtomatch/:userId"
                 children={<SavedToMatch />}
