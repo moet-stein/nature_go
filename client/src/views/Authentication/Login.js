@@ -81,7 +81,10 @@ export default function Signup() {
     };
     try {
       const res = await axios.post('/users/login', user);
-
+      const saveLocal = await window.localStorage.setItem(
+        'token',
+        JSON.stringify(res.data.token)
+      );
       setError(``);
       setLoading(true);
       history.push('/naturespots');
