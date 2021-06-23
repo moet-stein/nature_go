@@ -1,5 +1,15 @@
 const router = require('express').Router();
 const NatureSpot = require('../models/NatureSpotsModel');
+const passport = require('passport');
+
+// router.get(
+//   '/profile',
+//   passport.authenticate('jwt', { session: false }),
+//   (req, res) => {
+//     console.log(req.user);
+//     res.send(req.user);
+//   }
+// );
 
 // Create spot
 router.post('/', async (req, res) => {

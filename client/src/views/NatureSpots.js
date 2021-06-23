@@ -17,6 +17,8 @@ import Star from '@material-ui/icons/Star';
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+const token = window.localStorage.getItem('token') || '';
 
 const mapBoxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -76,6 +78,8 @@ export default function NatureSpots() {
   });
 
   useEffect(() => {
+    const decoded = jwt_decode(token);
+    console.log(decoded);
     const getNatureSpots = async () => {
       try {
         const res = await axios.get('/naturespots');
