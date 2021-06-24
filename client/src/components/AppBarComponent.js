@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
 import AppBar from '@material-ui/core/AppBar';
 import AppLogo from '../img/avatar1.png';
 import Box from '@material-ui/core/Box';
@@ -17,7 +18,7 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import grey from '@material-ui/core/colors/grey';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -47,7 +48,8 @@ export default function AppBarComponent() {
     left: false,
   });
   const [active, setActive] = useState('');
-  const { userInfo } = useContext(AuthContext);
+  const { userInfo, setUserInfo } = useContext(AuthContext);
+  const history = useHistory();
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -58,6 +60,19 @@ export default function AppBarComponent() {
     }
 
     setState({ ...state, [anchor]: open });
+  };
+
+  const handleLogout = async () => {
+    const res = await axios.post('/users/logout');
+    const saveLocal = await window.localStorage.setItem(
+      'token',
+      res.data.token
+    );
+    setUserInfo([]);
+    // if (userInfo) window.localStorage.removeItem('token', '');
+    console.log('logout clicked', userInfo);
+
+    history.push('/');
   };
 
   const list = (anchor) => (
@@ -157,7 +172,7 @@ export default function AppBarComponent() {
           </React.Fragment>
         )}
         {userInfo ? (
-          <ListItem>
+          <ListItem onClick={handleLogout}>
             <ListItemText
               primary={
                 <Typography type="body2" style={{ color: '#008080' }}>
@@ -188,6 +203,7 @@ export default function AppBarComponent() {
     if (location.pathname === '/naturespots') setActive('naturespots');
     if (location.pathname.includes('/mypage')) setActive('mypage');
     if (location.pathname.includes('/savedtomatch')) setActive('savedtomatch');
+    console.log(userInfo);
 
     // const token = window.localStorage.getItem('token');
     // const config = {
@@ -218,34 +234,37 @@ export default function AppBarComponent() {
             >
               {list('left')}
             </Drawer>
+            <Box>
+              {active === 'naturespots' && (
+                <Typography variant="h6" className={classes.title}>
+                  Nature Spots
+                </Typography>
+              )}
+              {active === 'mypage' && (
+                <Typography variant="h6" className={classes.title}>
+                  My Page
+                </Typography>
+              )}
+              {active === 'savedtomatch' && (
+                <Typography variant="h6" className={classes.title}>
+                  Saved Pics
+                </Typography>
+              )}
+            </Box>
 
-            {active === 'naturespots' && (
-              <Typography variant="h6" className={classes.title}>
-                Nature Spots
-              </Typography>
-            )}
-            {active === 'mypage' && (
-              <Typography variant="h6" className={classes.title}>
-                My Page
-              </Typography>
-            )}
-            {active === 'savedtomatch' && (
-              <Typography variant="h6" className={classes.title}>
-                Saved Pics
-              </Typography>
-            )}
-
-            {userInfo ? (
-              <Typography variant="h6" color="inherit">
-                Logout
-              </Typography>
+            {/* {userInfo ? (
+              <Button size="small">
+                <Typography variant="h6" color="inherit">
+                  Logout
+                </Typography>
+              </Button>
             ) : (
               <Link style={{ textDecoration: 'none' }} to="/login">
                 <Typography variant="h6" color="inherit">
                   Login
                 </Typography>
               </Link>
-            )}
+            )} */}
           </Toolbar>
         </AppBar>
       </div>

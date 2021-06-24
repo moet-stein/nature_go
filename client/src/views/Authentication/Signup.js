@@ -118,7 +118,7 @@ export default function Signup() {
                 fontWeight="fontWeightBold"
                 component="h1"
                 variant="h2"
-                color={teal[900]}
+                color="secondary"
               >
                 Signup
               </Typography>

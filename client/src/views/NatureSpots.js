@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import AppBarComponent from '../components/AppBarComponent';
 import NatureSpotsListCards from '../components/NatureSpotsListCards';
 import axios from 'axios';
@@ -18,6 +18,7 @@ import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import { AuthContext } from '../context/AuthContext';
 const token = window.localStorage.getItem('token') || '';
 
 const mapBoxToken = process.env.REACT_APP_MAPBOX_TOKEN;
@@ -69,6 +70,7 @@ export default function NatureSpots() {
   const [rating, setRating] = useState(3);
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
+  const { setUserInfo, userInfo } = useContext(AuthContext);
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '70vh',
@@ -89,7 +91,16 @@ export default function NatureSpots() {
         console.log(err);
       }
     };
+    const getUserInfo = async () => {
+      const token = window.localStorage.getItem('token');
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      const res = await axios.get('/users/profile', config);
+      setUserInfo(res.data);
+    };
     getNatureSpots();
+    getUserInfo();
   }, []);
 
   const handleMarkerClick = (id, lat, long) => {

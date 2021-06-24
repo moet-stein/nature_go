@@ -8,6 +8,8 @@ const bcrypt = require('bcrypt');
 const secretOrKey = require('../keys').secretOrKey;
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const LocalStorage = require('node-localstorage').LocalStorage,
+  localStorage = new LocalStorage('./scratch');
 
 // router.get('/all', (req, res) => {
 //   User.find({}, function (err, users) {
@@ -95,22 +97,30 @@ router.post('/login', async (req, res) => {
       });
     }
   });
-  // try {
-  //   // find user
-  //   const user = await User.findOne({ email: req.body.email });
-  //   !user && res.status(400).json('Wrong email or password');
+});
 
-  //   // validate password
-  //   const validPassword = await bcrypt.compare(
-  //     req.body.password,
-  //     user.password
-  //   );
-  //   !validPassword && res.status(400).json('Wrong email or password');
-  //   // send res
-  //   res.status(200).json({ _id: user._id, username: user.username });
-  // } catch (err) {
-  //   res.status(500).json(err);
-  // }
+// logout
+router.post('/logout', async (req, res) => {
+  const options = {
+    id: '',
+  };
+  const token = await jwt.sign(options, secretOrKey, { expiresIn: '1s' });
+  // localStorage.removeItem('token');
+  // localStorage.setItem('token', token);
+  // console.log('token changed?');
+  res.json({
+    success: true,
+    token: token,
+  });
+
+  // const authHeader = req.headers['authorization'];
+  // jwt.sign(authHeader, '', { expiresIn: 1 }, (logout, err) => {
+  //   if (logout) {
+  //     res.send({ msg: 'You have been Logged Out' });
+  //   } else {
+  //     res.send({ msg: 'Error' });
+  //   }
+  // });
 });
 
 router.get(
