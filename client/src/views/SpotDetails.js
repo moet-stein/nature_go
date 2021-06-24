@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import AppBarComponent from '../components/AppBarComponent';
 import Typography from '@material-ui/core/Typography';
@@ -29,9 +29,6 @@ export default function SpotDetails() {
     zoom: 11,
   });
 
-  useEffect(() => {
-    console.log(spot);
-  }, []);
   return (
     <div className={classes.root}>
       <AppBarComponent />

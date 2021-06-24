@@ -5,21 +5,16 @@ import axios from 'axios';
 import { format } from 'timeago.js';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
-import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Room from '@material-ui/icons/Room';
-import Star from '@material-ui/icons/Star';
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 import { AuthContext } from '../context/AuthContext';
-const token = window.localStorage.getItem('token') || '';
 
 const mapBoxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -63,14 +58,14 @@ const useStyle = makeStyles((theme) => ({
 
 export default function NatureSpots() {
   const classes = useStyle();
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
   const [natureSpots, setNatureSpots] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newSpot, setNewSpot] = useState(null);
   const [rating, setRating] = useState(3);
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
-  const { setUserInfo, userInfo } = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '70vh',
@@ -80,8 +75,7 @@ export default function NatureSpots() {
   });
 
   useEffect(() => {
-    const decoded = jwt_decode(token);
-    console.log(decoded);
+    // const decoded = jwt_decode(token);
     const getNatureSpots = async () => {
       try {
         const res = await axios.get('/naturespots');
@@ -91,16 +85,8 @@ export default function NatureSpots() {
         console.log(err);
       }
     };
-    const getUserInfo = async () => {
-      const token = window.localStorage.getItem('token');
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-      const res = await axios.get('/users/profile', config);
-      setUserInfo(res.data);
-    };
+
     getNatureSpots();
-    getUserInfo();
   }, []);
 
   const handleMarkerClick = (id, lat, long) => {
@@ -119,7 +105,7 @@ export default function NatureSpots() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newSpotPost = {
-      username: currentUser,
+      username: userInfo.username,
       title,
       desc,
       rating,
@@ -158,7 +144,7 @@ export default function NatureSpots() {
             transitionDuration="50"
           >
             {natureSpots.map((spot) => (
-              <>
+              <div key={spot._id}>
                 <Marker
                   latitude={spot.lat}
                   longitude={spot.long}
@@ -169,7 +155,9 @@ export default function NatureSpots() {
                     style={{
                       fontSize: viewport.zoom * 3,
                       color:
-                        spot.username === currentUser ? 'tomato' : 'slateblue',
+                        spot.username === userInfo.username
+                          ? 'tomato'
+                          : 'slateblue',
                       cursor: 'pointer',
                     }}
                     onClick={() =>
@@ -219,7 +207,7 @@ export default function NatureSpots() {
                           color="textSecondary"
                           component="p"
                         >
-                          Created by <b>{spot.author.username}</b>
+                          Created by <b>{spot.user.username}</b>
                         </Typography>
                         <Typography
                           variant="body2"
@@ -248,7 +236,7 @@ export default function NatureSpots() {
                     </div>
                   </Popup>
                 )}
-              </>
+              </div>
             ))}
             {newSpot && (
               <Popup
@@ -300,22 +288,6 @@ export default function NatureSpots() {
                 </div>
               </Popup>
             )}
-            {/* {currentUser ? (
-              <Box className={classes.leftFloat}>
-                <Button variant="contained" className={classes.white}>
-                  Log out
-                </Button>
-              </Box>
-            ) : (
-              <Box className={classes.leftFloat}>
-                <Button variant="contained" color="primary">
-                  Login
-                </Button>
-                <Button variant="contained" color="secondary">
-                  Register
-                </Button>
-              </Box>
-            )} */}
           </ReactMapGL>
         </Grid>
         <Grid item xs={12}>

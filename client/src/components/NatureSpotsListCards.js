@@ -30,6 +30,7 @@ export default function NatureSpotsListCards({ natureSpots }) {
             justifyContent="center"
             alignItems="center"
             minHeight="100vh"
+            key={spot._id}
           >
             <Card className={classes.cardWidth}>
               <Link

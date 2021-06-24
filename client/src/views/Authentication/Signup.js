@@ -1,23 +1,20 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import Logo from '../../img/avatar1.png';
 import Room from '@material-ui/icons/Room';
-import Avatars from './Avatars';
+// import Avatars from './Avatars';
 import Image from '../../img/landing_pic.png';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import HomeIcon from '@material-ui/icons/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 // import { useAuth } from '../context/AuthContext';
 import Alert from '@material-ui/lab/Alert';
-import teal from '@material-ui/core/colors/teal';
 import { Link, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -111,7 +108,7 @@ export default function Signup() {
         <div className={classes.paper}>
           <Box display="flex">
             <Box mr={3}>
-              <img className={classes.avatar} src={Logo} />
+              <img alt="logo" className={classes.avatar} src={Logo} />
             </Box>
             <Box mt={3} mr={2}>
               <Typography
@@ -134,7 +131,7 @@ export default function Signup() {
                 <Box mb={2}>
                   <Typography>Choose your avatar</Typography>
                 </Box>
-                <Avatars />
+                {/* <Avatars /> */}
               </Grid>
               <Grid item xs={12}>
                 <TextField

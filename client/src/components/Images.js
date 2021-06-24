@@ -4,13 +4,7 @@ import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import ImageList from '@material-ui/core/ImageList';
-// import ImageListItem from '@material-ui/core/ImageListItem';
 
 const useStyle = makeStyles(() => ({
   root: {
@@ -48,7 +42,7 @@ export default function Images({ picsArr }) {
       >
         {picsArr.map((pic) => {
           return (
-            <Card className={classes.root}>
+            <Card key={pic} className={classes.root}>
               <CardMedia
                 className={classes.media}
                 image={pic}

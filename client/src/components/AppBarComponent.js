@@ -48,8 +48,10 @@ export default function AppBarComponent() {
     left: false,
   });
   const [active, setActive] = useState('');
+  const [isUserThere, setIsUserThere] = useState(false);
   const { userInfo, setUserInfo } = useContext(AuthContext);
   const history = useHistory();
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -64,16 +66,44 @@ export default function AppBarComponent() {
 
   const handleLogout = async () => {
     const res = await axios.post('/users/logout');
-    const saveLocal = await window.localStorage.setItem(
-      'token',
-      res.data.token
-    );
+    window.localStorage.setItem('token', res.data.token);
     setUserInfo([]);
-    // if (userInfo) window.localStorage.removeItem('token', '');
     console.log('logout clicked', userInfo);
-
+    window.localStorage.removeItem('token');
     history.push('/');
   };
+
+  useEffect(() => {
+    if (location.pathname === '/naturespots') {
+      setActive('naturespots');
+      setSelectedIndex(0);
+    }
+    if (location.pathname.includes('/mypage')) {
+      setActive('mypage');
+      setSelectedIndex(1);
+    }
+    if (location.pathname.includes('/savedtomatch')) {
+      setActive('savedtomatch');
+      setSelectedIndex(2);
+    }
+    console.log(userInfo instanceof Array, userInfo);
+
+    const token = window.localStorage.getItem('token');
+    const getUserInfo = async () => {
+      console.log(isUserThere);
+      if (token !== null) {
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+        const res = await axios.get('/users/profile', config);
+        setUserInfo(res.data);
+        setIsUserThere(true);
+        console.log("I'm res.data from AppbarComponent", res.data);
+      }
+    };
+
+    getUserInfo();
+  }, []);
 
   const list = (anchor) => (
     <div
@@ -87,18 +117,22 @@ export default function AppBarComponent() {
       <Box
         m={2}
         display="flex"
-        flex-flexDirection="column"
+        flexDirection="column"
         justifyContent="center"
         alignItems="center"
       >
         <Box mr={2}>
-          {userInfo ? (
-            <img className={classes.logo} src={userInfo.avatarUrl} />
+          {isUserThere ? (
+            <img
+              alt={userInfo.avatarUrl}
+              className={classes.logo}
+              src={userInfo.avatarUrl}
+            />
           ) : (
-            <img className={classes.logo} src={AppLogo} />
+            <img alt="logo" className={classes.logo} src={AppLogo} />
           )}
         </Box>
-        {userInfo ? (
+        {isUserThere ? (
           <Typography>Hello {userInfo.username}</Typography>
         ) : (
           <Typography>Hello👋</Typography>
@@ -107,11 +141,7 @@ export default function AppBarComponent() {
       <Divider />
       <List>
         <Link style={{ textDecoration: 'none' }} to="/naturespots">
-          <ListItem
-            button
-            key="Nature Spots"
-            className={active === 'naturespots' && classes.activeBg}
-          >
+          <ListItem button key="Nature Spots" selected={selectedIndex === 0}>
             <Box mr={1}>
               <ExploreIcon color="primary" />
             </Box>
@@ -124,18 +154,14 @@ export default function AppBarComponent() {
             />
           </ListItem>
         </Link>
-        {userInfo && (
+        {isUserThere && (
           <React.Fragment>
             {' '}
             <Link
               style={{ textDecoration: 'none' }}
               to={`/mypage/${userInfo._id}`}
             >
-              <ListItem
-                button
-                key="My Page"
-                className={active === 'mypage' && classes.activeBg}
-              >
+              <ListItem button key="My Page" selected={selectedIndex === 1}>
                 <Box mr={1}>
                   <LoyaltyIcon color="primary" />
                 </Box>
@@ -155,7 +181,7 @@ export default function AppBarComponent() {
               <ListItem
                 button
                 key="Saved to Match"
-                className={active === 'savedtomatch' && classes.activeBg}
+                selected={selectedIndex === 2}
               >
                 <Box mr={1}>
                   <BookmarksIcon color="primary" />
@@ -171,7 +197,7 @@ export default function AppBarComponent() {
             </Link>
           </React.Fragment>
         )}
-        {userInfo ? (
+        {isUserThere ? (
           <ListItem onClick={handleLogout}>
             <ListItemText
               primary={
@@ -198,20 +224,6 @@ export default function AppBarComponent() {
       </List>
     </div>
   );
-
-  useEffect(() => {
-    if (location.pathname === '/naturespots') setActive('naturespots');
-    if (location.pathname.includes('/mypage')) setActive('mypage');
-    if (location.pathname.includes('/savedtomatch')) setActive('savedtomatch');
-    console.log(userInfo);
-
-    // const token = window.localStorage.getItem('token');
-    // const config = {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // };
-    // const res = await axios.get('/users/profile', config);
-    // console.log(res.data);
-  }, []);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import Image from '../../img/landing_pic.png';
 import Logo from '../../img/avatar1.png';
@@ -9,14 +9,12 @@ import HomeIcon from '@material-ui/icons/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import teal from '@material-ui/core/colors/teal';
 import { Link, useHistory } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -81,10 +79,7 @@ export default function Signup() {
     };
     try {
       const res = await axios.post('/users/login', user);
-      const saveLocal = await window.localStorage.setItem(
-        'token',
-        res.data.token
-      );
+      window.localStorage.setItem('token', res.data.token);
       setError(``);
       setLoading(true);
       history.push('/naturespots');
@@ -103,7 +98,7 @@ export default function Signup() {
         <div className={classes.paper}>
           <Box display="flex">
             <Box mr={3}>
-              <img className={classes.avatar} src={Logo} />
+              <img alt="logo" className={classes.avatar} src={Logo} />
             </Box>
             <Box mt={3} mr={2}>
               <Typography
