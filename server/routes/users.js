@@ -107,20 +107,8 @@ router.post('/login', async (req, res) => {
 
 // logout
 router.post('/logout', async (req, res) => {
-  const options = {
-    id: '',
-  };
-  const token = await jwt.sign(options, secretOrKey, { expiresIn: '1s' });
-  console.log(token);
-
   const id = req.body._id;
-  console.log(id);
   await User.findOneAndUpdate({ _id: id }, { $set: { login: false } });
-
-  res.json({
-    success: true,
-    token: token,
-  });
 });
 
 router.get(

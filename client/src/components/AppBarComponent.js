@@ -66,12 +66,10 @@ export default function AppBarComponent() {
 
   const handleLogout = async () => {
     const user = { _id: userInfo._id };
-    const res = await axios.post('/users/logout', user);
-    window.localStorage.setItem('token', res.data.token);
     setUserInfo([]);
-    console.log('logout clicked', userInfo);
     window.localStorage.removeItem('token');
     history.push('/');
+    await axios.post('/users/logout', user);
   };
 
   useEffect(() => {
