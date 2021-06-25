@@ -45,6 +45,7 @@ const UserSchema = new mongoose.Schema(
     myPics: [myPicSchema],
     favoritePics: [favoritePicSchema],
     savedPics: [savedPicSchema],
+    login: Boolean,
   },
   { timestamps: true }
 );

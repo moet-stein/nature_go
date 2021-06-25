@@ -86,7 +86,6 @@ export default function Signup() {
       console.log('login submitted');
     } catch (e) {
       console.log(e);
-      console.log(user);
       setError(`Email address or password is wrong`);
     }
     setLoading(false);

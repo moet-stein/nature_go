@@ -55,6 +55,7 @@ router.post(
             myPics: [],
             favoritePics: [],
             savedPics: [],
+            login: false,
           });
 
           //  save user and send response
@@ -72,7 +73,7 @@ router.post(
 router.post('/login', async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  User.findOne({ email: email }, (err, user) => {
+  const user = await User.findOne({ email: email }, (err, user) => {
     if (err) {
       res.send('Email does not exist');
     } else {
@@ -86,6 +87,7 @@ router.post('/login', async (req, res) => {
             id: user._id,
           };
           const token = jwt.sign(options, secretOrKey, { expiresIn: '30d' });
+
           console.log(token);
           res.json({
             success: true,
@@ -97,6 +99,10 @@ router.post('/login', async (req, res) => {
       });
     }
   });
+  if (user) {
+    user.login = true;
+    await user.save();
+  }
 });
 
 // logout
@@ -105,22 +111,16 @@ router.post('/logout', async (req, res) => {
     id: '',
   };
   const token = await jwt.sign(options, secretOrKey, { expiresIn: '1s' });
-  // localStorage.removeItem('token');
-  // localStorage.setItem('token', token);
-  // console.log('token changed?');
+  console.log(token);
+
+  const id = req.body._id;
+  console.log(id);
+  await User.findOneAndUpdate({ _id: id }, { $set: { login: false } });
+
   res.json({
     success: true,
     token: token,
   });
-
-  // const authHeader = req.headers['authorization'];
-  // jwt.sign(authHeader, '', { expiresIn: 1 }, (logout, err) => {
-  //   if (logout) {
-  //     res.send({ msg: 'You have been Logged Out' });
-  //   } else {
-  //     res.send({ msg: 'Error' });
-  //   }
-  // });
 });
 
 router.get(

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBarComponent from '../components/AppBarComponent';
 import ProfileSection from '../components/ProfileSection';
 import Images from '../components/Images';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import FormGroup from '@material-ui/core/FormGroup';
+import Switch from '@material-ui/core/Switch';
+import Grid from '@material-ui/core/Grid';
 
 const myPics = [
   'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1140&q=80',
@@ -25,12 +29,69 @@ const favorites = [
   'https://images.unsplash.com/photo-1518495973542-4542c06a5843?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80',
 ];
 
+const AntSwitch = withStyles((theme) => ({
+  root: {
+    width: 28,
+    height: 16,
+    padding: 0,
+    display: 'flex',
+  },
+  switchBase: {
+    padding: 2,
+    color: theme.palette.info.light,
+    '&$checked': {
+      transform: 'translateX(12px)',
+      color: theme.palette.common.white,
+      '& + $track': {
+        opacity: 1,
+        backgroundColor: theme.palette.primary.main,
+        borderColor: theme.palette.primary.main,
+      },
+    },
+  },
+  thumb: {
+    width: 12,
+    height: 12,
+    boxShadow: 'none',
+  },
+  track: {
+    border: `1px solid ${theme.palette.grey[500]}`,
+    borderRadius: 16 / 2,
+    opacity: 1,
+    backgroundColor: theme.palette.common.white,
+  },
+  checked: {},
+}))(Switch);
+
 export default function MyPage() {
+  const [showMyPics, setShowMyPics] = useState(true);
+
+  const handleChange = (event) => {
+    setShowMyPics(event.target.checked);
+  };
+
   return (
     <div>
       <AppBarComponent />
       <Box mt={3}>
         <ProfileSection />
+      </Box>
+      <Box>
+        <FormGroup>
+          <Typography component="div">
+            <Grid component="label" container alignItems="center" spacing={1}>
+              <Grid item>My Pics</Grid>
+              <Grid item>
+                <AntSwitch
+                  checked={showMyPics}
+                  onChange={handleChange}
+                  name="showPics"
+                />
+              </Grid>
+              <Grid item>Favorites</Grid>
+            </Grid>
+          </Typography>
+        </FormGroup>
       </Box>
       <Box mt={3}>
         <Typography variant="h5">My Nature Pics</Typography>
