@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { NatureSpotsContext } from '../context/NatureSpotsContext';
+import { MarkerContext } from '../context/MarkerContext';
 
 const mapBoxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -61,7 +62,7 @@ export default function NatureSpots() {
   const classes = useStyle();
   // const [currentUser, setCurrentUser] = useState(null);
   // const [natureSpots, setNatureSpots] = useState([]);
-  const [currentPlaceId, setCurrentPlaceId] = useState(null);
+  // const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newSpot, setNewSpot] = useState(null);
   const [rating, setRating] = useState(3);
   const [title, setTitle] = useState(null);
@@ -70,13 +71,19 @@ export default function NatureSpots() {
   const { natureSpots, setNatureSpots, setNewAdded } = useContext(
     NatureSpotsContext
   );
-  const [viewport, setViewport] = useState({
-    width: '100vw',
-    height: '70vh',
-    latitude: 52.52,
-    longitude: 13.405,
-    zoom: 10,
-  });
+  const {
+    viewport,
+    setViewport,
+    currentPlaceId,
+    setCurrentPlaceId,
+  } = useContext(MarkerContext);
+  // const [viewport, setViewport] = useState({
+  //   width: '100vw',
+  //   height: '70vh',
+  //   latitude: 52.52,
+  //   longitude: 13.405,
+  //   zoom: 10,
+  // });
 
   // useEffect(() => {
   //   console.log(userInfo);
@@ -297,9 +304,8 @@ export default function NatureSpots() {
             )}
           </ReactMapGL>
         </Grid>
-        <Grid item xs={12}>
-          <NatureSpotsListCards natureSpots={natureSpots} />
-        </Grid>
+
+        <NatureSpotsListCards natureSpots={natureSpots} />
       </Grid>
     </React.Fragment>
   );
