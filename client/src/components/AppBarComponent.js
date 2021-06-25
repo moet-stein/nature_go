@@ -48,8 +48,10 @@ export default function AppBarComponent() {
     left: false,
   });
   const [active, setActive] = useState('');
-  const [isUserThere, setIsUserThere] = useState(false);
-  const { userInfo, setUserInfo } = useContext(AuthContext);
+  // const [isUserThere, setIsUserThere] = useState(false);
+  const { userInfo, setUserInfo, isUserThere, setIsUserThere } = useContext(
+    AuthContext
+  );
   const history = useHistory();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -67,6 +69,7 @@ export default function AppBarComponent() {
   const handleLogout = async () => {
     const user = { _id: userInfo._id };
     setUserInfo([]);
+    setIsUserThere(false);
     window.localStorage.removeItem('token');
     history.push('/');
     await axios.post('/users/logout', user);

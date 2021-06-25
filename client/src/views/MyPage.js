@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 
@@ -29,45 +30,64 @@ const favorites = [
   'https://images.unsplash.com/photo-1518495973542-4542c06a5843?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80',
 ];
 
-const AntSwitch = withStyles((theme) => ({
+const IOSSwitch = withStyles((theme) => ({
   root: {
-    width: 28,
-    height: 16,
+    width: 42,
+    height: 26,
     padding: 0,
-    display: 'flex',
+    margin: theme.spacing(1),
   },
   switchBase: {
-    padding: 2,
-    color: theme.palette.info.light,
+    padding: 1,
     '&$checked': {
-      transform: 'translateX(12px)',
+      transform: 'translateX(16px)',
       color: theme.palette.common.white,
       '& + $track': {
+        backgroundColor: '#52d869',
         opacity: 1,
-        backgroundColor: theme.palette.primary.main,
-        borderColor: theme.palette.primary.main,
+        border: 'none',
       },
+    },
+    '&$focusVisible $thumb': {
+      color: '#52d869',
+      border: '6px solid #fff',
     },
   },
   thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: 'none',
+    width: 24,
+    height: 24,
   },
   track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
+    borderRadius: 26 / 2,
+    border: `1px solid ${theme.palette.info.light}`,
+    backgroundColor: theme.palette.info.light,
     opacity: 1,
-    backgroundColor: theme.palette.common.white,
+    transition: theme.transitions.create(['background-color', 'border']),
   },
   checked: {},
-}))(Switch);
+  focusVisible: {},
+}))(({ classes, ...props }) => {
+  return (
+    <Switch
+      focusVisibleClassName={classes.focusVisible}
+      disableRipple
+      classes={{
+        root: classes.root,
+        switchBase: classes.switchBase,
+        thumb: classes.thumb,
+        track: classes.track,
+        checked: classes.checked,
+      }}
+      {...props}
+    />
+  );
+});
 
 export default function MyPage() {
-  const [showMyPics, setShowMyPics] = useState(true);
+  const [showFavPics, setFavMyPics] = useState(false);
 
   const handleChange = (event) => {
-    setShowMyPics(event.target.checked);
+    setFavMyPics(event.target.checked);
   };
 
   return (
@@ -76,31 +96,39 @@ export default function MyPage() {
       <Box mt={3}>
         <ProfileSection />
       </Box>
-      <Box>
+      <Box mt={3} display="flex" justifyContent="center" alignItems="center">
         <FormGroup>
-          <Typography component="div">
-            <Grid component="label" container alignItems="center" spacing={1}>
-              <Grid item>My Pics</Grid>
-              <Grid item>
-                <AntSwitch
-                  checked={showMyPics}
-                  onChange={handleChange}
-                  name="showPics"
-                />
-              </Grid>
-              <Grid item>Favorites</Grid>
+          <Grid component="label" container alignItems="center" spacing={1}>
+            <Grid item>
+              <Typography>My Pics</Typography>
             </Grid>
-          </Typography>
+            <Grid item>
+              <FormControlLabel
+                control={
+                  <IOSSwitch
+                    checked={showFavPics}
+                    onChange={handleChange}
+                    name="checkedB"
+                  />
+                }
+                label="Favorites"
+              />
+            </Grid>
+          </Grid>
         </FormGroup>
       </Box>
-      <Box mt={3}>
-        <Typography variant="h5">My Nature Pics</Typography>
-        <Images picsArr={myPics} />
-      </Box>
-      <Box mt={3}>
-        <Typography variant="h5">Favorites</Typography>
-        <Images picsArr={favorites} />
-      </Box>
+      {!showFavPics && (
+        <Box mt={3}>
+          <Typography variant="h5">My Nature Pics</Typography>
+          <Images picsArr={myPics} />
+        </Box>
+      )}
+      {showFavPics && (
+        <Box mt={3}>
+          <Typography variant="h5">Favorites</Typography>
+          <Images picsArr={favorites} />
+        </Box>
+      )}
     </div>
   );
 }

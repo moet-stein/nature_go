@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GoBack from '../components/GoBack';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import AppBarComponent from '../components/AppBarComponent';
 import Typography from '@material-ui/core/Typography';
@@ -32,6 +33,7 @@ export default function SpotDetails() {
   return (
     <div className={classes.root}>
       <AppBarComponent />
+      <GoBack />
       <Grid container direction="column" justify="center" alignItems="center">
         <Grid item xs={12}>
           <Typography variant="h2">{spot.title}</Typography>

@@ -15,6 +15,7 @@ import SavedToMatch from './views/SavedToMatch';
 import Signup from './views/Authentication/Signup';
 import Login from './views/Authentication/Login';
 import { AuthProvider } from './context/AuthContext';
+import { NatureSpotsProvider } from './context/NatureSpotsContext';
 
 // context
 
@@ -43,25 +44,31 @@ function App() {
       <div className="App">
         <Router>
           <AuthProvider>
-            <Switch>
-              <Route exact path="/" children={<Home />} />
-              <Route exact path="/naturespots" children={<NatureSpots />} />
-              <Route exact path="/details/:spotId" children={<SpotDetails />} />
-              <PrivateRoute
-                exact
-                path="/mypage/:userId"
-                children={<MyPage />}
-              />
-              <PrivateRoute
-                exact
-                path="/savedtomatch/:userId"
-                children={<SavedToMatch />}
-              />
+            <NatureSpotsProvider>
+              <Switch>
+                <Route exact path="/" children={<Home />} />
+                <Route exact path="/naturespots" children={<NatureSpots />} />
+                <Route
+                  exact
+                  path="/details/:spotId"
+                  children={<SpotDetails />}
+                />
+                <PrivateRoute
+                  exact
+                  path="/mypage/:userId"
+                  children={<MyPage />}
+                />
+                <PrivateRoute
+                  exact
+                  path="/savedtomatch/:userId"
+                  children={<SavedToMatch />}
+                />
 
-              {/* Authentication */}
-              <Route exact path="/signup" children={<Signup />} />
-              <Route exact path="/login" children={<Login />} />
-            </Switch>
+                {/* Authentication */}
+                <Route exact path="/signup" children={<Signup />} />
+                <Route exact path="/login" children={<Login />} />
+              </Switch>
+            </NatureSpotsProvider>
           </AuthProvider>
         </Router>
       </div>

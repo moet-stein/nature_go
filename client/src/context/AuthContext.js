@@ -6,6 +6,7 @@ import axios from 'axios';
 // 2. initialize the context
 const initAuthContext = {
   userInfo: [],
+  isUserThere: false,
 };
 // 3. create context
 export const AuthContext = createContext(initAuthContext);
@@ -13,6 +14,7 @@ export const AuthContext = createContext(initAuthContext);
 // 4. make provider => value / children
 export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(initAuthContext.userInfo);
+  const [isUserThere, setIsUserThere] = useState(initAuthContext.isUserThere);
 
   const token = window.localStorage.getItem('token');
 
@@ -36,6 +38,8 @@ export const AuthProvider = ({ children }) => {
       value={{
         userInfo,
         setUserInfo,
+        isUserThere,
+        setIsUserThere,
       }}
     >
       {children}

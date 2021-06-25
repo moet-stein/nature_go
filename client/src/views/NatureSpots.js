@@ -15,6 +15,7 @@ import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { NatureSpotsContext } from '../context/NatureSpotsContext';
 
 const mapBoxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -59,13 +60,16 @@ const useStyle = makeStyles((theme) => ({
 export default function NatureSpots() {
   const classes = useStyle();
   // const [currentUser, setCurrentUser] = useState(null);
-  const [natureSpots, setNatureSpots] = useState([]);
+  // const [natureSpots, setNatureSpots] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newSpot, setNewSpot] = useState(null);
   const [rating, setRating] = useState(3);
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
-  const { userInfo } = useContext(AuthContext);
+  const { userInfo, isUserThere } = useContext(AuthContext);
+  const { natureSpots, setNatureSpots, setNewAdded } = useContext(
+    NatureSpotsContext
+  );
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '70vh',
@@ -74,20 +78,21 @@ export default function NatureSpots() {
     zoom: 10,
   });
 
-  useEffect(() => {
-    // const decoded = jwt_decode(token);
-    const getNatureSpots = async () => {
-      try {
-        const res = await axios.get('/naturespots');
-        setNatureSpots(res.data);
-        console.log(res.data[0]);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  // useEffect(() => {
+  //   console.log(userInfo);
+  //   // const decoded = jwt_decode(token);
+  //   const getNatureSpots = async () => {
+  //     try {
+  //       const res = await axios.get('/naturespots');
+  //       setNatureSpots(res.data);
+  //       console.log(res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
 
-    getNatureSpots();
-  }, []);
+  //   getNatureSpots();
+  // }, []);
 
   const handleMarkerClick = (id, lat, long) => {
     setCurrentPlaceId(id);
@@ -104,8 +109,9 @@ export default function NatureSpots() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setNewAdded(false);
     const newSpotPost = {
-      username: userInfo.username,
+      user: userInfo._id,
       title,
       desc,
       rating,
@@ -116,6 +122,7 @@ export default function NatureSpots() {
     try {
       const res = await axios.post('/naturespots', newSpotPost);
       setNatureSpots([...natureSpots, res.data]);
+      setNewAdded(true);
       setNewSpot(null);
     } catch (err) {
       console.log(err);
@@ -155,7 +162,7 @@ export default function NatureSpots() {
                     style={{
                       fontSize: viewport.zoom * 3,
                       color:
-                        spot.username === userInfo.username
+                        spot.user.username === userInfo.username
                           ? 'tomato'
                           : 'slateblue',
                       cursor: 'pointer',
@@ -238,7 +245,7 @@ export default function NatureSpots() {
                 )}
               </div>
             ))}
-            {newSpot && (
+            {newSpot && isUserThere && (
               <Popup
                 latitude={newSpot.lat}
                 longitude={newSpot.long}
