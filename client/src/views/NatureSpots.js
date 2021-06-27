@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import AppBarComponent from '../components/AppBarComponent';
 import NatureSpotsListCards from '../components/NatureSpotsListCards';
 import axios from 'axios';
 import { format } from 'timeago.js';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
+import Geocoder from 'react-mapbox-gl-geocoder';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
@@ -77,6 +78,11 @@ export default function NatureSpots() {
     currentPlaceId,
     setCurrentPlaceId,
   } = useContext(MarkerContext);
+
+  const onSelected = (viewport) => {
+    setViewport(viewport);
+  };
+
   // const [viewport, setViewport] = useState({
   //   width: '100vw',
   //   height: '70vh',
@@ -155,8 +161,17 @@ export default function NatureSpots() {
             onViewportChange={(nextViewport) => setViewport(nextViewport)}
             mapStyle="mapbox://styles/moepii/ckppic7c80e3b17pdh4k1pfvk"
             onDblClick={handleAddClick}
-            transitionDuration="50"
+            // transitionDuration="50"
           >
+            <Geocoder
+              mapboxApiAccessToken={mapBoxToken}
+              onSelected={(viewport) => onSelected(viewport)}
+              viewport={viewport}
+              hideOnSelect={true}
+              value=""
+              position="top-left"
+              // queryParams={params}
+            />
             {natureSpots.map((spot) => (
               <div key={spot._id}>
                 <Marker
