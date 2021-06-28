@@ -1,32 +1,5 @@
 const mongoose = require('mongoose');
 
-const myPicSchema = new mongoose.Schema({
-  url: String,
-  naturespot: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Naturespot',
-  },
-});
-
-const favoritePicSchema = new mongoose.Schema({
-  url: String,
-  naturespot: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'naturespot',
-  },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-});
-
-const savedPicSchema = new mongoose.Schema({
-  url: String,
-  naturespot: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Naturespot',
-  },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  matchedPic: String,
-});
-
 const UserSchema = new mongoose.Schema(
   {
     username: {
@@ -42,9 +15,9 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'Password cannot be blank'],
     },
     avatarUrl: { type: String, required: [true, 'Avatar cannot be blank'] },
-    myPics: [myPicSchema],
-    favoritePics: [favoritePicSchema],
-    savedPics: [savedPicSchema],
+    myPics: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
+    favoritePics: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
+    savedPics: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     login: Boolean,
   },
   { timestamps: true }

@@ -3,6 +3,7 @@ import Masonry from 'react-masonry-css';
 import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -11,10 +12,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const useStyle = makeStyles(() => ({
+const useStyle = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
@@ -31,12 +33,12 @@ const useStyle = makeStyles(() => ({
     boxShadow: '0px 1px 2px 0px rgba(0,0,0,0.4)',
     '&:hover , &:active': { boxShadow: ' -1px 10px 29px 0px rgba(0,0,0,0.8)' },
   },
-  avatarSize: {
-    width: '20px',
-    height: '20px',
-  },
   action: {
     padding: '0px !important',
+  },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
   },
 }));
 
@@ -57,28 +59,40 @@ export default function Images({ picsArr }) {
       >
         {picsArr.map((pic) => {
           return (
-            <Card key={pic} className={classes.root}>
-              <CardHeader
-                avatar={
-                  <Avatar
-                    className={classes.avatarSize}
-                    sx={{ bgcolor: 'primary' }}
-                    aria-label="recipe"
-                  >
-                    R
-                  </Avatar>
-                }
-                // title="Shrimp and Chorizo Paella"
-                subheader="Username"
-              />
-              <CardMedia className={classes.media} image={pic} />
+            <Card key={pic._id} className={classes.root}>
+              <Paper>
+                <Box
+                  display="flex"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  ml={2}
+                >
+                  <Box mr={1} mt={1} mb={1}>
+                    <Avatar
+                      alt={pic.author.username}
+                      src={pic.author.avatarUrl}
+                      className={classes.small}
+                    />
+                  </Box>
+                  <Box mt={1} mb={1}>
+                    <Typography color="secondary">
+                      {pic.author.username}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Paper>
+              <CardMedia className={classes.media} image={pic.url} />
               <CardActions disableSpacing className={classes.action}>
                 <IconButton aria-label="add to favorites">
                   <FavoriteIcon />
-                  <Typography>0</Typography>
+                  <Typography>{pic.likes}</Typography>
                 </IconButton>
-                <IconButton aria-label="add to favorites">
+                <IconButton aria-label="add to save">
                   <BookmarkBorderIcon />
+                  <Typography>{pic.saved}</Typography>
+                </IconButton>
+                <IconButton aria-label="comments">
+                  <ChatBubbleOutlineIcon />
                   <Typography>0</Typography>
                 </IconButton>
               </CardActions>

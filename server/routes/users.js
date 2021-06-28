@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/UsersModel');
+const NatureSpot = require('../models/NatureSpotsModel');
 const catchAsync = require('../utils/catchAsync');
 const users = require('../controllers/users');
 const { body, validationResult } = require('express-validator');
@@ -10,16 +11,6 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const LocalStorage = require('node-localstorage').LocalStorage,
   localStorage = new LocalStorage('./scratch');
-
-// router.get('/all', (req, res) => {
-//   User.find({}, function (err, users) {
-//     if (err) {
-//       res.send(err);
-//     } else {
-//       res.send(users);
-//     }
-//   });
-// });
 
 // SIGNUP //
 // http://localhost:5000/users/
@@ -111,38 +102,29 @@ router.post('/logout', async (req, res) => {
   await User.findOneAndUpdate({ _id: id }, { $set: { login: false } });
 });
 
-router.get(
-  '/profile',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const userInfo = {
-      _id: req.user._id,
-      avatarUrl: req.user.avatarUrl,
-      username: req.user.username,
-    };
-    console.log(userInfo);
-    res.send(userInfo);
-  }
-);
-
 // Add Favroite Image to a spot
 router.post('/favorite', async (req, res) => {
-  const { url, user, author, natureSpot } = req.body;
+  const { user, author, natureSpot, picId } = req.body;
   try {
     const favPic = await User.updateOne(
       { _id: user },
       {
         $push: {
           favoritePics: {
-            url: url,
             natureSpot: natureSpot,
-            author: author,
+            picId: picId,
           },
         },
       },
       { new: true, upsert: true }
     ).exec();
-    res.status(200).json(favPic);
+
+    const increaseLikes = await NatureSpot.updateOne(
+      { _id: natureSpot, 'images._id': picId },
+      { $set: { $inc: { 'images.$.likes': 1 } } }
+    ).exec();
+
+    res.status(200).json({ favPic: favPic, increaseLikes: increaseLikes });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -171,5 +153,33 @@ router.post('/saved', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// ****************GET ROUTE*******************//
+
+// profile
+router.get(
+  '/profile',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const userInfo = {
+      _id: req.user._id,
+      avatarUrl: req.user.avatarUrl,
+      username: req.user.username,
+    };
+    console.log(userInfo);
+    res.send(userInfo);
+  }
+);
+
+// mypics
+// router.get('/mypics', async (req, res) => {
+//   const { id } = req.body;
+//   try {
+//     const myPics = await User.findOne({ _id: id });
+//     res.status(200).json(myPics);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;

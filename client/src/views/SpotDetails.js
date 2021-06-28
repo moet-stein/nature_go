@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GoBack from '../components/GoBack';
 import Images from '../components/Images';
+import UploadButton from '../components/UploadButton';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import AppBarComponent from '../components/AppBarComponent';
 import Typography from '@material-ui/core/Typography';
@@ -57,7 +58,7 @@ export default function SpotDetails() {
     if (longDesc) {
       setHideDesc(true);
     }
-    spot.images.map((pic) => setPicsArr((old) => [...old, pic.url]));
+    // spot.images.map((pic) => setPicsArr((old) => [...old, pic.url]));
   }, []);
 
   return (
@@ -66,9 +67,11 @@ export default function SpotDetails() {
       <GoBack />
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant="h3">{spot.title}</Typography>
+          <Typography color="secondary" variant="h3">
+            {spot.title}
+          </Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Box className={classes.center} mt={2}>
             <ReactMapGL
               {...viewport}
@@ -95,7 +98,8 @@ export default function SpotDetails() {
             </ReactMapGL>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6}>
+
+        <Grid item xs={12}>
           <Box className={classes.center} mt={2}>
             <Box className={classes.boxWidth}>
               {hideDesc ? (
@@ -128,9 +132,12 @@ export default function SpotDetails() {
             </Box>
           </Box>
         </Grid>
+        <Grid item xs={12}>
+          <UploadButton />
+        </Grid>
       </Grid>
 
-      <Images picsArr={picsArr} />
+      <Images picsArr={spot.images} />
     </div>
   );
 }

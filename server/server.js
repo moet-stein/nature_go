@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const natureSpotRoute = require('./routes/natureSpots');
 const userRoute = require('./routes/users');
+const imageRoute = require('./routes/images');
 const passport = require('passport');
 const { jwtStrategy } = require('./passport');
 
@@ -30,6 +31,7 @@ passport.use('jwt', jwtStrategy);
 
 app.use('/api/users', userRoute);
 app.use('/api/naturespots', natureSpotRoute);
+app.use('/api/images', imageRoute);
 
 app.listen(port, () => {
   console.log('Server is running on ' + port + 'port');
