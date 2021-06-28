@@ -1,5 +1,14 @@
 const mongoose = require('mongoose');
 
+const savedPicSchema = new mongoose.Schema({
+  savedImage: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Image',
+  },
+  matchedImage: String,
+  matching: Number,
+});
+
 const UserSchema = new mongoose.Schema(
   {
     username: {
@@ -17,7 +26,7 @@ const UserSchema = new mongoose.Schema(
     avatarUrl: { type: String, required: [true, 'Avatar cannot be blank'] },
     myPics: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     favoritePics: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
-    savedPics: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
+    savedPics: [savedPicSchema],
     login: Boolean,
   },
   { timestamps: true }

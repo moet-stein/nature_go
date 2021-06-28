@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-const naturePicSchema = new mongoose.Schema(
-  {
-    url: String,
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    likes: Number,
-    saved: Number,
-  },
-  { timestamps: true }
-);
+// const naturePicSchema = new mongoose.Schema(
+//   {
+//     url: String,
+//     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+//     likes: Number,
+//     saved: Number,
+//   },
+//   { timestamps: true }
+// );
 
 const NatureSpotSchema = new mongoose.Schema(
   {
@@ -36,7 +36,7 @@ const NatureSpotSchema = new mongoose.Schema(
       type: Number,
       require: true,
     },
-    images: [naturePicSchema],
+    images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
   },
   { timestamps: true }
 );

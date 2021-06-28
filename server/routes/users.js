@@ -102,34 +102,6 @@ router.post('/logout', async (req, res) => {
   await User.findOneAndUpdate({ _id: id }, { $set: { login: false } });
 });
 
-// Add Favroite Image to a spot
-router.post('/favorite', async (req, res) => {
-  const { user, author, natureSpot, picId } = req.body;
-  try {
-    const favPic = await User.updateOne(
-      { _id: user },
-      {
-        $push: {
-          favoritePics: {
-            natureSpot: natureSpot,
-            picId: picId,
-          },
-        },
-      },
-      { new: true, upsert: true }
-    ).exec();
-
-    const increaseLikes = await NatureSpot.updateOne(
-      { _id: natureSpot, 'images._id': picId },
-      { $set: { $inc: { 'images.$.likes': 1 } } }
-    ).exec();
-
-    res.status(200).json({ favPic: favPic, increaseLikes: increaseLikes });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 // Add Saved Image to a spot
 router.post('/saved', async (req, res) => {
   const { url, user, author, natureSpot } = req.body;
@@ -171,15 +143,10 @@ router.get(
   }
 );
 
-// mypics
-// router.get('/mypics', async (req, res) => {
-//   const { id } = req.body;
-//   try {
-//     const myPics = await User.findOne({ _id: id });
-//     res.status(200).json(myPics);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+// mypics & favorites (get route) for mypage
 
+// saved (get route) for saved page
+
+// matching photo (post route) for saved page
+// {savedpic imageObjectI, matchingpic: url, matching: Boolean}
 module.exports = router;

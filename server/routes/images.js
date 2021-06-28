@@ -15,21 +15,65 @@ router.post('/uploadimage', async (req, res) => {
       likes: 0,
       saved: 0,
     });
-    const user = await newImage.save();
+    const pic = await newImage.save();
 
     const myPic = await User.updateOne(
       { _id: authorId },
       {
         $push: {
-          myPics: user._id,
+          myPics: pic._id,
         },
       },
       { new: true, upsert: true }
     ).exec();
-    res.status(200).json({ newImage: newImage, myPic: myPic });
+
+    const naturePic = await NatureSpot.updateOne(
+      { _id: natureId },
+      {
+        $push: {
+          images: pic._id,
+        },
+      },
+      { new: true, upsert: true }
+    ).exec();
+
+    res.status(200).json({ newImage: pic, myPic: myPic, naturePic: naturePic });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+// Add Favroite Image to a spot
+router.post('/addfavorite', async (req, res) => {
+  const { imageId, userId } = req.body;
+
+  try {
+    const increaseLikes = await Image.updateOne(
+      { _id: imageId },
+      { $inc: { likes: 1 } },
+      { new: true, upsert: true }
+    ).exec();
+
+    const favPic = await User.updateOne(
+      { _id: userId },
+      {
+        $push: {
+          favoritePics: imageId,
+        },
+      },
+      { new: true, upsert: true }
+    ).exec();
+
+    res.status(200).json({ favPic: favPic, increaseLikes: increaseLikes });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// dislike the image (post)
+
+// save image (post)
+
+// Unsave the image (post)
 
 module.exports = router;
