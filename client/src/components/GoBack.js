@@ -5,8 +5,8 @@ import { useHistory } from 'react-router';
 const useStyles = makeStyles((theme) => ({
   marginFlex: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    marginLeft: theme.spacing(4),
+    // marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(2),
     display: 'flex',
     justifyContent: 'flex-start',
   },
