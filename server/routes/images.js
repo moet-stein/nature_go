@@ -99,7 +99,64 @@ router.post('/removefavorite', async (req, res) => {
 });
 
 // save image (post)
+router.post('/addsaved', async (req, res) => {
+  const { imageId, userId } = req.body;
+
+  try {
+    const increaseSaved = await Image.updateOne(
+      { _id: imageId },
+      { $inc: { saved: 1 } },
+      { new: true, upsert: true }
+    ).exec();
+
+    const savedPicObj = {
+      savedImage: imageId,
+      matchedImage: '',
+      matching: 0,
+    };
+
+    const savedPic = await User.updateOne(
+      { _id: userId },
+      {
+        $push: {
+          savedPics: savedPicObj,
+        },
+      },
+      { new: true, upsert: true }
+    ).exec();
+
+    res.status(200).json({ savedPic: savedPic, increaseSaved: increaseSaved });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // Unsave the image (post)
+router.post('/removesaved', async (req, res) => {
+  const { imageId, userId } = req.body;
+
+  try {
+    const decreaseSaved = await Image.updateOne(
+      { _id: imageId },
+      { $inc: { saved: -1 } },
+      { new: true, upsert: true }
+    ).exec();
+
+    const removedSavedPic = await User.updateOne(
+      { _id: userId },
+      {
+        $pull: {
+          savedPics: { savedImage: imageId },
+        },
+      }
+    ).exec();
+
+    res
+      .status(200)
+      .json({ removedSavedPic: removedSavedPic, decreaseSaved: decreaseSaved });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 module.exports = router;
