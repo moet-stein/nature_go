@@ -159,4 +159,22 @@ router.post('/removesaved', async (req, res) => {
   }
 });
 
+// ****************************GET***************************//
+// get images with nature spot id
+router.get('/natimages', async (req, res) => {
+  const { naturespotId } = req.body;
+  try {
+    const images = await Image.find({
+      naturespot: naturespotId,
+    }).populate({
+      path: 'author',
+      select: ['username', 'avatarUrl'],
+    });
+
+    res.status(200).json(images);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

@@ -17,6 +17,8 @@ import Login from './views/Authentication/Login';
 import { AuthProvider } from './context/AuthContext';
 import { NatureSpotsProvider } from './context/NatureSpotsContext';
 import { MarkerProvider } from './context/MarkerContext';
+import { FavSavProvider } from './context/FavSavContext';
+import { PicsArrProvider } from './context/PicsArrContext';
 
 // context
 
@@ -47,29 +49,37 @@ function App() {
           <AuthProvider>
             <NatureSpotsProvider>
               <MarkerProvider>
-                <Switch>
-                  <Route exact path="/" children={<Home />} />
-                  <Route exact path="/naturespots" children={<NatureSpots />} />
-                  <Route
-                    exact
-                    path="/details/:spotId"
-                    children={<SpotDetails />}
-                  />
-                  <PrivateRoute
-                    exact
-                    path="/mypage/:userId"
-                    children={<MyPage />}
-                  />
-                  <PrivateRoute
-                    exact
-                    path="/savedtomatch/:userId"
-                    children={<SavedToMatch />}
-                  />
+                <PicsArrProvider>
+                  <FavSavProvider>
+                    <Switch>
+                      <Route exact path="/" children={<Home />} />
+                      <Route
+                        exact
+                        path="/naturespots"
+                        children={<NatureSpots />}
+                      />
+                      <Route
+                        exact
+                        path="/details/:spotId"
+                        children={<SpotDetails />}
+                      />
+                      <PrivateRoute
+                        exact
+                        path="/mypage/:userId"
+                        children={<MyPage />}
+                      />
+                      <PrivateRoute
+                        exact
+                        path="/savedtomatch/:userId"
+                        children={<SavedToMatch />}
+                      />
 
-                  {/* Authentication */}
-                  <Route exact path="/signup" children={<Signup />} />
-                  <Route exact path="/login" children={<Login />} />
-                </Switch>
+                      {/* Authentication */}
+                      <Route exact path="/signup" children={<Signup />} />
+                      <Route exact path="/login" children={<Login />} />
+                    </Switch>
+                  </FavSavProvider>
+                </PicsArrProvider>
               </MarkerProvider>
             </NatureSpotsProvider>
           </AuthProvider>

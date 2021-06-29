@@ -137,6 +137,9 @@ router.get(
       _id: req.user._id,
       avatarUrl: req.user.avatarUrl,
       username: req.user.username,
+      myPics: req.user.myPics,
+      favoritePics: req.user.favoritePics,
+      savedPics: req.user.savedPics,
     };
     console.log(userInfo);
     res.send(userInfo);
