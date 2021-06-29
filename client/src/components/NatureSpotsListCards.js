@@ -35,7 +35,7 @@ export default function NatureSpotsListCards({ natureSpots }) {
 
   const thumbnail = (spot) => {
     return spot.images.length > 0
-      ? spot.images[1].url
+      ? spot.images[0].url
       : 'https://images.unsplash.com/photo-1575998256921-f3ef8ebdabef?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
   };
 

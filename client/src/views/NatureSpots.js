@@ -83,30 +83,6 @@ export default function NatureSpots() {
     setViewport(viewport);
   };
 
-  // const [viewport, setViewport] = useState({
-  //   width: '100vw',
-  //   height: '70vh',
-  //   latitude: 52.52,
-  //   longitude: 13.405,
-  //   zoom: 10,
-  // });
-
-  // useEffect(() => {
-  //   console.log(userInfo);
-  //   // const decoded = jwt_decode(token);
-  //   const getNatureSpots = async () => {
-  //     try {
-  //       const res = await axios.get('/naturespots');
-  //       setNatureSpots(res.data);
-  //       console.log(res.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-
-  //   getNatureSpots();
-  // }, []);
-
   const handleMarkerClick = (id, lat, long) => {
     setCurrentPlaceId(id);
     setViewport({ ...viewport, latitude: lat, longitude: long });
