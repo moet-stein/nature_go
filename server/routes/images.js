@@ -71,6 +71,32 @@ router.post('/addfavorite', async (req, res) => {
 });
 
 // dislike the image (post)
+router.post('/removefavorite', async (req, res) => {
+  const { imageId, userId } = req.body;
+
+  try {
+    const decreaseLikes = await Image.updateOne(
+      { _id: imageId },
+      { $inc: { likes: -1 } },
+      { new: true, upsert: true }
+    ).exec();
+
+    const removedFavPic = await User.updateOne(
+      { _id: userId },
+      {
+        $pull: {
+          favoritePics: imageId,
+        },
+      }
+    ).exec();
+
+    res
+      .status(200)
+      .json({ removedFavPic: removedFavPic, decreaseLikes: decreaseLikes });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // save image (post)
 
