@@ -25,8 +25,13 @@ router.get('/', async (req, res) => {
       })
       .populate({
         path: 'images',
+        populate: {
+          path: 'author naturespot',
+        },
+
         // select: ['username', 'avatarUrl', 'email'],
       });
+
     res.status(200).json(natureSpots);
   } catch (err) {
     res.status(500).json(err);

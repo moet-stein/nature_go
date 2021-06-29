@@ -8,7 +8,7 @@ const ImageSchema = new mongoose.Schema(
     },
     naturespot: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Naturespot',
+      ref: 'NatureSpot',
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,

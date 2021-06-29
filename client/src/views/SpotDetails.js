@@ -58,6 +58,7 @@ export default function SpotDetails() {
     if (longDesc) {
       setHideDesc(true);
     }
+    console.log(spot.images);
     // spot.images.map((pic) => setPicsArr((old) => [...old, pic.url]));
   }, []);
 

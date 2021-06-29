@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Masonry from 'react-masonry-css';
 import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
@@ -50,6 +50,9 @@ export default function Images({ picsArr }) {
     1100: 4,
     700: 2,
   };
+  useEffect(() => {
+    console.log(picsArr);
+  }, []);
   return (
     <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
       <Masonry
