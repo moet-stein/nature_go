@@ -161,11 +161,11 @@ router.post('/removesaved', async (req, res) => {
 
 // ****************************GET***************************//
 // get images with nature spot id
-router.get('/natimages', async (req, res) => {
-  const { naturespotId } = req.body;
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
   try {
     const images = await Image.find({
-      naturespot: naturespotId,
+      naturespot: id,
     }).populate({
       path: 'author',
       select: ['username', 'avatarUrl'],

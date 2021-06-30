@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
 import GoBack from '../components/GoBack';
 import Images from '../components/Images';
 import UploadButton from '../components/UploadButton';
@@ -13,6 +14,9 @@ import Room from '@material-ui/icons/Room';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import { AuthContext } from '../context/AuthContext';
+import { FavSavContext } from '../context/FavSavContext';
+import { PicsArrContext } from '../context/PicsArrContext';
 
 const mapBoxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -36,9 +40,31 @@ const useStyles = makeStyles(() => ({
 export default function SpotDetails() {
   const classes = useStyles();
   const location = useLocation();
+  const { userInfo } = useContext(AuthContext);
   const { spot } = location.state;
+  const {
+    favIdArr,
+    setFavIdArr,
+    savIdArr,
+    setSavIdArr,
+    matchedFavIdArr,
+    setMatchedFavIdArr,
+    matchedSaveIdArr,
+    setMatchedSaveIdArr,
+  } = useContext(FavSavContext);
+  const {
+    naturespot,
+    setNaturespot,
+    picturesArr,
+    setPicturesArr,
+    picsIdArr,
+    setPicsIdArr,
+    fetch,
+    setFetch,
+  } = useContext(PicsArrContext);
   const [hideDesc, setHideDesc] = useState(false);
-  const [picsArr, setPicsArr] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [viewport, setViewport] = useState({
     width: 350,
     height: 200,
@@ -54,13 +80,24 @@ export default function SpotDetails() {
     hideDesc ? setHideDesc(false) : setHideDesc(true);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
+    await setPicturesArr([]);
     if (longDesc) {
       setHideDesc(true);
     }
-    console.log(spot.images);
-    // spot.images.map((pic) => setPicsArr((old) => [...old, pic.url]));
-  }, []);
+    setNaturespot(spot._id);
+    const res = await axios.get(`/images/${spot._id}`);
+    await setPicturesArr(res.data);
+    await setPicsIdArr(res.data.map((p) => p._id));
+    await setMatchedFavIdArr(
+      res.data.map((p) => p._id).filter((id) => favIdArr.includes(id))
+    );
+    await setMatchedSaveIdArr(
+      res.data.map((p) => p._id).filter((id) => savIdArr.includes(id))
+    );
+    console.log(favIdArr);
+    setLoading(false);
+  }, [fetch]);
 
   return (
     <div className={classes.root}>
@@ -137,8 +174,7 @@ export default function SpotDetails() {
           <UploadButton />
         </Grid>
       </Grid>
-
-      <Images picsArr={spot.images} />
+      {!loading && <Images picsArr={spot.images} />}
     </div>
   );
 }

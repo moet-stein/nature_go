@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
+import Loading from '../img/loading.svg';
 import Masonry from 'react-masonry-css';
 import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
@@ -19,6 +20,8 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import { AuthContext } from '../context/AuthContext';
 import { FavSavContext } from '../context/FavSavContext';
+import { PicsArrContext } from '../context/PicsArrContext';
+import { useParams } from 'react-router-dom';
 
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 
@@ -50,16 +53,29 @@ const useStyle = makeStyles((theme) => ({
 
 export default function Images({ picsArr }) {
   const classes = useStyle();
+  let { id } = useParams();
   const { userInfo } = useContext(AuthContext);
   const {
+    favIdArr,
+    setFavIdArr,
+    savIdArr,
+    setSavIdArr,
     matchedFavIdArr,
     setMatchedFavIdArr,
     matchedSaveIdArr,
     setMatchedSaveIdArr,
   } = useContext(FavSavContext);
-  const [picsIdArr, setPicsIdArr] = useState([]);
-  const [favIdArr, setFavIdArr] = useState([]);
-  const [savIdArr, setSavIdArr] = useState([]);
+  const {
+    naturespot,
+    setNaturespot,
+    picturesArr,
+    setPicturesArr,
+    fetch,
+    setFetch,
+    picsIdArr,
+    setPicsIdArr,
+  } = useContext(PicsArrContext);
+  // const [loading, setLoading] = useState(true);
 
   const breakpoints = {
     default: 3,
@@ -67,27 +83,35 @@ export default function Images({ picsArr }) {
     700: 2,
   };
 
-  const handleFav = async (picId) => {
-    if (matchedFavIdArr.includes(picId)) {
-      console.log('remove fav');
+  const handleFav = (picId) => {
+    const addremove = async (route) => {
       const favPic = {
         imageId: picId,
         userId: userInfo._id,
       };
-      const res = await axios.post('/images/removefavorite', favPic);
+      const favRes = await axios.post(`/images/${route}`, favPic);
+      // const res = await axios.get(`/images/${naturespot}`);
+      // setPicturesArr(res.data);
+      fetch ? setFetch(false) : setFetch(true);
+    };
+
+    if (matchedFavIdArr.includes(picId)) {
+      addremove('removefavorite');
+      console.log('remove fav');
     } else {
+      addremove('addfavorite');
       console.log('add fav');
     }
   };
 
+  const handleSaved = async () => {
+    console.log('saved clicked');
+  };
+
   useEffect(async () => {
-    await setPicsIdArr(picsArr.map((p) => p._id));
-    await setFavIdArr(userInfo.favoritePics);
-    await setSavIdArr(userInfo.savedPics);
-    await setMatchedFavIdArr(picsIdArr.filter((id) => favIdArr.includes(id)));
-    await setMatchedSaveIdArr(picsIdArr.filter((id) => savIdArr.includes(id)));
-    console.log(picsArr);
-  }, []);
+    console.log(matchedFavIdArr);
+  }, [fetch]);
+
   return (
     <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
       <Masonry
@@ -95,7 +119,7 @@ export default function Images({ picsArr }) {
         className={moduleClasses.myMasonryGrid}
         columnClassName={moduleClasses.myMasonryGridColumn}
       >
-        {picsArr.map((pic) => {
+        {picturesArr.map((pic) => {
           return (
             <Card key={pic._id} className={classes.root}>
               <Paper>
@@ -133,7 +157,7 @@ export default function Images({ picsArr }) {
 
                   <Typography>{pic.likes}</Typography>
                 </IconButton>
-                <IconButton aria-label="add to save">
+                <IconButton aria-label="add to save" onClick={handleSaved}>
                   <BookmarkBorderIcon />
                   <Typography>{pic.saved}</Typography>
                 </IconButton>

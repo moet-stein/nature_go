@@ -20,6 +20,8 @@ import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import grey from '@material-ui/core/colors/grey';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { FavSavContext } from '../context/FavSavContext';
+import { PicsArrContext } from '../context/PicsArrContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +54,12 @@ export default function AppBarComponent() {
   const { userInfo, setUserInfo, isUserThere, setIsUserThere } = useContext(
     AuthContext
   );
+  const {
+    setFavIdArr,
+
+    setSavIdArr,
+  } = useContext(FavSavContext);
+  const { fetch } = useContext(PicsArrContext);
   const history = useHistory();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -99,13 +107,15 @@ export default function AppBarComponent() {
         };
         const res = await axios.get('/users/profile', config);
         setUserInfo(res.data);
+        await setFavIdArr(res.data.favoritePics);
+        await setSavIdArr(res.data.savedPics);
         setIsUserThere(true);
         console.log("I'm res.data from AppbarComponent", res.data);
       }
     };
 
     getUserInfo();
-  }, []);
+  }, [fetch]);
 
   const list = (anchor) => (
     <div

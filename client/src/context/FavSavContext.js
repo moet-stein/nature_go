@@ -3,6 +3,8 @@ import React, { createContext, useState, useEffect } from 'react';
 
 // 2. initialize the context
 const initFavSavContext = {
+  favIdArr: [],
+  savIdArr: [],
   matchedFavIdArr: [],
   matchedSaveIdArr: [],
 };
@@ -11,6 +13,8 @@ export const FavSavContext = createContext(initFavSavContext);
 
 // 4. make provider => value / children
 export const FavSavProvider = ({ children }) => {
+  const [favIdArr, setFavIdArr] = useState(initFavSavContext.favIdArr);
+  const [savIdArr, setSavIdArr] = useState(initFavSavContext.savIdArr);
   const [matchedFavIdArr, setMatchedFavIdArr] = useState(
     initFavSavContext.matchedFavIdArr
   );
@@ -21,6 +25,10 @@ export const FavSavProvider = ({ children }) => {
   return (
     <FavSavContext.Provider
       value={{
+        favIdArr,
+        setFavIdArr,
+        savIdArr,
+        setSavIdArr,
         matchedFavIdArr,
         setMatchedFavIdArr,
         matchedSaveIdArr,
