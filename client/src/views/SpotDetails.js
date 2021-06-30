@@ -89,15 +89,23 @@ export default function SpotDetails() {
     const res = await axios.get(`/images/${spot._id}`);
     await setPicturesArr(res.data);
     await setPicsIdArr(res.data.map((p) => p._id));
-    await setMatchedFavIdArr(
-      res.data.map((p) => p._id).filter((id) => favIdArr.includes(id))
-    );
-    await setMatchedSaveIdArr(
-      res.data.map((p) => p._id).filter((id) => savIdArr.includes(id))
-    );
-    console.log(favIdArr);
+
+    console.log(userInfo);
+    await setFavIdArr(userInfo.favoritePics);
+    await setSavIdArr(userInfo.savedPics);
+    if (favIdArr) {
+      await setMatchedFavIdArr(
+        res.data.map((p) => p._id).filter((id) => favIdArr.includes(id))
+      );
+    }
+    if (savIdArr) {
+      await setMatchedSaveIdArr(
+        res.data.map((p) => p._id).filter((id) => savIdArr.includes(id))
+      );
+    }
+    console.log(matchedFavIdArr);
     setLoading(false);
-  }, [fetch]);
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -174,7 +182,7 @@ export default function SpotDetails() {
           <UploadButton />
         </Grid>
       </Grid>
-      {!loading && <Images picsArr={spot.images} />}
+      {!loading && <Images picsArr={picturesArr} />}
     </div>
   );
 }

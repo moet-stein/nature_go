@@ -97,10 +97,16 @@ export default function Images({ picsArr }) {
 
     if (matchedFavIdArr.includes(picId)) {
       addremove('removefavorite');
-      console.log('remove fav');
+      setMatchedFavIdArr(matchedFavIdArr.filter((id) => id !== picId));
+      let picObjIndex = picturesArr.findIndex((obj) => obj._id == picId);
+      picturesArr[picObjIndex].likes -= 1;
+      console.log('remove fav', matchedFavIdArr);
     } else {
       addremove('addfavorite');
-      console.log('add fav');
+      setMatchedFavIdArr((oldArray) => [...oldArray, picId]);
+      let picObjIndex = picturesArr.findIndex((obj) => obj._id == picId);
+      picturesArr[picObjIndex].likes += 1;
+      console.log('add fav', matchedFavIdArr);
     }
   };
 
@@ -109,8 +115,8 @@ export default function Images({ picsArr }) {
   };
 
   useEffect(async () => {
-    console.log(matchedFavIdArr);
-  }, [fetch]);
+    console.log('picturesArr', picturesArr);
+  }, []);
 
   return (
     <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
@@ -161,10 +167,10 @@ export default function Images({ picsArr }) {
                   <BookmarkBorderIcon />
                   <Typography>{pic.saved}</Typography>
                 </IconButton>
-                <IconButton aria-label="comments">
+                {/* <IconButton aria-label="comments">
                   <ChatBubbleOutlineIcon />
                   <Typography>0</Typography>
-                </IconButton>
+                </IconButton> */}
               </CardActions>
             </Card>
           );

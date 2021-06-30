@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { makeStyles } from '@material-ui/core/styles';
-import { FavSavContext } from '../context/FavSavContext';
-import { PicsArrContext } from '../context/PicsArrContext';
 import { useHistory } from 'react-router';
 const useStyles = makeStyles((theme) => ({
   marginFlex: {
@@ -18,17 +16,8 @@ const GoBack = () => {
   const classes = useStyles();
 
   const history = useHistory();
-  const { setMatchedFavIdArr } = useContext(FavSavContext);
-  const {
-    setPicturesArr,
-
-    setPicsIdArr,
-  } = useContext(PicsArrContext);
 
   const goBack = () => {
-    setMatchedFavIdArr([]);
-    setPicturesArr([]);
-    setPicsIdArr([]);
     history.goBack();
   };
 
