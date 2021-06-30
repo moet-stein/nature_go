@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
+import CardHeader from './CardHeader';
 // import Loading from '../img/loading.svg';
 import Masonry from 'react-masonry-css';
 import moduleClasses from './styles/Images.module.css';
@@ -184,27 +185,7 @@ export default function Images({ picsArr }) {
         {picturesArr.map((pic) => {
           return (
             <Card key={pic._id} className={classes.root}>
-              <Paper>
-                <Box
-                  display="flex"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  ml={2}
-                >
-                  <Box mr={1} mt={1} mb={1}>
-                    <Avatar
-                      alt={pic.author.username}
-                      src={pic.author.avatarUrl}
-                      className={classes.small}
-                    />
-                  </Box>
-                  <Box mt={1} mb={1}>
-                    <Typography color="secondary">
-                      {pic.author.username}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Paper>
+              <CardHeader pic={pic} />
               <CardMedia className={classes.media} image={pic.url} />
               <CardActions disableSpacing className={classes.action}>
                 {showIcon(pic, 'favorite')}
