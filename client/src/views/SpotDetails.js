@@ -42,7 +42,11 @@ export default function SpotDetails() {
   const location = useLocation();
   const { setUserInfo } = useContext(AuthContext);
   const { spot } = location.state;
-  const { setMatchedFavIdArr, setMatchedSaveIdArr } = useContext(FavSavContext);
+  const {
+    setMatchedFavIdArr,
+    setMatchedSaveIdArr,
+    setMatchedMyPicIdArr,
+  } = useContext(FavSavContext);
   const {
     setNaturespot,
     picturesArr,
@@ -104,6 +108,11 @@ export default function SpotDetails() {
       console.log(savedIds);
       await setMatchedSaveIdArr(
         res.data.map((p) => p._id).filter((id) => savedIds.includes(id))
+      );
+    }
+    if (userData.myPics) {
+      await setMatchedMyPicIdArr(
+        res.data.map((p) => p._id).filter((id) => userData.myPics.includes(id))
       );
     }
 

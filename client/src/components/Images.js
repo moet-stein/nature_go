@@ -61,6 +61,7 @@ export default function Images({ picsArr }) {
     setMatchedFavIdArr,
     matchedSaveIdArr,
     setMatchedSaveIdArr,
+    matchedMyPicIdArr,
   } = useContext(FavSavContext);
   const { picturesArr } = useContext(PicsArrContext);
   // const [loading, setLoading] = useState(true);
@@ -69,6 +70,60 @@ export default function Images({ picsArr }) {
     default: 3,
     1100: 4,
     700: 2,
+  };
+
+  const showIcon = (pic, kind) => {
+    const kindObj =
+      kind === 'favorite'
+        ? {
+            icon1: <FavoriteIcon />,
+            icon2: <FavoriteIcon style={{ color: red[500] }} />,
+            icon3: <FavoriteBorderIcon />,
+            showNum: pic.likes,
+            matchedArr: matchedFavIdArr,
+            setMatchedIdArr: setMatchedFavIdArr,
+          }
+        : {
+            icon1: <BookmarkIcon />,
+            icon2: <BookmarkIcon style={{ color: teal[500] }} />,
+            icon3: <BookmarkBorderIcon />,
+            showNum: pic.saved,
+            matchedArr: matchedSaveIdArr,
+            setMatchedIdArr: setMatchedSaveIdArr,
+          };
+
+    if (matchedMyPicIdArr && matchedMyPicIdArr.includes(pic._id)) {
+      return (
+        <IconButton aria-label={`add to ${kind}`} disabled>
+          {kindObj.icon1}
+          <Typography>{kindObj.showNum}</Typography>
+        </IconButton>
+      );
+    } else if (kindObj.matchedArr && kindObj.matchedArr.includes(pic._id)) {
+      return (
+        <IconButton
+          aria-label={`add to ${kind}`}
+          onClick={() =>
+            handleFavSav(pic._id, kindObj.matchedArr, kindObj.setMatchedIdArr)
+          }
+        >
+          {kindObj.icon2}
+          <Typography>{kindObj.showNum}</Typography>
+        </IconButton>
+      );
+    } else {
+      return (
+        <IconButton
+          aria-label={`add to ${kind}`}
+          onClick={() =>
+            handleFavSav(pic._id, kindObj.matchedArr, kindObj.setMatchedIdArr)
+          }
+        >
+          {kindObj.icon3}
+          <Typography>{pic.likes}</Typography>
+        </IconButton>
+      );
+    }
   };
 
   const handleFavSav = (picId, arr, setArr) => {
@@ -144,38 +199,8 @@ export default function Images({ picsArr }) {
               </Paper>
               <CardMedia className={classes.media} image={pic.url} />
               <CardActions disableSpacing className={classes.action}>
-                <IconButton
-                  aria-label="add to favorites"
-                  onClick={() =>
-                    handleFavSav(pic._id, matchedFavIdArr, setMatchedFavIdArr)
-                  }
-                >
-                  {matchedFavIdArr && matchedFavIdArr.includes(pic._id) ? (
-                    <FavoriteIcon style={{ color: red[500] }} />
-                  ) : (
-                    <FavoriteBorderIcon />
-                  )}
-
-                  <Typography>{pic.likes}</Typography>
-                </IconButton>
-                <IconButton
-                  aria-label="add to save"
-                  onClick={() =>
-                    handleFavSav(pic._id, matchedSaveIdArr, setMatchedSaveIdArr)
-                  }
-                >
-                  {matchedSaveIdArr && matchedSaveIdArr.includes(pic._id) ? (
-                    <BookmarkIcon style={{ color: teal[500] }} />
-                  ) : (
-                    <BookmarkBorderIcon />
-                  )}
-
-                  <Typography>{pic.saved}</Typography>
-                </IconButton>
-                {/* <IconButton aria-label="comments">
-                  <ChatBubbleOutlineIcon />
-                  <Typography>0</Typography>
-                </IconButton> */}
+                {showIcon(pic, 'favorite')}
+                {showIcon(pic, 'save')}
               </CardActions>
             </Card>
           );

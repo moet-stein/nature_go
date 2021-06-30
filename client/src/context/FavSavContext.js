@@ -5,8 +5,10 @@ import React, { createContext, useState, useEffect } from 'react';
 const initFavSavContext = {
   favIdArr: [],
   savIdArr: [],
+  myPicIdArr: [],
   matchedFavIdArr: [],
   matchedSaveIdArr: [],
+  matchedMyPicIdArr: [],
 };
 // 3. create context
 export const FavSavContext = createContext(initFavSavContext);
@@ -15,11 +17,15 @@ export const FavSavContext = createContext(initFavSavContext);
 export const FavSavProvider = ({ children }) => {
   const [favIdArr, setFavIdArr] = useState(initFavSavContext.favIdArr);
   const [savIdArr, setSavIdArr] = useState(initFavSavContext.savIdArr);
+  const [myPicIdArr, setMyPicIdArr] = useState(initFavSavContext.myPicIdArr);
   const [matchedFavIdArr, setMatchedFavIdArr] = useState(
     initFavSavContext.matchedFavIdArr
   );
   const [matchedSaveIdArr, setMatchedSaveIdArr] = useState(
     initFavSavContext.matchedSaveIdArr
+  );
+  const [matchedMyPicIdArr, setMatchedMyPicIdArr] = useState(
+    initFavSavContext.matchedMyPicIdArr
   );
 
   return (
@@ -33,6 +39,10 @@ export const FavSavProvider = ({ children }) => {
         setMatchedFavIdArr,
         matchedSaveIdArr,
         setMatchedSaveIdArr,
+        myPicIdArr,
+        setMyPicIdArr,
+        matchedMyPicIdArr,
+        setMatchedMyPicIdArr,
       }}
     >
       {children}
