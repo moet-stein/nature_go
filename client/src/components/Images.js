@@ -14,10 +14,12 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import red from '@material-ui/core/colors/red';
+import teal from '@material-ui/core/colors/teal';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 // import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 import { AuthContext } from '../context/AuthContext';
 import { FavSavContext } from '../context/FavSavContext';
 import { PicsArrContext } from '../context/PicsArrContext';
@@ -54,7 +56,12 @@ const useStyle = makeStyles((theme) => ({
 export default function Images({ picsArr }) {
   const classes = useStyle();
   const { userInfo } = useContext(AuthContext);
-  const { matchedFavIdArr, setMatchedFavIdArr } = useContext(FavSavContext);
+  const {
+    matchedFavIdArr,
+    setMatchedFavIdArr,
+    matchedSaveIdArr,
+    setMatchedSaveIdArr,
+  } = useContext(FavSavContext);
   const { picturesArr } = useContext(PicsArrContext);
   // const [loading, setLoading] = useState(true);
 
@@ -64,33 +71,45 @@ export default function Images({ picsArr }) {
     700: 2,
   };
 
-  const handleFav = (picId) => {
+  const handleFavSav = (picId, arr, setArr) => {
+    const removeRoute =
+      arr === 'matchedFavIdArr' ? 'removefavorite' : 'removesaved';
+    const addRoute = arr === 'matchedFavIdArr' ? 'addfavorite' : 'addsaved';
+
     const addremove = async (route) => {
-      const favPic = {
+      const body = {
         imageId: picId,
         userId: userInfo._id,
       };
-      const favRes = await axios.post(`/images/${route}`, favPic);
+      const postReq = await axios.post(`/images/${route}`, body);
     };
 
-    if (matchedFavIdArr.includes(picId)) {
-      addremove('removefavorite');
-      setMatchedFavIdArr(matchedFavIdArr.filter((id) => id !== picId));
+    if (arr.includes(picId)) {
+      addremove(removeRoute);
+      setArr(arr.filter((id) => id !== picId));
       let picObjIndex = picturesArr.findIndex((obj) => obj._id == picId);
-      picturesArr[picObjIndex].likes -= 1;
-      console.log('remove fav', matchedFavIdArr);
+      if (arr === matchedFavIdArr) {
+        picturesArr[picObjIndex].likes -= 1;
+      } else {
+        picturesArr[picObjIndex].saved -= 1;
+      }
+      console.log('remove fav', arr);
     } else {
-      addremove('addfavorite');
-      setMatchedFavIdArr((oldArray) => [...oldArray, picId]);
+      addremove(addRoute);
+      setArr((oldArray) => [...oldArray, picId]);
       let picObjIndex = picturesArr.findIndex((obj) => obj._id == picId);
-      picturesArr[picObjIndex].likes += 1;
-      console.log('add fav', matchedFavIdArr);
+      if (arr === matchedFavIdArr) {
+        picturesArr[picObjIndex].likes += 1;
+      } else {
+        picturesArr[picObjIndex].saved += 1;
+      }
+      console.log('add fav', arr);
     }
   };
 
-  const handleSaved = async () => {
-    console.log('saved clicked');
-  };
+  useEffect(() => {
+    console.log(matchedFavIdArr, matchedSaveIdArr);
+  }, []);
 
   return (
     <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
@@ -127,9 +146,11 @@ export default function Images({ picsArr }) {
               <CardActions disableSpacing className={classes.action}>
                 <IconButton
                   aria-label="add to favorites"
-                  onClick={() => handleFav(pic._id)}
+                  onClick={() =>
+                    handleFavSav(pic._id, matchedFavIdArr, setMatchedFavIdArr)
+                  }
                 >
-                  {matchedFavIdArr.includes(pic._id) ? (
+                  {matchedFavIdArr && matchedFavIdArr.includes(pic._id) ? (
                     <FavoriteIcon style={{ color: red[500] }} />
                   ) : (
                     <FavoriteBorderIcon />
@@ -137,8 +158,18 @@ export default function Images({ picsArr }) {
 
                   <Typography>{pic.likes}</Typography>
                 </IconButton>
-                <IconButton aria-label="add to save" onClick={handleSaved}>
-                  <BookmarkBorderIcon />
+                <IconButton
+                  aria-label="add to save"
+                  onClick={() =>
+                    handleFavSav(pic._id, matchedSaveIdArr, setMatchedSaveIdArr)
+                  }
+                >
+                  {matchedSaveIdArr && matchedSaveIdArr.includes(pic._id) ? (
+                    <BookmarkIcon style={{ color: teal[500] }} />
+                  ) : (
+                    <BookmarkBorderIcon />
+                  )}
+
                   <Typography>{pic.saved}</Typography>
                 </IconButton>
                 {/* <IconButton aria-label="comments">

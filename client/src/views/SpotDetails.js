@@ -90,6 +90,8 @@ export default function SpotDetails() {
     await setPicturesArr(res.data);
     await setPicsIdArr(res.data.map((p) => p._id));
 
+    console.log(userData.favoritePics, userData.savedPics);
+
     if (userData.favoritePics) {
       await setMatchedFavIdArr(
         res.data
@@ -98,12 +100,13 @@ export default function SpotDetails() {
       );
     }
     if (userData.savedPics) {
+      const savedIds = userData.savedPics.map((obj) => obj.savedImage);
+      console.log(savedIds);
       await setMatchedSaveIdArr(
-        res.data
-          .map((p) => p._id)
-          .filter((id) => userData.savedPics.includes(id))
+        res.data.map((p) => p._id).filter((id) => savedIds.includes(id))
       );
     }
+
     setLoading(false);
   }, []);
 
