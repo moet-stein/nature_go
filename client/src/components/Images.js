@@ -74,7 +74,7 @@ export default function Images({ picsArr }) {
 
   const showIcon = (pic, kind) => {
     const kindObj =
-      kind === 'favorite'
+      kind == 'favorite'
         ? {
             icon1: <FavoriteIcon />,
             icon2: <FavoriteIcon style={{ color: red[500] }} />,
@@ -103,9 +103,7 @@ export default function Images({ picsArr }) {
       return (
         <IconButton
           aria-label={`add to ${kind}`}
-          onClick={() =>
-            handleFavSav(pic._id, kindObj.matchedArr, kindObj.setMatchedIdArr)
-          }
+          onClick={() => handleFavSav(pic._id, kind)}
         >
           {kindObj.icon2}
           <Typography>{kindObj.showNum}</Typography>
@@ -115,21 +113,30 @@ export default function Images({ picsArr }) {
       return (
         <IconButton
           aria-label={`add to ${kind}`}
-          onClick={() =>
-            handleFavSav(pic._id, kindObj.matchedArr, kindObj.setMatchedIdArr)
-          }
+          onClick={() => handleFavSav(pic._id, kind)}
         >
           {kindObj.icon3}
-          <Typography>{pic.likes}</Typography>
+          <Typography>{kindObj.showNum}</Typography>
         </IconButton>
       );
     }
   };
 
-  const handleFavSav = (picId, arr, setArr) => {
-    const removeRoute =
-      arr === 'matchedFavIdArr' ? 'removefavorite' : 'removesaved';
-    const addRoute = arr === 'matchedFavIdArr' ? 'addfavorite' : 'addsaved';
+  const handleFavSav = (picId, kind) => {
+    let removeRoute, addRoute, arr, setArr;
+    if (kind === 'favorite') {
+      console.log('this is favorite');
+      removeRoute = 'removefavorite';
+      addRoute = 'addfavorite';
+      arr = matchedFavIdArr;
+      setArr = setMatchedFavIdArr;
+    } else {
+      console.log('this is save');
+      removeRoute = 'removesaved';
+      addRoute = 'addsaved';
+      arr = matchedSaveIdArr;
+      setArr = setMatchedSaveIdArr;
+    }
 
     const addremove = async (route) => {
       const body = {
@@ -151,6 +158,7 @@ export default function Images({ picsArr }) {
       console.log('remove fav', arr);
     } else {
       addremove(addRoute);
+      console.log(addRoute);
       setArr((oldArray) => [...oldArray, picId]);
       let picObjIndex = picturesArr.findIndex((obj) => obj._id == picId);
       if (arr === matchedFavIdArr) {
