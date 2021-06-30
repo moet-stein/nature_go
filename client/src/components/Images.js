@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
-import Loading from '../img/loading.svg';
+// import Loading from '../img/loading.svg';
 import Masonry from 'react-masonry-css';
 import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+// import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,7 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import red from '@material-ui/core/colors/red';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+// import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import { AuthContext } from '../context/AuthContext';
 import { FavSavContext } from '../context/FavSavContext';
@@ -53,28 +53,9 @@ const useStyle = makeStyles((theme) => ({
 
 export default function Images({ picsArr }) {
   const classes = useStyle();
-  let { id } = useParams();
   const { userInfo } = useContext(AuthContext);
-  const {
-    favIdArr,
-    setFavIdArr,
-    savIdArr,
-    setSavIdArr,
-    matchedFavIdArr,
-    setMatchedFavIdArr,
-    matchedSaveIdArr,
-    setMatchedSaveIdArr,
-  } = useContext(FavSavContext);
-  const {
-    naturespot,
-    setNaturespot,
-    picturesArr,
-    setPicturesArr,
-    fetch,
-    setFetch,
-    picsIdArr,
-    setPicsIdArr,
-  } = useContext(PicsArrContext);
+  const { matchedFavIdArr, setMatchedFavIdArr } = useContext(FavSavContext);
+  const { picturesArr } = useContext(PicsArrContext);
   // const [loading, setLoading] = useState(true);
 
   const breakpoints = {
@@ -90,9 +71,6 @@ export default function Images({ picsArr }) {
         userId: userInfo._id,
       };
       const favRes = await axios.post(`/images/${route}`, favPic);
-      // const res = await axios.get(`/images/${naturespot}`);
-      // setPicturesArr(res.data);
-      fetch ? setFetch(false) : setFetch(true);
     };
 
     if (matchedFavIdArr.includes(picId)) {
@@ -113,10 +91,6 @@ export default function Images({ picsArr }) {
   const handleSaved = async () => {
     console.log('saved clicked');
   };
-
-  useEffect(async () => {
-    console.log('picturesArr', picturesArr);
-  }, []);
 
   return (
     <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>

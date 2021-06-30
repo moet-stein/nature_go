@@ -3,7 +3,7 @@ import axios from 'axios';
 import GoBack from '../components/GoBack';
 import Images from '../components/Images';
 import UploadButton from '../components/UploadButton';
-import ReactMapGL, { Marker, Popup } from 'react-map-gl';
+import ReactMapGL, { Marker } from 'react-map-gl';
 import AppBarComponent from '../components/AppBarComponent';
 import Typography from '@material-ui/core/Typography';
 import { useLocation } from 'react-router-dom';
@@ -40,27 +40,14 @@ const useStyles = makeStyles(() => ({
 export default function SpotDetails() {
   const classes = useStyles();
   const location = useLocation();
-  const { userInfo } = useContext(AuthContext);
+  const { setUserInfo } = useContext(AuthContext);
   const { spot } = location.state;
+  const { setMatchedFavIdArr, setMatchedSaveIdArr } = useContext(FavSavContext);
   const {
-    favIdArr,
-    setFavIdArr,
-    savIdArr,
-    setSavIdArr,
-    matchedFavIdArr,
-    setMatchedFavIdArr,
-    matchedSaveIdArr,
-    setMatchedSaveIdArr,
-  } = useContext(FavSavContext);
-  const {
-    naturespot,
     setNaturespot,
     picturesArr,
     setPicturesArr,
-    picsIdArr,
     setPicsIdArr,
-    fetch,
-    setFetch,
   } = useContext(PicsArrContext);
   const [hideDesc, setHideDesc] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -80,7 +67,20 @@ export default function SpotDetails() {
     hideDesc ? setHideDesc(false) : setHideDesc(true);
   };
 
+  const getUserInfo = async () => {
+    const token = window.localStorage.getItem('token');
+    if (token !== null) {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      const res = await axios.get('/users/profile', config);
+      setUserInfo(res.data);
+      return res.data;
+    }
+  };
+
   useEffect(async () => {
+    const userData = await getUserInfo();
     await setPicturesArr([]);
     if (longDesc) {
       setHideDesc(true);
@@ -90,20 +90,20 @@ export default function SpotDetails() {
     await setPicturesArr(res.data);
     await setPicsIdArr(res.data.map((p) => p._id));
 
-    console.log(userInfo);
-    await setFavIdArr(userInfo.favoritePics);
-    await setSavIdArr(userInfo.savedPics);
-    if (favIdArr) {
+    if (userData.favoritePics) {
       await setMatchedFavIdArr(
-        res.data.map((p) => p._id).filter((id) => favIdArr.includes(id))
+        res.data
+          .map((p) => p._id)
+          .filter((id) => userData.favoritePics.includes(id))
       );
     }
-    if (savIdArr) {
+    if (userData.savedPics) {
       await setMatchedSaveIdArr(
-        res.data.map((p) => p._id).filter((id) => savIdArr.includes(id))
+        res.data
+          .map((p) => p._id)
+          .filter((id) => userData.savedPics.includes(id))
       );
     }
-    console.log(matchedFavIdArr);
     setLoading(false);
   }, []);
 
