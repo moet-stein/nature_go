@@ -12,7 +12,7 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-export default function CardHeader({ pic }) {
+export default function UserHeader({ pic }) {
   const classes = useStyle();
   return (
     <Paper>

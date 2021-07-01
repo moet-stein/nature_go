@@ -194,7 +194,7 @@ export default function SpotDetails() {
           <UploadButton />
         </Grid>
       </Grid>
-      {!loading && <Images picsArr={picturesArr} />}
+      {!loading && <Images />}
     </div>
   );
 }

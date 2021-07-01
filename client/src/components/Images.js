@@ -1,32 +1,13 @@
-import React, { useEffect, useContext, useState } from 'react';
-import axios from 'axios';
-import CardHeader from './CardHeader';
-// import Loading from '../img/loading.svg';
+import React, { useContext } from 'react';
+import UserHeader from './UserHeader';
+import FavSav from './FavSav';
 import Masonry from 'react-masonry-css';
 import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-// import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import red from '@material-ui/core/colors/red';
-import teal from '@material-ui/core/colors/teal';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-// import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
-import { AuthContext } from '../context/AuthContext';
-import { FavSavContext } from '../context/FavSavContext';
 import { PicsArrContext } from '../context/PicsArrContext';
-import { useParams } from 'react-router-dom';
-
-// import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -36,144 +17,17 @@ const useStyle = makeStyles((theme) => ({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
-  picWidth: {
-    // margin: '5px',
-  },
-  card: {
-    width: '160px',
-    transition: 'all .25s linear',
-    boxShadow: '0px 1px 2px 0px rgba(0,0,0,0.4)',
-    '&:hover , &:active': { boxShadow: ' -1px 10px 29px 0px rgba(0,0,0,0.8)' },
-  },
-  action: {
-    padding: '0px !important',
-  },
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-  },
 }));
 
-export default function Images({ picsArr }) {
+export default function Images() {
   const classes = useStyle();
-  const { userInfo } = useContext(AuthContext);
-  const {
-    matchedFavIdArr,
-    setMatchedFavIdArr,
-    matchedSaveIdArr,
-    setMatchedSaveIdArr,
-    matchedMyPicIdArr,
-  } = useContext(FavSavContext);
   const { picturesArr } = useContext(PicsArrContext);
-  // const [loading, setLoading] = useState(true);
 
   const breakpoints = {
     default: 3,
     1100: 4,
     700: 2,
   };
-
-  const showIcon = (pic, kind) => {
-    const kindObj =
-      kind == 'favorite'
-        ? {
-            icon1: <FavoriteIcon />,
-            icon2: <FavoriteIcon style={{ color: red[500] }} />,
-            icon3: <FavoriteBorderIcon />,
-            showNum: pic.likes,
-            matchedArr: matchedFavIdArr,
-            setMatchedIdArr: setMatchedFavIdArr,
-          }
-        : {
-            icon1: <BookmarkIcon />,
-            icon2: <BookmarkIcon style={{ color: teal[500] }} />,
-            icon3: <BookmarkBorderIcon />,
-            showNum: pic.saved,
-            matchedArr: matchedSaveIdArr,
-            setMatchedIdArr: setMatchedSaveIdArr,
-          };
-
-    if (matchedMyPicIdArr && matchedMyPicIdArr.includes(pic._id)) {
-      return (
-        <IconButton aria-label={`add to ${kind}`} disabled>
-          {kindObj.icon1}
-          <Typography>{kindObj.showNum}</Typography>
-        </IconButton>
-      );
-    } else if (kindObj.matchedArr && kindObj.matchedArr.includes(pic._id)) {
-      return (
-        <IconButton
-          aria-label={`add to ${kind}`}
-          onClick={() => handleFavSav(pic._id, kind)}
-        >
-          {kindObj.icon2}
-          <Typography>{kindObj.showNum}</Typography>
-        </IconButton>
-      );
-    } else {
-      return (
-        <IconButton
-          aria-label={`add to ${kind}`}
-          onClick={() => handleFavSav(pic._id, kind)}
-        >
-          {kindObj.icon3}
-          <Typography>{kindObj.showNum}</Typography>
-        </IconButton>
-      );
-    }
-  };
-
-  const handleFavSav = (picId, kind) => {
-    let removeRoute, addRoute, arr, setArr;
-    if (kind === 'favorite') {
-      console.log('this is favorite');
-      removeRoute = 'removefavorite';
-      addRoute = 'addfavorite';
-      arr = matchedFavIdArr;
-      setArr = setMatchedFavIdArr;
-    } else {
-      console.log('this is save');
-      removeRoute = 'removesaved';
-      addRoute = 'addsaved';
-      arr = matchedSaveIdArr;
-      setArr = setMatchedSaveIdArr;
-    }
-
-    const addremove = async (route) => {
-      const body = {
-        imageId: picId,
-        userId: userInfo._id,
-      };
-      const postReq = await axios.post(`/images/${route}`, body);
-    };
-
-    if (arr.includes(picId)) {
-      addremove(removeRoute);
-      setArr(arr.filter((id) => id !== picId));
-      let picObjIndex = picturesArr.findIndex((obj) => obj._id == picId);
-      if (arr === matchedFavIdArr) {
-        picturesArr[picObjIndex].likes -= 1;
-      } else {
-        picturesArr[picObjIndex].saved -= 1;
-      }
-      console.log('remove fav', arr);
-    } else {
-      addremove(addRoute);
-      console.log(addRoute);
-      setArr((oldArray) => [...oldArray, picId]);
-      let picObjIndex = picturesArr.findIndex((obj) => obj._id == picId);
-      if (arr === matchedFavIdArr) {
-        picturesArr[picObjIndex].likes += 1;
-      } else {
-        picturesArr[picObjIndex].saved += 1;
-      }
-      console.log('add fav', arr);
-    }
-  };
-
-  useEffect(() => {
-    console.log(matchedFavIdArr, matchedSaveIdArr);
-  }, []);
 
   return (
     <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
@@ -185,12 +39,9 @@ export default function Images({ picsArr }) {
         {picturesArr.map((pic) => {
           return (
             <Card key={pic._id} className={classes.root}>
-              <CardHeader pic={pic} />
+              <UserHeader pic={pic} />
               <CardMedia className={classes.media} image={pic.url} />
-              <CardActions disableSpacing className={classes.action}>
-                {showIcon(pic, 'favorite')}
-                {showIcon(pic, 'save')}
-              </CardActions>
+              <FavSav />
             </Card>
           );
         })}

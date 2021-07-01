@@ -147,6 +147,33 @@ router.get(
 );
 
 // mypics & favorites (get route) for mypage
+router.get('/myfavpics/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id)
+      .populate({
+        path: 'myPics',
+        select: ['url', 'naturespot', '_id'],
+        populate: { path: 'naturespot', select: ['_id', 'title'] },
+      })
+      .populate({
+        path: 'favoritePics',
+        select: ['url', 'naturespot', '_id', 'author'],
+        populate: { path: 'naturespot', select: ['_id', 'title'] },
+        populate: { path: 'author', select: ['_id', 'avatarUrl', 'username'] },
+      });
+
+    const myFavPics = {
+      _id: user._id,
+      myPics: user.myPics,
+      favoritePics: user.favoritePics,
+    };
+
+    res.status(200).json(myFavPics);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // saved (get route) for saved page
 
