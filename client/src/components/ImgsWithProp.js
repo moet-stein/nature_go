@@ -1,4 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { FavSavContext } from '../context/FavSavContext';
+import { MyPicFavPicContext } from '../context/MyPicFavPicContext';
+import { PicsArrContext } from '../context/PicsArrContext';
 import UserHeader from './UserHeader';
 import FavSav from './FavSav';
 import Masonry from 'react-masonry-css';
@@ -7,7 +10,6 @@ import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import { PicsArrContext } from '../context/PicsArrContext';
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -19,15 +21,24 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-export default function Images() {
+export default function ImgsWithProp({ picsArr }) {
   const classes = useStyle();
-  const { picturesArr } = useContext(PicsArrContext);
+  const { setMatchedFavIdArr } = useContext(FavSavContext);
+  const { setPicsIdArr } = useContext(PicsArrContext);
+  const { favPicsArr } = useContext(MyPicFavPicContext);
 
   const breakpoints = {
     default: 3,
     1100: 4,
     700: 2,
   };
+  useEffect(() => {
+    if (picsArr == favPicsArr) {
+      setPicsIdArr(picsArr.map((pic) => pic._id));
+      setMatchedFavIdArr(favPicsArr.map((pic) => pic._id));
+      console.log('I am favpicsarr');
+    }
+  }, []);
 
   return (
     <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
@@ -36,10 +47,10 @@ export default function Images() {
         className={moduleClasses.myMasonryGrid}
         columnClassName={moduleClasses.myMasonryGridColumn}
       >
-        {picturesArr.map((pic) => {
+        {picsArr.map((pic) => {
           return (
             <Card key={pic._id} className={classes.root}>
-              <UserHeader pic={pic} />
+              {'author' in pic && <UserHeader pic={pic} />}
               <CardMedia className={classes.media} image={pic.url} />
               <FavSav pic={pic} />
             </Card>

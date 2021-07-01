@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { FavSavContext } from '../context/FavSavContext';
 import { PicsArrContext } from '../context/PicsArrContext';
+import { MyPicFavPicContext } from '../context/MyPicFavPicContext';
 import { makeStyles } from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,6 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Typography from '@material-ui/core/Typography';
+import { useLocation } from 'react-router-dom';
 
 const useStyle = makeStyles(() => ({
   action: {
@@ -22,6 +24,7 @@ const useStyle = makeStyles(() => ({
 
 export default function FavSav({ pic }) {
   const classes = useStyle();
+  const location = useLocation();
   const { userInfo } = useContext(AuthContext);
   const {
     matchedFavIdArr,
@@ -31,7 +34,12 @@ export default function FavSav({ pic }) {
     matchedMyPicIdArr,
   } = useContext(FavSavContext);
   const { picturesArr } = useContext(PicsArrContext);
+  const { favPicsArr, setFavPicsArr } = useContext(MyPicFavPicContext);
 
+  // Show favorite or save icon
+  // icon1: If the pic is the user's own pic, he/she cannot like the pic
+  // icon2: If the pic is already liked or saved by the user, show the colored icon (it's able to be unliked or unsaved)
+  // icon3: If the pic is not the user's one and if the user did not like or save it yet, just show the icon that is able to be clicked to like or save
   const showIcon = (pic, kind) => {
     const kindObj =
       kind == 'favorite'
@@ -83,21 +91,25 @@ export default function FavSav({ pic }) {
   };
 
   const handleFavSav = (picId, kind) => {
-    let removeRoute, addRoute, arr, setArr;
+    let removeRoute, addRoute, arr, setArr, picObjArr;
+    // When detailed page => picturesArr
+    // WHen mypage (on favorite (myPics cannot be liked or saved))  => favPicsArr
+    picObjArr = picturesArr.length > 0 ? picturesArr : favPicsArr;
+
+    //   Depending on favorite icon or save icon, routes and arr to be manipulated are different
     if (kind === 'favorite') {
-      console.log('this is favorite');
       removeRoute = 'removefavorite';
       addRoute = 'addfavorite';
       arr = matchedFavIdArr;
       setArr = setMatchedFavIdArr;
     } else {
-      console.log('this is save');
       removeRoute = 'removesaved';
       addRoute = 'addsaved';
       arr = matchedSaveIdArr;
       setArr = setMatchedSaveIdArr;
     }
 
+    // Function to call post route to either add or remove favorite/save
     const addremove = async (route) => {
       const body = {
         imageId: picId,
@@ -106,34 +118,48 @@ export default function FavSav({ pic }) {
       const postReq = await axios.post(`/images/${route}`, body);
     };
 
+    // arr.includes(picId), that means arr includes the id: already liked or saved => make it remove on clicke
     if (arr.includes(picId)) {
+      // post route to remove
       addremove(removeRoute);
+
+      //   get rid of the id from idArr, so that the icon color changes to grey
       setArr(arr.filter((id) => id !== picId));
-      let picObjIndex = picturesArr.findIndex((obj) => obj._id == picId);
+
+      //   find index to decrease the number of the pic obj to show total likes/saved
+      let picObjIndex = picObjArr.findIndex((obj) => obj._id == picId);
+
+      //  if arr is matchedFavIdArr, decrease likes
       if (arr === matchedFavIdArr) {
-        picturesArr[picObjIndex].likes -= 1;
+        picObjArr[picObjIndex].likes -= 1;
+        //   When on mypage, get rid of the pic as it is unliked, no favorite pic anymore
+        if (location.pathname.includes('/mypage')) {
+          setFavPicsArr(favPicsArr.filter((pic) => pic._id !== picId));
+        }
       } else {
-        picturesArr[picObjIndex].saved -= 1;
+        picObjArr[picObjIndex].saved -= 1;
       }
-      console.log('remove fav', arr);
+      // arr.includes(picId) == false, that means the user cliked the icon to add favorite or save
     } else {
+      //   add favorite or save in database (route)
       addremove(addRoute);
-      console.log(addRoute);
+      //   add to fav/save to show the colored icon
       setArr((oldArray) => [...oldArray, picId]);
-      let picObjIndex = picturesArr.findIndex((obj) => obj._id == picId);
+
+      let picObjIndex = picObjArr.findIndex((obj) => obj._id == picId);
+
       if (arr === matchedFavIdArr) {
-        picturesArr[picObjIndex].likes += 1;
+        picObjArr[picObjIndex].likes += 1;
       } else {
-        picturesArr[picObjIndex].saved += 1;
+        picObjArr[picObjIndex].saved += 1;
       }
-      console.log('add fav', arr);
     }
   };
 
   return (
     <CardActions disableSpacing className={classes.action}>
-      {showIcon({ pic }, 'favorite')}
-      {showIcon({ pic }, 'save')}
+      {showIcon(pic, 'favorite')}
+      {showIcon(pic, 'save')}
     </CardActions>
   );
 }

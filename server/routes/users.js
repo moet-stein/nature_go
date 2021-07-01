@@ -153,14 +153,17 @@ router.get('/myfavpics/:id', async (req, res) => {
     const user = await User.findById(id)
       .populate({
         path: 'myPics',
-        select: ['url', 'naturespot', '_id'],
+        select: ['url', 'naturespot', '_id', 'likes', 'saved'],
         populate: { path: 'naturespot', select: ['_id', 'title'] },
       })
       .populate({
         path: 'favoritePics',
-        select: ['url', 'naturespot', '_id', 'author'],
-        populate: { path: 'naturespot', select: ['_id', 'title'] },
+        select: ['url', '_id', 'author'],
         populate: { path: 'author', select: ['_id', 'avatarUrl', 'username'] },
+      })
+      .populate({
+        path: 'favoritePics',
+        populate: { path: 'naturespot', select: ['_id', 'title'] },
       });
 
     const myFavPics = {
