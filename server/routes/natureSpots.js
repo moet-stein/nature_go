@@ -38,4 +38,26 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const natureSpot = await NatureSpot.findById(id)
+      .populate({
+        path: 'user',
+        select: ['username', 'avatarUrl', 'email'],
+      })
+      .populate({
+        path: 'images',
+        populate: {
+          path: 'author naturespot',
+        },
+      });
+
+    res.status(200).json(natureSpot);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

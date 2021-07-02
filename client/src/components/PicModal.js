@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import UserHeader from './UserHeader';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +12,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { makeStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -37,13 +39,17 @@ const useStyle = makeStyles((theme) => ({
 export default function PicModal({ pic }) {
   const classes = useStyle();
   const [open, setOpen] = useState(false);
+  const [spot, setSpot] = useState(null);
 
-  const handleOpen = () => {
+  const handleOpen = async (id) => {
     setOpen(true);
+    const res = await axios.get(`/naturespots/${id}`);
+    setSpot(res.data);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setSpot(null);
   };
 
   return (
@@ -51,7 +57,7 @@ export default function PicModal({ pic }) {
       <CardMedia
         className={classes.media}
         image={pic.url}
-        onClick={handleOpen}
+        onClick={() => handleOpen(pic.naturespot._id)}
       />
       <Modal
         aria-labelledby="transition-modal-title"
@@ -67,14 +73,24 @@ export default function PicModal({ pic }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <Box m={2}>
-              <Button variant="outlined" color="secondary">
-                <Typography id="transition-modal-title" variant="h4">
-                  {pic.naturespot.title}
-                </Typography>
-                <ArrowForwardIcon />
-              </Button>
-            </Box>
+            <Link
+              to={{
+                pathname: `/details/${pic.naturespot._id}`,
+                state: {
+                  spot,
+                },
+              }}
+              style={{ textDecoration: 'none' }}
+            >
+              <Box m={2}>
+                <Button variant="outlined" color="secondary">
+                  <Typography id="transition-modal-title" variant="h4">
+                    {pic.naturespot.title}
+                  </Typography>
+                  <ArrowForwardIcon />
+                </Button>
+              </Box>
+            </Link>
 
             <Card key={pic._id} className={classes.root}>
               {'author' in pic && <UserHeader pic={pic} />}
@@ -82,7 +98,7 @@ export default function PicModal({ pic }) {
               <CardMedia
                 className={classes.media}
                 image={pic.url}
-                onClick={handleOpen}
+                onClick={() => handleOpen(pic.naturespot._id)}
               />
               <CardContent>
                 {' '}

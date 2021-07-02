@@ -84,6 +84,7 @@ export default function SpotDetails() {
   };
 
   useEffect(async () => {
+    console.log(spot);
     const userData = await getUserInfo();
     await setPicturesArr([]);
     if (longDesc) {
