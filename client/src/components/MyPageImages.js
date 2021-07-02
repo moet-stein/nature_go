@@ -38,6 +38,7 @@ export default function MyPageImages({ showFavPics }) {
     const res = await axios.get(`/users/myfavpics/${userId}`);
     setMyPicsArr(res.data.myPics);
     setFavPicsArr(res.data.favoritePics);
+
     setMatchedSaveIdArr(
       res.data.favoritePics
         .map((pic) => pic._id)

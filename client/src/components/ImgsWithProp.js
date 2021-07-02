@@ -3,21 +3,33 @@ import { FavSavContext } from '../context/FavSavContext';
 import { MyPicFavPicContext } from '../context/MyPicFavPicContext';
 import { PicsArrContext } from '../context/PicsArrContext';
 import UserHeader from './UserHeader';
+import PicModal from './PicModal';
 import FavSav from './FavSav';
 import Masonry from 'react-masonry-css';
 import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 
 const useStyle = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    '&:hover': { boxShadow: '-1px 10px 29px 0px rgba(0,0,0,0.8)' },
   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[3],
+    padding: theme.spacing(2, 4, 3),
   },
 }));
 
@@ -36,7 +48,6 @@ export default function ImgsWithProp({ picsArr }) {
     if (picsArr == favPicsArr) {
       setPicsIdArr(picsArr.map((pic) => pic._id));
       setMatchedFavIdArr(favPicsArr.map((pic) => pic._id));
-      console.log('I am favpicsarr');
     }
   }, []);
 
@@ -51,7 +62,7 @@ export default function ImgsWithProp({ picsArr }) {
           return (
             <Card key={pic._id} className={classes.root}>
               {'author' in pic && <UserHeader pic={pic} />}
-              <CardMedia className={classes.media} image={pic.url} />
+              <PicModal pic={pic} />
               <FavSav pic={pic} />
             </Card>
           );
