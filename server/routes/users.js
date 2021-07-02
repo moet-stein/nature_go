@@ -126,6 +126,8 @@ router.post('/saved', async (req, res) => {
   }
 });
 
+// delete savedImage
+
 // ****************GET ROUTE*******************//
 
 // profile
@@ -179,6 +181,24 @@ router.get('/myfavpics/:id', async (req, res) => {
 });
 
 // saved (get route) for saved page
+router.get('/savedpics/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id).populate({
+      path: 'savedPics',
+      populate: { path: 'savedImage', populate: { path: 'naturespot' } },
+    });
+
+    const savedPics = {
+      _id: user._id,
+      savedPics: user.savedPics,
+    };
+
+    res.status(200).json(savedPics);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // matching photo (post route) for saved page
 // {savedpic imageObjectI, matchingpic: url, matching: Boolean}

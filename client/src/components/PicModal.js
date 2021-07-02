@@ -100,10 +100,10 @@ export default function PicModal({ pic }) {
                 image={pic.url}
                 onClick={() => handleOpen(pic.naturespot._id)}
               />
-              <CardContent>
+              {/* <CardContent>
                 {' '}
                 <Typography variant="h5">{pic.naturespot.title}</Typography>
-              </CardContent>
+              </CardContent> */}
             </Card>
           </div>
         </Fade>

@@ -20,6 +20,7 @@ import { MarkerProvider } from './context/MarkerContext';
 import { FavSavProvider } from './context/FavSavContext';
 import { PicsArrProvider } from './context/PicsArrContext';
 import { MyPicFavPicProvider } from './context/MyPicFavPicContext';
+import { SavedArrProvider } from './context/SavedArrContext';
 
 // context
 
@@ -53,33 +54,35 @@ function App() {
                 <PicsArrProvider>
                   <MyPicFavPicProvider>
                     <FavSavProvider>
-                      <Switch>
-                        <Route exact path="/" children={<Home />} />
-                        <Route
-                          exact
-                          path="/naturespots"
-                          children={<NatureSpots />}
-                        />
-                        <Route
-                          exact
-                          path="/details/:spotId"
-                          children={<SpotDetails />}
-                        />
-                        <PrivateRoute
-                          exact
-                          path="/mypage/:userId"
-                          children={<MyPage />}
-                        />
-                        <PrivateRoute
-                          exact
-                          path="/savedtomatch/:userId"
-                          children={<SavedToMatch />}
-                        />
+                      <SavedArrProvider>
+                        <Switch>
+                          <Route exact path="/" children={<Home />} />
+                          <Route
+                            exact
+                            path="/naturespots"
+                            children={<NatureSpots />}
+                          />
+                          <Route
+                            exact
+                            path="/details/:spotId"
+                            children={<SpotDetails />}
+                          />
+                          <PrivateRoute
+                            exact
+                            path="/mypage/:userId"
+                            children={<MyPage />}
+                          />
+                          <PrivateRoute
+                            exact
+                            path="/savedtomatch/:userId"
+                            children={<SavedToMatch />}
+                          />
 
-                        {/* Authentication */}
-                        <Route exact path="/signup" children={<Signup />} />
-                        <Route exact path="/login" children={<Login />} />
-                      </Switch>
+                          {/* Authentication */}
+                          <Route exact path="/signup" children={<Signup />} />
+                          <Route exact path="/login" children={<Login />} />
+                        </Switch>
+                      </SavedArrProvider>
                     </FavSavProvider>
                   </MyPicFavPicProvider>
                 </PicsArrProvider>
