@@ -2,9 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import grey from '@material-ui/core/colors/grey';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
@@ -81,10 +79,6 @@ export default function SavFooter({ saved }) {
       );
     }
   };
-
-  useEffect(() => {
-    console.log(saved);
-  }, []);
 
   return (
     <Box mt={2} className={classes.flex}>

@@ -12,6 +12,7 @@ import NatureSpots from './views/NatureSpots';
 import SpotDetails from './views/SpotDetails';
 import MyPage from './views/MyPage';
 import SavedToMatch from './views/SavedToMatch';
+import OtherUser from './views/OtherUser';
 import Signup from './views/Authentication/Signup';
 import Login from './views/Authentication/Login';
 import { AuthProvider } from './context/AuthContext';
@@ -76,6 +77,11 @@ function App() {
                             exact
                             path="/savedtomatch/:userId"
                             children={<SavedToMatch />}
+                          />
+                          <PrivateRoute
+                            exact
+                            path="/otheruser/:otherUserId"
+                            children={<OtherUser />}
                           />
 
                           {/* Authentication */}

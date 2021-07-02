@@ -200,6 +200,39 @@ router.get('/savedpics/:id', async (req, res) => {
   }
 });
 
+// get mypics & saved pics to see other user (get route)
+router.get(
+  '/otheruser/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const { id } = req.params;
+    try {
+      const user = await User.findById(id)
+        .populate({
+          path: 'savedPics',
+          populate: { path: 'savedImage', populate: { path: 'naturespot' } },
+        })
+        .populate({
+          path: 'myPics',
+        });
+
+      const savedPics = {
+        _id: user._id,
+        username: user.username,
+        avatarUrl: user.avatarUrl,
+        myPics: user.myPics,
+        savedPics: user.savedPics,
+      };
+
+      res.status(200).json(savedPics);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+);
+
+// increase matching number
+
 // matching photo (post route) for saved page
 // {savedpic imageObjectI, matchingpic: url, matching: Boolean}
 module.exports = router;
