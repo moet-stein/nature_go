@@ -76,12 +76,6 @@ export default function MyPage() {
     setFavMyPics(event.target.checked);
   };
 
-  // useEffect(async () => {
-  //   const myPics = await axios.get('/mypics', { params: { id: userInfo._id } });
-  //   setMyPicsArr(myPics.data);
-  //   console.log(myPicsArr);
-  // }, []);
-
   return (
     <div>
       <AppBarComponent />

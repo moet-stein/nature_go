@@ -6,6 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 
 export default function ProfileSection() {
   const { userInfo } = useContext(AuthContext);
+
   return (
     <div>
       <Box display="flex" justifyContent="center" alignItems="center">
