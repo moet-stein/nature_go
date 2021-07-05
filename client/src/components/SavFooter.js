@@ -45,8 +45,6 @@ IconContainer.propTypes = {
 export default function SavFooter({ saved }) {
   const classes = useStyles();
   const [preview, setPreview] = useState(false);
-  const [picId, setPicId] = useState(null);
-  const [currentPicId, setCurrentPicId] = useState(null);
   const [file, setFile] = useState(null);
   const [fileToSend, setFileToSend] = useState(null);
   const { userInfo } = useContext(AuthContext);
@@ -67,10 +65,6 @@ export default function SavFooter({ saved }) {
     setFile(URL.createObjectURL(event.target.files[0]));
     setFileToSend(event.target.files);
     setPreview(true);
-    setCurrentPicId(saved._id);
-    console.log(saved);
-    console.log(picId);
-    console.log(saved._id);
   };
 
   const uploadImg = async (url) => {
@@ -104,7 +98,6 @@ export default function SavFooter({ saved }) {
       });
       // post req to upload photo
       await uploadImg(res.data.Location);
-      console.log(savedArr);
       console.log('success');
       // handle success
     } catch (error) {
@@ -120,18 +113,11 @@ export default function SavFooter({ saved }) {
     setFileToSend(null);
   };
 
-  const getPicId = () => {
+  const reset = () => {
     setPreview(false);
     setFile(null);
     setFileToSend(null);
-    console.log(saved._id);
   };
-
-  useEffect(() => {
-    console.log(saved);
-    // setPicId(saved._id);
-    // console.log(saved._id);
-  }, []);
 
   const showIcon = (num) => {
     if (saved.matchedImage.length <= 0) {
@@ -140,13 +126,13 @@ export default function SavFooter({ saved }) {
           <input
             accept="image/*"
             style={{ display: 'none' }}
-            id="raised-button-file"
+            id={saved._id}
             multiple
             type="file"
-            onClick={getPicId}
+            onClick={reset}
             onChange={(e) => handleFile(e)}
           />
-          <label htmlFor="raised-button-file">
+          <label htmlFor={saved._id}>
             <Button
               variant="contained"
               color="secondary"

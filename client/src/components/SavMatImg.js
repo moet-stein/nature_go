@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import SavLink from './SavLink';
 import SavFooter from './SavFooter';
 import { SavedArrContext } from '../context/SavedArrContext';
@@ -35,6 +35,9 @@ export default function SavMatImg({ pic, index }) {
   const togglePics = () => {
     yourPic ? setYourPic(false) : setYourPic(true);
   };
+  useEffect(() => {
+    console.log(pic);
+  }, []);
 
   return (
     <Box m={3} className={classes.cardWidth}>
@@ -57,7 +60,7 @@ export default function SavMatImg({ pic, index }) {
         )}
 
         <CardContent>
-          {pic.matching > 0 && (
+          {pic.matchedImage.length > 0 && (
             <Box>
               <Box display="flex" justifyContent="flex-start">
                 {!yourPic ? (
