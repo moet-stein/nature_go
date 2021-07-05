@@ -125,6 +125,25 @@ router.post('/saved', async (req, res) => {
     res.status(500).json(err);
   }
 });
+// matching photo (post route) for saved page
+router.post('/uploadmatching', async (req, res) => {
+  const { user, picId, url } = req.body;
+  try {
+    const matchingPic = await User.updateOne(
+      { _id: user, 'savedPics._id': picId },
+      {
+        $set: {
+          'savedPics.$.matchedImage': url,
+        },
+      },
+      { new: true, upsert: true }
+    ).exec();
+    res.status(200).json(matchingPic);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 // delete savedImage
 
@@ -233,6 +252,5 @@ router.get(
 
 // increase matching number
 
-// matching photo (post route) for saved page
 // {savedpic imageObjectI, matchingpic: url, matching: Boolean}
 module.exports = router;

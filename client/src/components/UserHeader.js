@@ -52,7 +52,6 @@ export default function UserHeader({ pic }) {
 
   useEffect(() => {
     if (pic.author._id === userInfo._id) setCurrentUser(true);
-    console.log(pic.author._id);
   }, []);
 
   return (
