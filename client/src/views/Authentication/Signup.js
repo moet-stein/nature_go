@@ -1,10 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import Logo from '../../img/avatar1.png';
 import Room from '@material-ui/icons/Room';
-// import Avatars from './Avatars';
+import DefaultAvatar from '../../img/avatar1.png';
 import Image from '../../img/landing_pic.png';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Box from '@material-ui/core/Box';
 import HomeIcon from '@material-ui/icons/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -60,6 +63,13 @@ const useStyles = makeStyles((theme) => ({
     borderColor: 'rgb(0, 0, 0, 0.6) !important',
     borderWidth: 2,
   },
+  media: {
+    // height: 0,
+    // paddingTop: '56.25%', // 16:9
+    width: '150px',
+    height: '150px',
+    borderRadius: '50%',
+  },
 }));
 
 export default function Signup() {
@@ -68,15 +78,54 @@ export default function Signup() {
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const classes = useStyles();
-  //   const { signup } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(DefaultAvatar);
+  const [fileToSend, setFileToSend] = useState(DefaultAvatar);
+  const [showCancel, setShowCancel] = useState(false);
   const history = useHistory();
+
+  const handleFile = async (event) => {
+    console.log(file === DefaultAvatar);
+    setShowCancel(true);
+    setFile(URL.createObjectURL(event.target.files[0]));
+    setFileToSend(event.target.files);
+    console.log(event.target.files);
+  };
+
+  const resetAvatar = () => {
+    setShowCancel(false);
+    setFile(DefaultAvatar);
+    setFileToSend(DefaultAvatar);
+  };
+
+  const submitFile = async () => {
+    try {
+      if (!fileToSend) {
+        throw new Error('Select a file first!');
+      }
+      const formData = new FormData();
+      formData.append('file', fileToSend[0]);
+      const res = await axios.post(`/aws/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('success');
+      return res.data.Location;
+    } catch (error) {
+      console.log(error);
+      console.log('upload failed');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(userNameRef.current.value, emailRef.current.value);
+    let avatarUrl;
+    file == DefaultAvatar
+      ? (avatarUrl =
+          'https://naturego.s3.amazonaws.com/bucketFolder/1625515883520.png')
+      : (avatarUrl = await submitFile());
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError(`Passwords do not match`);
@@ -86,6 +135,7 @@ export default function Signup() {
       username: userNameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
+      avatarUrl: avatarUrl,
     };
 
     try {
@@ -93,7 +143,7 @@ export default function Signup() {
       setError(``);
       setLoading(true);
       console.log('signup form submitted');
-      history.push('/naturespots');
+      history.push('/login');
     } catch (err) {
       console.log(err);
       setError(`${err}, Failed to create an account`);
@@ -128,10 +178,46 @@ export default function Signup() {
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Box mb={2}>
-                  <Typography>Choose your avatar</Typography>
+                <Box
+                  mb={2}
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                >
+                  <Box>
+                    <img className={classes.media} src={file} />
+                  </Box>
+                  <input
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    multiple
+                    type="file"
+                    onChange={(e) => handleFile(e)}
+                  />
+                  <label htmlFor="raised-button-file">
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      component="span"
+                      startIcon={<PhotoCamera />}
+                    >
+                      Upload
+                    </Button>
+                  </label>
+                  {showCancel && (
+                    <Box m={2}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={resetAvatar}
+                      >
+                        Cancel
+                      </Button>
+                    </Box>
+                  )}
+                  <Typography>Upload your Profile Pic</Typography>
                 </Box>
-                {/* <Avatars /> */}
               </Grid>
               <Grid item xs={12}>
                 <TextField
