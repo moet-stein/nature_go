@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import { PicsArrContext } from '../context/PicsArrContext';
+import { FavSavContext } from '../context/FavSavContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,23 +20,45 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none',
   },
+  card: { width: '320px' },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
 }));
 
-export default function UploadButton() {
+export default function UploadButton({ natureId, userInfo }) {
   const classes = useStyles();
   const [uploaded, setUploaded] = useState(false);
   const [preview, setPreview] = useState(false);
   const [file, setFile] = useState(null);
   const [fileToSend, setFileToSend] = useState(null);
+  const { picturesArr, setPicturesArr } = useContext(PicsArrContext);
+  const { matchedMyPicIdArr, setMatchedMyPicIdArr } = useContext(FavSavContext);
 
   const handleFile = async (event) => {
     setFile(URL.createObjectURL(event.target.files[0]));
     setFileToSend(event.target.files);
     setPreview(true);
+  };
+
+  const uploadImg = async (url) => {
+    setPreview(false);
+    const body = {
+      url: url,
+      natureId: natureId,
+      authorId: userInfo._id,
+    };
+    const postReq = await axios.post(`/images/uploadimage`, body);
+    const newPostObj = postReq.data.newImage;
+    newPostObj.author = {
+      avatarUrl: userInfo.avatarUrl,
+      username: userInfo.username,
+      _id: userInfo._id,
+    };
+    await setPicturesArr((oldArr) => [...oldArr, newPostObj].reverse());
+    await setMatchedMyPicIdArr((oldArr) => [...oldArr, newPostObj._id]);
+    console.log(postReq.data.newImage);
   };
 
   const submitFile = async () => {
@@ -50,7 +75,7 @@ export default function UploadButton() {
       });
       console.log(res.data.Location);
       // post req to upload photo
-      //
+      await uploadImg(res.data.Location);
       console.log('success');
       // handle success
     } catch (error) {
@@ -58,6 +83,11 @@ export default function UploadButton() {
       // handle error
     }
   };
+
+  useEffect(() => {
+    console.log(picturesArr);
+    console.log(matchedMyPicIdArr);
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -82,8 +112,11 @@ export default function UploadButton() {
         </label>
       </React.Fragment>
       {preview && (
-        <Box>
-          <Card>
+        <Box m={3}>
+          <Typography color="secondary" variant="h5">
+            Preview
+          </Typography>
+          <Card className={classes.card}>
             <CardMedia className={classes.media} image={file} />
           </Card>
           <Box m={2}>

@@ -24,10 +24,10 @@ export default function OtherUser() {
     }
   };
 
-  useEffect(() => {
-    getOtherUserInfo();
-    console.log(otherUserId);
-    console.log(otherUser.myPics.map((p) => p.url));
+  useEffect(async () => {
+    await getOtherUserInfo();
+    // console.log(otherUserId);
+    // console.log(otherUser.myPics.map((p) => p.url));
   }, []);
 
   return (

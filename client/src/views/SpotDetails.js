@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
 export default function SpotDetails() {
   const classes = useStyles();
   const location = useLocation();
-  const { setUserInfo } = useContext(AuthContext);
+  const { userInfo, setUserInfo } = useContext(AuthContext);
   const { spot } = location.state;
   const {
     setMatchedFavIdArr,
@@ -91,7 +91,7 @@ export default function SpotDetails() {
     }
     setNaturespot(spot._id);
     const res = await axios.get(`/images/${spot._id}`);
-    await setPicturesArr(res.data);
+    await setPicturesArr(res.data.reverse());
     await setPicsIdArr(res.data.map((p) => p._id));
 
     console.log(userData.favoritePics, userData.savedPics);
@@ -191,7 +191,7 @@ export default function SpotDetails() {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <UploadButton />
+          <UploadButton natureId={spot._id} userInfo={userInfo} />
         </Grid>
       </Grid>
       {!loading && <Images />}
