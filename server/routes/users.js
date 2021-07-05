@@ -145,8 +145,6 @@ router.post('/uploadmatching', async (req, res) => {
   }
 });
 
-// delete savedImage
-
 // ****************GET ROUTE*******************//
 
 // profile

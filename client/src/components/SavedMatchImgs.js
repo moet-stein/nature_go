@@ -22,7 +22,7 @@ export default function SavedMatchImgs({ savedArr }) {
     <React.Fragment>
       <Box className={classes.flexWrap}>
         {savedArr.map((pic, index) => {
-          return <SavMatImg pic={pic} index={index} />;
+          return <SavMatImg key={pic._id} pic={pic} index={index} />;
         })}
       </Box>
     </React.Fragment>
