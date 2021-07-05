@@ -150,7 +150,7 @@ export default function SavFooter({ saved }) {
           <Rating
             name="customized-icons"
             IconContainerComponent={IconContainer}
-            value={saved.matching}
+            value={saved.matching.length}
             readOnly
           />
           <Typography color="secondary" variant="body2">
@@ -172,7 +172,7 @@ export default function SavFooter({ saved }) {
   return (
     <React.Fragment>
       <Box mt={2} className={classes.flex}>
-        {showIcon(saved.matching)}
+        {showIcon(saved.matching.length)}
 
         <DeleteForeverIcon
           style={{ color: grey[600] }}

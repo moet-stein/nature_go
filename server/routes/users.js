@@ -115,6 +115,7 @@ router.post('/saved', async (req, res) => {
             natureSpot: natureSpot,
             author: author,
             matchedPic: '',
+            matching: [],
           },
         },
       },
@@ -144,6 +145,8 @@ router.post('/uploadmatching', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// increase matching number
 
 // ****************GET ROUTE*******************//
 
@@ -247,8 +250,6 @@ router.get(
     }
   }
 );
-
-// increase matching number
 
 // {savedpic imageObjectI, matchingpic: url, matching: Boolean}
 module.exports = router;

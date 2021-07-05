@@ -14,7 +14,7 @@ export default function OtherUserProfile({ otherUser }) {
       </Box>
       <Box>
         <Typography>Uploads: {otherUser.myPics.length}</Typography>
-        <Typography>Matching: {otherUser.savedPics.length}</Typography>
+        <Typography>Matching: {otherUser.savedPics.length} Pics</Typography>
       </Box>
     </Box>
   );

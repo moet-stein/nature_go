@@ -112,7 +112,7 @@ router.post('/addsaved', async (req, res) => {
     const savedPicObj = {
       savedImage: imageId,
       matchedImage: '',
-      matching: 0,
+      matching: [],
     };
 
     const savedPic = await User.updateOne(

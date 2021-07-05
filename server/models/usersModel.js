@@ -6,7 +6,7 @@ const savedPicSchema = new mongoose.Schema({
     ref: 'Image',
   },
   matchedImage: String,
-  matching: Number,
+  matching: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
 const UserSchema = new mongoose.Schema(
