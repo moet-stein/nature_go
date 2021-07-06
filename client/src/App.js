@@ -16,6 +16,7 @@ import OtherUser from './views/OtherUser';
 import Signup from './views/Authentication/Signup';
 import Login from './views/Authentication/Login';
 import UpdateProfile from './views/Authentication/UpdateProfile';
+import ConfirmReg from './views/Authentication/ConfirmReg';
 import { AuthProvider } from './context/AuthContext';
 import { NatureSpotsProvider } from './context/NatureSpotsContext';
 import { MarkerProvider } from './context/MarkerContext';
@@ -90,6 +91,11 @@ function App() {
                             {/* Authentication */}
                             <Route exact path="/signup" children={<Signup />} />
                             <Route exact path="/login" children={<Login />} />
+                            <Route
+                              exact
+                              path="/confirmregister"
+                              children={<ConfirmReg />}
+                            />
                             <PrivateRoute
                               exact
                               path="/updateprofile/:id"

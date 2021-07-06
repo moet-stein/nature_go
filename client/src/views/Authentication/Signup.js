@@ -141,7 +141,7 @@ export default function Signup() {
       setError(``);
       setLoading(true);
       console.log('signup form submitted');
-      history.push('/login');
+      history.push('/confirmregister');
     } catch (err) {
       console.log(err);
       let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
