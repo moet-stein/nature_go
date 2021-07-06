@@ -31,6 +31,10 @@ export default function Images() {
     700: 2,
   };
 
+  useEffect(() => {
+    console.log(userInfo);
+  }, []);
+
   return (
     <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
       <Masonry
@@ -43,7 +47,7 @@ export default function Images() {
             <Card key={pic._id} className={classes.root}>
               <UserHeader pic={pic} />
               <CardMedia className={classes.media} image={pic.url} />
-              {userInfo.length > 0 && <FavSav pic={pic} />}
+              {userInfo && <FavSav pic={pic} />}
             </Card>
           );
         })}

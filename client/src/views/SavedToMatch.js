@@ -31,9 +31,7 @@ export default function SavedToMatch() {
     await setSavedArr(res.data.savedPics);
     console.log(res.data.savedPics);
     res.data.savedPics.forEach(async (s) => {
-      const res = await axios.get(
-        `/naturespots/${s.savedImage.naturespot._id}`
-      );
+      const res = await axios.get(`/naturespots/${s.natureSpotId}`);
       return setSpotsArr((old) => [...old, res.data]);
     });
   }, []);

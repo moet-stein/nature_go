@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import SavLink from './SavLink';
+import axios from 'axios';
 import OtherUserFooter from './OtherUserFooter';
 import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -27,29 +29,39 @@ const useStyles = makeStyles(() => ({
 
 export default function OtherUserImgs({ pic, index }) {
   const classes = useStyles();
-  // const { spotsArr } = useContext(SavedArrContext);
+  const [spot, setSpot] = useState(null);
+  // const {  } = useContext(SavedArrContext);
   const [original, setOriginal] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const togglePics = () => {
     original ? setOriginal(false) : setOriginal(true);
   };
 
+  useEffect(async () => {
+    const res = await axios.get(`/naturespots/${pic.natureSpotId}`);
+    setSpot(res.data);
+    setLoading(false);
+  }, []);
+
   return (
     <Box m={3} className={classes.cardWidth}>
       <Card key={pic._id} className={classes.root}>
-        <Paper>
-          <Box
-            display="flex"
-            justifyContent="flex-start"
-            alignItems="center"
-            ml={2}
-          >
-            {/* <SavLink pic={pic} spot={spotsArr[index]} /> */}
-          </Box>
-        </Paper>
+        {!loading && (
+          <Paper>
+            <Box
+              display="flex"
+              justifyContent="flex-start"
+              alignItems="center"
+              ml={2}
+            >
+              <SavLink pic={pic} spot={spot} />
+            </Box>
+          </Paper>
+        )}
 
         {original ? (
-          <CardMedia className={classes.media} image={pic.savedImage.url} />
+          <CardMedia className={classes.media} image={pic.originalImage} />
         ) : (
           <CardMedia className={classes.media} image={pic.matchedImage} />
         )}

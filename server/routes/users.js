@@ -146,29 +146,29 @@ router.post(
 );
 
 // Add Saved Image to a spot
-router.post('/saved', async (req, res) => {
-  const { url, user, author, natureSpot } = req.body;
-  try {
-    const savePic = await User.updateOne(
-      { _id: user },
-      {
-        $push: {
-          savedPics: {
-            url: url,
-            natureSpot: natureSpot,
-            author: author,
-            matchedPic: '',
-            matching: [],
-          },
-        },
-      },
-      { new: true, upsert: true }
-    ).exec();
-    res.status(200).json(savePic);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// router.post('/saved', async (req, res) => {
+//   const { url, user, author, natureSpot } = req.body;
+//   try {
+//     const savePic = await User.updateOne(
+//       { _id: user },
+//       {
+//         $push: {
+//           savedPics: {
+//             url: url,
+//             natureSpot: natureSpot,
+//             author: author,
+//             matchedPic: '',
+//             matching: [],
+//           },
+//         },
+//       },
+//       { new: true, upsert: true }
+//     ).exec();
+//     res.status(200).json(savePic);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 // matching photo (post route) for saved page
 router.post('/uploadmatching', async (req, res) => {
   const { user, picId, url } = req.body;

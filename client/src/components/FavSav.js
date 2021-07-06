@@ -91,6 +91,7 @@ export default function FavSav({ pic }) {
   };
 
   const handleFavSav = (picId, kind) => {
+    console.log(pic);
     let removeRoute, addRoute, arr, setArr, picObjArr;
     // When detailed page => picturesArr
     // WHen mypage (on favorite (myPics cannot be liked or saved))  => favPicsArr
@@ -111,10 +112,21 @@ export default function FavSav({ pic }) {
 
     // Function to call post route to either add or remove favorite/save
     const addremove = async (route) => {
-      const body = {
-        imageId: picId,
-        userId: userInfo._id,
-      };
+      let body;
+      if (route == 'addsaved') {
+        body = {
+          natureSpotId: pic.naturespot,
+          imageId: picId,
+          userId: userInfo._id,
+          origImgUrl: pic.url,
+        };
+      } else {
+        body = {
+          imageId: picId,
+          userId: userInfo._id,
+        };
+      }
+
       const postReq = await axios.post(`/images/${route}`, body);
     };
 

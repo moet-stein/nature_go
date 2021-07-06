@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const savedPicSchema = new mongoose.Schema({
-  savedImage: {
+  natureSpotId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Image',
+    ref: 'NatureSpot',
   },
+  originalImage: String,
   matchedImage: String,
   matching: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });

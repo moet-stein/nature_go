@@ -100,7 +100,7 @@ router.post('/removefavorite', async (req, res) => {
 
 // save image (post)
 router.post('/addsaved', async (req, res) => {
-  const { imageId, userId } = req.body;
+  const { natureSpotId, imageId, userId, origImgUrl } = req.body;
 
   try {
     const increaseSaved = await Image.updateOne(
@@ -110,9 +110,10 @@ router.post('/addsaved', async (req, res) => {
     ).exec();
 
     const savedPicObj = {
-      savedImage: imageId,
+      natureSpotId: natureSpotId,
       matchedImage: '',
       matching: [],
+      originalImage: origImgUrl,
     };
 
     const savedPic = await User.updateOne(

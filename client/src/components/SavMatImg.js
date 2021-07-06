@@ -54,7 +54,7 @@ export default function SavMatImg({ pic, index }) {
         </Paper>
 
         {!yourPic ? (
-          <CardMedia className={classes.media} image={pic.savedImage.url} />
+          <CardMedia className={classes.media} image={pic.originalImage} />
         ) : (
           <CardMedia className={classes.media} image={pic.matchedImage} />
         )}
