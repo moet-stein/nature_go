@@ -4,7 +4,6 @@ import AppBarComponent from '../components/AppBarComponent';
 import GoBack from '../components/GoBack';
 import OtherUserImg from '../components/OtherUserImg';
 import axios from 'axios';
-import Typography from '@material-ui/core/Typography';
 import { useParams } from 'react-router-dom';
 import { OtherUserContext } from '../context/OtherUserContext';
 import { AuthContext } from '../context/AuthContext';

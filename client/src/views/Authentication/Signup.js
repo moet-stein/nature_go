@@ -5,8 +5,6 @@ import Room from '@material-ui/icons/Room';
 import DefaultAvatar from '../../img/avatar1.png';
 import Image from '../../img/landing_pic.png';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Box from '@material-ui/core/Box';
 import HomeIcon from '@material-ui/icons/Home';

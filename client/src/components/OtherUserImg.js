@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import OtherUserFooter from './OtherUserFooter';
-import SavLink from './SavLink';
-import SavFooter from './SavFooter';
-import { SavedArrContext } from '../context/SavedArrContext';
 import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -36,10 +33,6 @@ export default function OtherUserImgs({ pic, index }) {
   const togglePics = () => {
     original ? setOriginal(false) : setOriginal(true);
   };
-
-  useEffect(() => {
-    console.log(pic);
-  }, []);
 
   return (
     <Box m={3} className={classes.cardWidth}>

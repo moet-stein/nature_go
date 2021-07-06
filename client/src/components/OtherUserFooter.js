@@ -107,9 +107,9 @@ export default function OtherUserFooter({ pic, index }) {
   };
 
   const showIcon = (num) => {
-    if (num == 5) {
-      setHideButton(true);
-    }
+    // if (num == 5) {
+    //   setHideButton(true);
+    // }
     if (num >= 0 && num < 5) {
       return (
         <Box component="fieldset" borderColor="transparent">
@@ -135,6 +135,9 @@ export default function OtherUserFooter({ pic, index }) {
     const arr = havMatPicArr[index].matching;
     if (arr.length > 0 && arr.includes(userInfo._id)) {
       setToggleGive(false);
+    }
+    if (arr.length > 0 && arr.length >= 5) {
+      setHideButton(true);
     }
 
     console.log(havMatPicArr[index], arr);

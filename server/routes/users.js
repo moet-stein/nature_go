@@ -102,6 +102,48 @@ router.post('/logout', async (req, res) => {
   await User.findOneAndUpdate({ _id: id }, { $set: { login: false } });
 });
 
+// update
+router.post(
+  '/updateprofile',
+  body('username').isLength({ min: 3 }),
+  body('email').isEmail(),
+  async (req, res) => {
+    const { userId, avatarUrl, username, email, oldEmail } = req.body;
+    try {
+      User.findOne({ email: email }, async (err, user) => {
+        if (err) {
+          res.json({ error: err });
+        }
+        if (user && email !== oldEmail) {
+          res.send('Email is already used');
+        } else {
+          // express validator
+          const errors = await validationResult(req);
+          if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+          }
+          const updatedUser = User.updateOne(
+            { _id: userId },
+            {
+              $set: {
+                username: username,
+                avatarUrl: avatarUrl,
+                email: email,
+              },
+            },
+            { new: true, upsert: true }
+          ).exec();
+
+          res.status(200).json(updatedUser);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+  }
+);
+
 // Add Saved Image to a spot
 router.post('/saved', async (req, res) => {
   const { url, user, author, natureSpot } = req.body;
@@ -198,6 +240,7 @@ router.get(
   (req, res) => {
     const userInfo = {
       _id: req.user._id,
+      email: req.user.email,
       avatarUrl: req.user.avatarUrl,
       username: req.user.username,
       myPics: req.user.myPics,
