@@ -144,7 +144,20 @@ export default function Signup() {
       history.push('/login');
     } catch (err) {
       console.log(err);
-      setError(`${err}, Failed to create an account`);
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (
+        userNameRef.current.value.length > 0 &&
+        userNameRef.current.value.length <= 3
+      ) {
+        setError('Username must be longer than 3 letters');
+      } else if (!re.test(emailRef.current.value)) {
+        setError('Email must be valid');
+      } else if (passwordRef.current.value.length <= 5) {
+        setError('Password must be longer than 5 letters');
+      } else {
+        setError('Email is already used');
+      }
     }
     setLoading(false);
   };

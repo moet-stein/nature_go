@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import HomeIcon from '@material-ui/icons/Home';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
@@ -138,7 +139,6 @@ export default function UpdateProfile() {
       ? (avatarUrl = user.avatarUrl)
       : (avatarUrl = await submitFile());
 
-    console.log(userNameRef.current.value, emailRef.current.value.length);
     const username =
       userNameRef.current.value.length == 0
         ? user.username
@@ -155,7 +155,6 @@ export default function UpdateProfile() {
       oldEmail: user.email,
     };
 
-    console.log(updatedUser);
     try {
       await axios.post('/users/updateprofile', updatedUser);
       setError(``);
@@ -164,7 +163,15 @@ export default function UpdateProfile() {
       history.push(`/mypage/${user._id}`);
     } catch (err) {
       console.log(err);
-      setError(`${err}, Failed to update profile`);
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (username.length > 0 && username.length <= 3) {
+        setError('Username should be longer than 3 letters');
+      } else if (!re.test(email)) {
+        setError('Email should be valid');
+      } else {
+        setError('Email is already used');
+      }
     }
     setLoading(false);
   };
@@ -173,6 +180,7 @@ export default function UpdateProfile() {
     <React.Fragment>
       <GoBack />
       <Typography>Update Profile</Typography>
+      {error && <Alert severity="error">{error}</Alert>}
       {!loading && (
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <Grid container spacing={2}>

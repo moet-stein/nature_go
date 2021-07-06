@@ -23,10 +23,10 @@ router.post(
     try {
       User.findOne({ email: req.body.email }, async (err, user) => {
         if (err) {
-          res.json({ error: err });
+          res.status(500).json({ error: err });
         }
         if (user) {
-          res.send('Email is already used');
+          res.status(500).send('Email is already used');
         } else {
           // express validator
           const errors = await validationResult(req);
@@ -115,26 +115,27 @@ router.post(
           res.json({ error: err });
         }
         if (user && email !== oldEmail) {
-          res.send('Email is already used');
+          res.status(500).send('Email is already used');
         } else {
           // express validator
           const errors = await validationResult(req);
           if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
-          }
-          const updatedUser = User.updateOne(
-            { _id: userId },
-            {
-              $set: {
-                username: username,
-                avatarUrl: avatarUrl,
-                email: email,
+          } else {
+            const updatedUser = User.updateOne(
+              { _id: userId },
+              {
+                $set: {
+                  username: username,
+                  avatarUrl: avatarUrl,
+                  email: email,
+                },
               },
-            },
-            { new: true, upsert: true }
-          ).exec();
+              { new: true, upsert: true }
+            ).exec();
 
-          res.status(200).json(updatedUser);
+            res.status(200).json(updatedUser);
+          }
         }
       });
     } catch (err) {
