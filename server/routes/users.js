@@ -148,6 +148,47 @@ router.post('/uploadmatching', async (req, res) => {
 
 // increase matching number
 
+// give smile (matching) to other user
+router.post('/givematching', async (req, res) => {
+  const { userToGet, userToGive, savPicId } = req.body;
+  try {
+    const updatedMatching = await User.updateOne(
+      { _id: userToGet, 'savedPics._id': savPicId },
+      {
+        $push: {
+          'savedPics.$.matching': userToGive,
+        },
+      },
+      { new: true, upsert: true }
+    ).exec();
+    res.status(200).json(updatedMatching);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// get back matching from other user
+// give smile (matching) to other user
+router.post('/getbackmatching', async (req, res) => {
+  const { getBackFrom, userToGetBack, savPicId } = req.body;
+  try {
+    const updatedMatching = await User.updateOne(
+      { _id: getBackFrom, 'savedPics._id': savPicId },
+      {
+        $pull: {
+          'savedPics.$.matching': userToGetBack,
+        },
+      },
+      { new: true, upsert: true }
+    ).exec();
+    res.status(200).json(updatedMatching);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 // ****************GET ROUTE*******************//
 
 // profile

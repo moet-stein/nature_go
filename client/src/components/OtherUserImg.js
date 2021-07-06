@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function OtherUserImgs({ pic }) {
+export default function OtherUserImgs({ pic, index }) {
   const classes = useStyles();
   // const { spotsArr } = useContext(SavedArrContext);
   const [original, setOriginal] = useState(true);
@@ -78,7 +78,7 @@ export default function OtherUserImgs({ pic }) {
               Flip
             </Button>
           </Box>
-          <OtherUserFooter pic={pic} />
+          <OtherUserFooter pic={pic} index={index} />
         </CardContent>
       </Card>
     </Box>
