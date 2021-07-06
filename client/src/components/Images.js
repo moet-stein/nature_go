@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserHeader from './UserHeader';
 import FavSav from './FavSav';
 import Masonry from 'react-masonry-css';
@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { PicsArrContext } from '../context/PicsArrContext';
+import { AuthContext } from '../context/AuthContext';
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -22,6 +23,7 @@ const useStyle = makeStyles((theme) => ({
 export default function Images() {
   const classes = useStyle();
   const { picturesArr } = useContext(PicsArrContext);
+  const { userInfo } = useContext(AuthContext);
 
   const breakpoints = {
     default: 3,
@@ -41,7 +43,7 @@ export default function Images() {
             <Card key={pic._id} className={classes.root}>
               <UserHeader pic={pic} />
               <CardMedia className={classes.media} image={pic.url} />
-              <FavSav pic={pic} />
+              {userInfo.length > 0 && <FavSav pic={pic} />}
             </Card>
           );
         })}

@@ -19,15 +19,6 @@ export default function UserHeader({ pic }) {
   const { userInfo } = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState(false);
 
-  // const link = () => {
-  //   console.log(pic.author._id, userInfo._id);
-  //   console.log(pic.author._id === userInfo._id);
-  //   if (pic.author._id === userInfo._id) {
-  //     setLinkTo(`/mypage/${userInfo._id}`);
-  //   } else {
-  //     setLinkTo(`/otheruser/${pic.author._id}`);
-  //   }
-  // };
   const headerContents = (pic) => {
     return (
       <Box
@@ -56,17 +47,26 @@ export default function UserHeader({ pic }) {
 
   return (
     <Paper>
-      {!currentUser ? (
-        <Link
-          style={{ textDecoration: 'none' }}
-          to={`/otheruser/${pic.author._id}`}
-        >
-          {headerContents(pic)}
-        </Link>
+      {userInfo.length <= 0 ? (
+        <Box>{headerContents(pic)}</Box>
       ) : (
-        <Link style={{ textDecoration: 'none' }} to={`/mypage/${userInfo._id}`}>
-          {headerContents(pic)}
-        </Link>
+        <React.Fragment>
+          {!currentUser ? (
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={`/otheruser/${pic.author._id}`}
+            >
+              {headerContents(pic)}
+            </Link>
+          ) : (
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={`/mypage/${userInfo._id}`}
+            >
+              {headerContents(pic)}
+            </Link>
+          )}
+        </React.Fragment>
       )}
     </Paper>
   );

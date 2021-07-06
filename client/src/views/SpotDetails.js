@@ -94,26 +94,28 @@ export default function SpotDetails() {
     await setPicturesArr(res.data.reverse());
     await setPicsIdArr(res.data.map((p) => p._id));
 
-    console.log(userData.favoritePics, userData.savedPics);
-
-    if (userData.favoritePics) {
-      await setMatchedFavIdArr(
-        res.data
-          .map((p) => p._id)
-          .filter((id) => userData.favoritePics.includes(id))
-      );
-    }
-    if (userData.savedPics) {
-      const savedIds = userData.savedPics.map((obj) => obj.savedImage);
-      console.log(savedIds);
-      await setMatchedSaveIdArr(
-        res.data.map((p) => p._id).filter((id) => savedIds.includes(id))
-      );
-    }
-    if (userData.myPics) {
-      await setMatchedMyPicIdArr(
-        res.data.map((p) => p._id).filter((id) => userData.myPics.includes(id))
-      );
+    if (userData) {
+      if (userData.favoritePics) {
+        await setMatchedFavIdArr(
+          res.data
+            .map((p) => p._id)
+            .filter((id) => userData.favoritePics.includes(id))
+        );
+      }
+      if (userData.savedPics) {
+        const savedIds = userData.savedPics.map((obj) => obj.savedImage);
+        console.log(savedIds);
+        await setMatchedSaveIdArr(
+          res.data.map((p) => p._id).filter((id) => savedIds.includes(id))
+        );
+      }
+      if (userData.myPics) {
+        await setMatchedMyPicIdArr(
+          res.data
+            .map((p) => p._id)
+            .filter((id) => userData.myPics.includes(id))
+        );
+      }
     }
 
     setLoading(false);
@@ -190,9 +192,11 @@ export default function SpotDetails() {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12}>
-          <UploadButton natureId={spot._id} userInfo={userInfo} />
-        </Grid>
+        {userInfo.length > 0 && (
+          <Grid item xs={12}>
+            <UploadButton natureId={spot._id} userInfo={userInfo} />
+          </Grid>
+        )}
       </Grid>
       {!loading && <Images />}
     </div>
