@@ -52,11 +52,11 @@ export default function SavFooter({ saved }) {
 
   const deleteSaved = async (saved) => {
     setSavedArr(
-      savedArr.filter((s) => s.savedImage._id !== saved.savedImage._id)
+      savedArr.filter((s) => s.originalImage !== saved.originalImage)
     );
     const body = {
-      imageId: saved.savedImage._id,
       userId: userInfo._id,
+      origUrl: saved.originalImage,
     };
     const postReq = await axios.post(`/images/removesaved`, body);
   };

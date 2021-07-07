@@ -238,7 +238,7 @@ router.post('/getbackmatching', async (req, res) => {
 router.get(
   '/profile',
   passport.authenticate('jwt', { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const userInfo = {
       _id: req.user._id,
       email: req.user.email,
@@ -248,8 +248,23 @@ router.get(
       favoritePics: req.user.favoritePics,
       savedPics: req.user.savedPics,
     };
-    console.log(userInfo);
-    res.send(userInfo);
+    const user = await User.findById(req.user._id)
+      .populate({
+        path: 'myPics',
+        select: ['url', 'naturespot', '_id', 'likes', 'saved'],
+        populate: { path: 'naturespot', select: ['_id', 'title'] },
+      })
+      .populate({
+        path: 'favoritePics',
+        select: ['url', '_id', 'author'],
+        populate: { path: 'author', select: ['_id', 'avatarUrl', 'username'] },
+      });
+    // .populate({
+    //   path: 'favoritePics',
+    //   populate: { path: 'naturespot', select: ['_id', 'title'] },
+    // });
+    res.status(200).json(user);
+    // res.send(userInfo);
   }
 );
 

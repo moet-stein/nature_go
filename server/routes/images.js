@@ -72,11 +72,11 @@ router.post('/addfavorite', async (req, res) => {
 
 // dislike the image (post)
 router.post('/removefavorite', async (req, res) => {
-  const { imageId, userId } = req.body;
+  const { imageId, imageUrl, userId } = req.body;
 
   try {
     const decreaseLikes = await Image.updateOne(
-      { _id: imageId },
+      { url: imageUrl },
       { $inc: { likes: -1 } },
       { new: true, upsert: true }
     ).exec();
@@ -100,11 +100,11 @@ router.post('/removefavorite', async (req, res) => {
 
 // save image (post)
 router.post('/addsaved', async (req, res) => {
-  const { natureSpotId, imageId, userId, origImgUrl } = req.body;
+  const { natureSpotId, userId, origUrl } = req.body;
 
   try {
     const increaseSaved = await Image.updateOne(
-      { _id: imageId },
+      { url: origUrl },
       { $inc: { saved: 1 } },
       { new: true, upsert: true }
     ).exec();
@@ -113,7 +113,7 @@ router.post('/addsaved', async (req, res) => {
       natureSpotId: natureSpotId,
       matchedImage: '',
       matching: [],
-      originalImage: origImgUrl,
+      originalImage: origUrl,
     };
 
     const savedPic = await User.updateOne(
@@ -134,11 +134,11 @@ router.post('/addsaved', async (req, res) => {
 
 // Unsave the image (post)
 router.post('/removesaved', async (req, res) => {
-  const { imageId, userId } = req.body;
+  const { userId, origUrl } = req.body;
 
   try {
     const decreaseSaved = await Image.updateOne(
-      { _id: imageId },
+      { url: origUrl },
       { $inc: { saved: -1 } },
       { new: true, upsert: true }
     ).exec();
@@ -147,7 +147,7 @@ router.post('/removesaved', async (req, res) => {
       { _id: userId },
       {
         $pull: {
-          savedPics: { savedImage: imageId },
+          savedPics: { originalImage: origUrl },
         },
       }
     ).exec();
@@ -156,6 +156,44 @@ router.post('/removesaved', async (req, res) => {
       .status(200)
       .json({ removedSavedPic: removedSavedPic, decreaseSaved: decreaseSaved });
   } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// delete mypics (from images collection & from myPics in user collection & from every user's favorites & naturespot image)
+router.post('/deletemypic', async (req, res) => {
+  const { imageId, userId, natureSpotId } = req.body;
+
+  try {
+    const imgCol = await Image.deleteOne({ _id: imageId });
+
+    const myPic = await User.updateOne(
+      { _id: userId },
+      {
+        $pull: {
+          myPics: imageId,
+        },
+      }
+    ).exec();
+
+    const natSpot = await NatureSpot.updateOne(
+      { _id: natureSpotId },
+      {
+        $pull: {
+          images: imageId,
+        },
+      }
+    );
+
+    const removeFavs = await User.updateMany(
+      {},
+      { $pull: { 'favoritePics.$[element]': imageId } },
+      { multi: true, arrayFilters: [{ element: { $eq: imageId } }] }
+    );
+
+    res.status(200).json({ imgCol, myPic, natSpot, removeFavs });
+  } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });

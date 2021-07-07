@@ -37,6 +37,7 @@ export default function SavMatImg({ pic, index }) {
   };
   useEffect(() => {
     console.log(pic);
+    console.log(spotsArr[index]);
   }, []);
 
   return (
@@ -49,7 +50,7 @@ export default function SavMatImg({ pic, index }) {
             alignItems="center"
             ml={2}
           >
-            <SavLink pic={pic} spot={spotsArr[index]} />
+            {/* <SavLink pic={pic} spot={spotsArr[index]} /> */}
           </Box>
         </Paper>
 

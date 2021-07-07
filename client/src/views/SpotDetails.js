@@ -77,7 +77,7 @@ export default function SpotDetails() {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      const res = await axios.get('/users/profile', config);
+      const res = await axios.get(`/users/profile`, config);
       setUserInfo(res.data);
       return res.data;
     }
@@ -92,28 +92,31 @@ export default function SpotDetails() {
     setNaturespot(spot._id);
     const res = await axios.get(`/images/${spot._id}`);
     await setPicturesArr(res.data.reverse());
-    await setPicsIdArr(res.data.map((p) => p._id));
+    await setPicsIdArr(res.data.map((p) => p.url));
 
     if (userData) {
+      console.log(userData);
       if (userData.favoritePics) {
         await setMatchedFavIdArr(
           res.data
-            .map((p) => p._id)
-            .filter((id) => userData.favoritePics.includes(id))
+            .map((p) => p.url)
+            .filter((url) =>
+              userData.favoritePics.map((p) => p.url).includes(url)
+            )
         );
       }
       if (userData.savedPics) {
-        const savedIds = userData.savedPics.map((obj) => obj.savedImage);
+        const savedIds = userData.savedPics.map((obj) => obj.originalImage);
         console.log(savedIds);
         await setMatchedSaveIdArr(
-          res.data.map((p) => p._id).filter((id) => savedIds.includes(id))
+          res.data.map((p) => p.url).filter((url) => savedIds.includes(url))
         );
       }
       if (userData.myPics) {
         await setMatchedMyPicIdArr(
           res.data
-            .map((p) => p._id)
-            .filter((id) => userData.myPics.includes(id))
+            .map((p) => p.url)
+            .filter((url) => userData.myPics.map((p) => p.url).includes(url))
         );
       }
     }

@@ -31,8 +31,8 @@ export default function ImgsWithProp({ picsArr }) {
   };
   useEffect(() => {
     if (picsArr == favPicsArr) {
-      setPicsIdArr(picsArr.map((pic) => pic._id));
-      setMatchedFavIdArr(favPicsArr.map((pic) => pic._id));
+      setPicsIdArr(picsArr.map((pic) => pic.url));
+      setMatchedFavIdArr(favPicsArr.map((pic) => pic.url));
     }
   }, []);
 

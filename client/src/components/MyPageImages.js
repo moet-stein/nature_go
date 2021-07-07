@@ -39,14 +39,16 @@ export default function MyPageImages({ showFavPics }) {
     setMyPicsArr(res.data.myPics);
     setFavPicsArr(res.data.favoritePics);
 
+    console.log(res.data, userData.savedPics);
+
     setMatchedSaveIdArr(
       res.data.favoritePics
-        .map((pic) => pic._id)
-        .filter((id) =>
-          userData.savedPics.map((pic) => pic.savedImage).includes(id)
+        .map((pic) => pic.url)
+        .filter((url) =>
+          userData.savedPics.map((pic) => pic.originalImage).includes(url)
         )
     );
-    setMatchedMyPicIdArr(res.data.myPics.map((pic) => pic._id));
+    setMatchedMyPicIdArr(res.data.myPics.map((pic) => pic.url));
   }, []);
 
   return (
