@@ -17,7 +17,6 @@ import Signup from './views/Authentication/Signup';
 import Login from './views/Authentication/Login';
 import UpdateProfile from './views/Authentication/UpdateProfile';
 import ConfirmReg from './views/Authentication/ConfirmReg';
-import Comments from './views/Comments';
 import { AuthProvider } from './context/AuthContext';
 import { NatureSpotsProvider } from './context/NatureSpotsContext';
 import { MarkerProvider } from './context/MarkerContext';
@@ -26,6 +25,7 @@ import { PicsArrProvider } from './context/PicsArrContext';
 import { MyPicFavPicProvider } from './context/MyPicFavPicContext';
 import { SavedArrProvider } from './context/SavedArrContext';
 import { OtherUserProvider } from './context/OtherUserContext';
+import { CommentsProvider } from './context/CommentsContext';
 
 // context
 
@@ -61,53 +61,54 @@ function App() {
                     <FavSavProvider>
                       <SavedArrProvider>
                         <OtherUserProvider>
-                          <Switch>
-                            <Route exact path="/" children={<Home />} />
-                            <Route
-                              exact
-                              path="/naturespots"
-                              children={<NatureSpots />}
-                            />
-                            <Route
-                              exact
-                              path="/details/:spotId"
-                              children={<SpotDetails />}
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/mypage/:userId"
-                              children={<MyPage />}
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/savedtomatch/:userId"
-                              children={<SavedToMatch />}
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/otheruser/:otherUserId"
-                              children={<OtherUser />}
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/comments/:natspotId"
-                              children={<Comments />}
-                            />
+                          <CommentsProvider>
+                            <Switch>
+                              <Route exact path="/" children={<Home />} />
+                              <Route
+                                exact
+                                path="/naturespots"
+                                children={<NatureSpots />}
+                              />
+                              <Route
+                                exact
+                                path="/details/:spotId"
+                                children={<SpotDetails />}
+                              />
+                              <PrivateRoute
+                                exact
+                                path="/mypage/:userId"
+                                children={<MyPage />}
+                              />
+                              <PrivateRoute
+                                exact
+                                path="/savedtomatch/:userId"
+                                children={<SavedToMatch />}
+                              />
+                              <PrivateRoute
+                                exact
+                                path="/otheruser/:otherUserId"
+                                children={<OtherUser />}
+                              />
 
-                            {/* Authentication */}
-                            <Route exact path="/signup" children={<Signup />} />
-                            <Route exact path="/login" children={<Login />} />
-                            <Route
-                              exact
-                              path="/confirmregister"
-                              children={<ConfirmReg />}
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/updateprofile/:id"
-                              children={<UpdateProfile />}
-                            />
-                          </Switch>
+                              {/* Authentication */}
+                              <Route
+                                exact
+                                path="/signup"
+                                children={<Signup />}
+                              />
+                              <Route exact path="/login" children={<Login />} />
+                              <Route
+                                exact
+                                path="/confirmregister"
+                                children={<ConfirmReg />}
+                              />
+                              <PrivateRoute
+                                exact
+                                path="/updateprofile/:id"
+                                children={<UpdateProfile />}
+                              />
+                            </Switch>
+                          </CommentsProvider>
                         </OtherUserProvider>
                       </SavedArrProvider>
                     </FavSavProvider>

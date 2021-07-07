@@ -5,6 +5,7 @@ const cors = require('cors');
 const natureSpotRoute = require('./routes/natureSpots');
 const userRoute = require('./routes/users');
 const imageRoute = require('./routes/images');
+const commentRoute = require('./routes/comments');
 const passport = require('passport');
 const awsRoute = require('./routes/aws');
 const { jwtStrategy } = require('./passport');
@@ -34,6 +35,7 @@ passport.use('jwt', jwtStrategy);
 app.use('/api/users', userRoute);
 app.use('/api/naturespots', natureSpotRoute);
 app.use('/api/images', imageRoute);
+app.use('/api/comments', commentRoute);
 app.use('/api/aws', awsRoute);
 
 app.listen(port, () => {

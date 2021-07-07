@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import GoBack from '../components/GoBack';
 import Images from '../components/Images';
-import Comments from './Comments';
+import Comments from '../components/Comments';
 import UploadButton from '../components/UploadButton';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import AppBarComponent from '../components/AppBarComponent';
@@ -163,10 +163,12 @@ export default function SpotDetails() {
           </Box>
         </Grid>
 
-        <Comments />
+        <Box m={2}>
+          <Comments spot={spot} />
+        </Box>
 
         <Grid item xs={12}>
-          <Box className={classes.center} mt={2}>
+          <Box className={classes.center}>
             <Box className={classes.boxWidth}>
               {hideDesc ? (
                 <Typography className={classes.maxW} variant="body2">
