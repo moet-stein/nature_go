@@ -195,11 +195,9 @@ export default function SpotDetails() {
             </Box>
           </Box>
         </Grid>
-        {userInfo.length > 0 && (
-          <Grid item xs={12}>
-            <UploadButton natureId={spot._id} userInfo={userInfo} />
-          </Grid>
-        )}
+        <Grid item xs={12}>
+          <UploadButton natureId={spot._id} userInfo={userInfo} />
+        </Grid>
       </Grid>
       {!loading && <Images />}
     </div>

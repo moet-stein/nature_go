@@ -47,7 +47,9 @@ export default function Images() {
             <Card key={pic._id} className={classes.root}>
               <UserHeader pic={pic} />
               <CardMedia className={classes.media} image={pic.url} />
-              {userInfo && <FavSav pic={pic} />}
+              {userInfo && Object.keys(userInfo).length !== 0 && (
+                <FavSav pic={pic} />
+              )}
             </Card>
           );
         })}

@@ -36,7 +36,7 @@ export default function FavSav({ pic }) {
     matchedMyPicIdArr,
     setMatchedMyPicIdArr,
   } = useContext(FavSavContext);
-  const { picturesArr } = useContext(PicsArrContext);
+  const { picturesArr, setPicturesArr } = useContext(PicsArrContext);
   const { myPicsArr, setMyPicsArr, favPicsArr, setFavPicsArr } = useContext(
     MyPicFavPicContext
   );
@@ -187,11 +187,18 @@ export default function FavSav({ pic }) {
 
   const handleDelete = async () => {
     console.log('delete clicked');
-    setMyPicsArr(myPicsArr.filter((p) => p.url !== pic.url));
+    console.log(pic);
+    console.log(pic.url);
+    if (location.pathname.includes('/mypage')) {
+      setMyPicsArr(myPicsArr.filter((p) => p.url !== pic.url));
+    } else {
+      setPicturesArr(picturesArr.filter((p) => p.url !== pic.url));
+    }
+
     const body = {
       imageId: pic._id,
       userId: userInfo._id,
-      natureSpotId: pic.natureSpotId,
+      natureSpotId: pic.naturespot,
     };
     const res = await axios.post('/images/deletemypic', body);
     console.log(res);

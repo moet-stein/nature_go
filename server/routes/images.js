@@ -185,11 +185,25 @@ router.post('/deletemypic', async (req, res) => {
       }
     );
 
+    // {
+    //   $in: [ObjectId('5e47a5e81627c0c63e7dba92')];
+    // }
+
     const removeFavs = await User.updateMany(
       {},
-      { $pull: { 'favoritePics.$[element]': imageId } },
-      { multi: true, arrayFilters: [{ element: { $eq: imageId } }] }
+      {
+        $pull: {
+          favoritePics: { $in: imageId },
+        },
+      },
+      { upsert: true }
     );
+
+    // const removeFavs = await User.updateMany(
+    //   {},
+    //   { $pull: { 'favoritePics.$[element]': imageId } },
+    //   { multi: true, arrayFilters: [{ element: { $eq: imageId } }] }
+    // );
 
     res.status(200).json({ imgCol, myPic, natSpot, removeFavs });
   } catch (err) {

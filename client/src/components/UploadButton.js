@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
+import grey from '@material-ui/core/colors/grey';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
@@ -24,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  cancel: {
+    color: grey[400],
   },
 }));
 
@@ -57,7 +61,7 @@ export default function UploadButton({ natureId, userInfo }) {
       _id: userInfo._id,
     };
     await setPicturesArr((oldArr) => [...oldArr, newPostObj].reverse());
-    await setMatchedMyPicIdArr((oldArr) => [...oldArr, newPostObj._id]);
+    await setMatchedMyPicIdArr((oldArr) => [...oldArr, url]);
     console.log(postReq.data.newImage);
   };
 
@@ -84,42 +88,58 @@ export default function UploadButton({ natureId, userInfo }) {
     }
   };
 
-  useEffect(() => {
-    console.log(picturesArr);
-    console.log(matchedMyPicIdArr);
+  const cancel = () => {
+    setFile(null);
+    setFileToSend(null);
+    setPreview(false);
+  };
+
+  useState(() => {
+    console.log(userInfo && Object.keys(userInfo).length === 0);
   }, []);
 
   return (
     <div className={classes.root}>
-      <React.Fragment>
-        <input
-          accept="image/*"
-          style={{ display: 'none' }}
-          id="raised-button-file"
-          multiple
-          type="file"
-          onChange={(e) => handleFile(e)}
-        />
-        <label htmlFor="raised-button-file">
-          <Button
-            variant="contained"
-            color="secondary"
-            component="span"
-            startIcon={<PhotoCamera />}
-          >
-            Upload
-          </Button>
-        </label>
-      </React.Fragment>
+      {userInfo && Object.keys(userInfo).length !== 0 && (
+        <React.Fragment>
+          <input
+            accept="image/*"
+            style={{ display: 'none' }}
+            id="raised-button-file"
+            multiple
+            type="file"
+            onChange={(e) => handleFile(e)}
+          />
+          <label htmlFor="raised-button-file">
+            <Button
+              variant="contained"
+              color="secondary"
+              component="span"
+              startIcon={<PhotoCamera />}
+            >
+              Upload
+            </Button>
+          </label>
+        </React.Fragment>
+      )}
       {preview && (
         <Box m={3}>
           <Typography color="secondary" variant="h5">
             Preview
           </Typography>
-          <Card className={classes.card}>
-            <CardMedia className={classes.media} image={file} />
-          </Card>
-          <Box m={2}>
+          <Box display="flex" justifyContent="center">
+            <Card className={classes.card}>
+              <CardMedia className={classes.media} image={file} />
+            </Card>
+          </Box>
+          <Box m={2} display="flex" justifyContent="space-around">
+            <Button
+              className={classes.cancel}
+              variant="outlined"
+              onClick={cancel}
+            >
+              Cancel
+            </Button>
             <Button variant="outlined" color="secondary" onClick={submitFile}>
               Submit
             </Button>
