@@ -17,6 +17,7 @@ import Signup from './views/Authentication/Signup';
 import Login from './views/Authentication/Login';
 import UpdateProfile from './views/Authentication/UpdateProfile';
 import ConfirmReg from './views/Authentication/ConfirmReg';
+import Comments from './views/Comments';
 import { AuthProvider } from './context/AuthContext';
 import { NatureSpotsProvider } from './context/NatureSpotsContext';
 import { MarkerProvider } from './context/MarkerContext';
@@ -86,6 +87,11 @@ function App() {
                               exact
                               path="/otheruser/:otherUserId"
                               children={<OtherUser />}
+                            />
+                            <PrivateRoute
+                              exact
+                              path="/comments/:natspotId"
+                              children={<Comments />}
                             />
 
                             {/* Authentication */}

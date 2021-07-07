@@ -100,7 +100,7 @@ export default function UploadButton({ natureId, userInfo }) {
 
   return (
     <div className={classes.root}>
-      {userInfo && Object.keys(userInfo).length !== 0 && (
+      {!preview && userInfo && Object.keys(userInfo).length !== 0 && (
         <React.Fragment>
           <input
             accept="image/*"

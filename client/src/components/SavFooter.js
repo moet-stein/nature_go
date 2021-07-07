@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
@@ -120,52 +120,54 @@ export default function SavFooter({ saved }) {
   };
 
   const showIcon = (num) => {
-    if (saved.matchedImage.length <= 0) {
-      return (
-        <Box className={classes.flex}>
-          <input
-            accept="image/*"
-            style={{ display: 'none' }}
-            id={saved._id}
-            multiple
-            type="file"
-            onClick={reset}
-            onChange={(e) => handleFile(e)}
-          />
-          <label htmlFor={saved._id}>
-            <Button
-              variant="contained"
-              color="secondary"
-              component="span"
-              startIcon={<PhotoCamera />}
-            >
-              Upload
-            </Button>
-          </label>
-        </Box>
-      );
-    } else if (num < 5) {
-      return (
-        <Box component="fieldset" borderColor="transparent">
-          <Rating
-            name="customized-icons"
-            IconContainerComponent={IconContainer}
-            value={saved.matching.length}
-            readOnly
-          />
-          <Typography color="secondary" variant="body2">
-            Matching accepted: {num}
-          </Typography>
-        </Box>
-      );
-    } else {
-      return (
-        <Box className={classes.flex}>
-          <EmojiNatureIcon color="secondary" />
-          <Typography color="secondary">Matching Accepted!</Typography>{' '}
-          <EmojiNatureIcon color="secondary" />
-        </Box>
-      );
+    if (!preview) {
+      if (saved.matchedImage.length <= 0) {
+        return (
+          <Box className={classes.flex}>
+            <input
+              accept="image/*"
+              style={{ display: 'none' }}
+              id={saved._id}
+              multiple
+              type="file"
+              onClick={reset}
+              onChange={(e) => handleFile(e)}
+            />
+            <label htmlFor={saved._id}>
+              <Button
+                variant="contained"
+                color="secondary"
+                component="span"
+                startIcon={<PhotoCamera />}
+              >
+                Upload
+              </Button>
+            </label>
+          </Box>
+        );
+      } else if (num < 5) {
+        return (
+          <Box component="fieldset" borderColor="transparent">
+            <Rating
+              name="customized-icons"
+              IconContainerComponent={IconContainer}
+              value={saved.matching.length}
+              readOnly
+            />
+            <Typography color="secondary" variant="body2">
+              Matching accepted: {num}
+            </Typography>
+          </Box>
+        );
+      } else {
+        return (
+          <Box className={classes.flex}>
+            <EmojiNatureIcon color="secondary" />
+            <Typography color="secondary">Matching Accepted!</Typography>{' '}
+            <EmojiNatureIcon color="secondary" />
+          </Box>
+        );
+      }
     }
   };
 
@@ -173,11 +175,12 @@ export default function SavFooter({ saved }) {
     <React.Fragment>
       <Box mt={2} className={classes.flex}>
         {showIcon(saved.matching.length)}
-
-        <DeleteForeverIcon
-          style={{ color: grey[600] }}
-          onClick={() => deleteSaved(saved)}
-        />
+        {!preview && (
+          <DeleteForeverIcon
+            style={{ color: grey[600] }}
+            onClick={() => deleteSaved(saved)}
+          />
+        )}
       </Box>
       {preview && (
         <Box
