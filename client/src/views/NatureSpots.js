@@ -247,6 +247,7 @@ export default function NatureSpots() {
                 )}
               </div>
             ))}
+
             {newSpot && isUserThere && (
               <Popup
                 latitude={newSpot.lat}
