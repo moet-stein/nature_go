@@ -300,8 +300,9 @@ export default function NatureSpots() {
             )}
           </ReactMapGL>
         </Grid>
-
-        <NatureSpotsListCards natureSpots={natureSpots} />
+        {natureSpots.length > 0 && (
+          <NatureSpotsListCards natureSpots={natureSpots} />
+        )}
       </Grid>
     </React.Fragment>
   );

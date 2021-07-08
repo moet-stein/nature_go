@@ -28,7 +28,8 @@ export default function NatureSpotsListCards({ natureSpots }) {
     currentPlaceId,
     setCurrentPlaceId,
   } = useContext(MarkerContext);
-  const [filteredArr, setFilteredArr] = useState([]);
+  const [filteredArr, setFilteredArr] = useState(natureSpots);
+  const [loading, setLoading] = useState(true);
 
   const showOnMap = (id, lat, long) => {
     window.scrollTo(0, 0);
@@ -48,7 +49,9 @@ export default function NatureSpotsListCards({ natureSpots }) {
   };
 
   useEffect(() => {
+    console.log(natureSpots);
     setFilteredArr(natureSpots);
+    setLoading(false);
   }, []);
 
   return (
@@ -70,55 +73,10 @@ export default function NatureSpotsListCards({ natureSpots }) {
         alignItems="center"
         minHeight="100vh"
       >
-        {filteredArr.map((spot) => (
-          <Box m={2} key={spot._id}>
-            <Card className={classes.cardWidth}>
-              <Link
-                to={{
-                  pathname: `details/${spot._id}`,
-                  state: {
-                    spot,
-                  },
-                }}
-                style={{ textDecoration: 'none' }}
-              >
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    alt={spot.title}
-                    height="220"
-                    src={thumbnail(spot)}
-                    title={spot.title}
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      color="secondary"
-                      variant="h5"
-                      component="h2"
-                    >
-                      {spot.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      {spot.desc.length > 80
-                        ? spot.desc.slice(0, 80) + '...'
-                        : spot.desc}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Link>
-              <CardActions>
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() => showOnMap(spot._id, spot.lat, spot.long)}
-                >
-                  On Map
-                </Button>
+        {!loading &&
+          filteredArr.map((spot) => (
+            <Box m={2} key={spot._id}>
+              <Card className={classes.cardWidth}>
                 <Link
                   to={{
                     pathname: `details/${spot._id}`,
@@ -126,17 +84,63 @@ export default function NatureSpotsListCards({ natureSpots }) {
                       spot,
                     },
                   }}
-                  // to={`details/${spot._id}`}
                   style={{ textDecoration: 'none' }}
                 >
-                  <Button size="small" color="primary">
-                    Learn More
-                  </Button>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      alt={spot.title}
+                      height="220"
+                      src={thumbnail(spot)}
+                      title={spot.title}
+                    />
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        color="secondary"
+                        variant="h5"
+                        component="h2"
+                      >
+                        {spot.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        {spot.desc.length > 80
+                          ? spot.desc.slice(0, 80) + '...'
+                          : spot.desc}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
                 </Link>
-              </CardActions>
-            </Card>
-          </Box>
-        ))}
+                <CardActions>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => showOnMap(spot._id, spot.lat, spot.long)}
+                  >
+                    On Map
+                  </Button>
+                  <Link
+                    to={{
+                      pathname: `details/${spot._id}`,
+                      state: {
+                        spot,
+                      },
+                    }}
+                    // to={`details/${spot._id}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <Button size="small" color="primary">
+                      Learn More
+                    </Button>
+                  </Link>
+                </CardActions>
+              </Card>
+            </Box>
+          ))}
       </Box>
     </React.Fragment>
   );
