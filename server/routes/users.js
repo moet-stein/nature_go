@@ -7,10 +7,17 @@ const users = require('../controllers/users');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const secretOrKey = require('../keys').secretOrKey;
+const secretOrKey2 = require('../keys').secretOrKey2;
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const LocalStorage = require('node-localstorage').LocalStorage,
   localStorage = new LocalStorage('./scratch');
+// mailgun
+require('dotenv').config();
+const mailgun = require('mailgun-js');
+const DOMAIN = 'sandbox53fe7162191a4212be7ee0862b0b235d.mailgun.org';
+const mg = mailgun({ apiKey: process.env.MAILGUN_API, domain: DOMAIN });
+const _ = require('lodash');
 
 // SIGNUP //
 // http://localhost:5000/users/
@@ -47,6 +54,10 @@ router.post(
             favoritePics: [],
             savedPics: [],
             login: false,
+            // resetLink: {
+            //   data: "String",
+            //   default: '',
+            // },
           });
 
           //  save user and send response
@@ -69,7 +80,7 @@ router.post('/login', async (req, res) => {
       res.send('Email does not exist');
     } else {
       bcrypt.compare(password, user.password, function (err, result) {
-        console.log(result);
+        console.log(result, 'result');
         if (err) {
           res.send(err);
         }
@@ -144,6 +155,92 @@ router.post(
     }
   }
 );
+
+// forgot password route (send email with link)
+router.put('/forgotpassword', (req, res) => {
+  const { email } = req.body;
+
+  User.findOne({ email }, (err, user) => {
+    if (err || !user) {
+      return res
+        .status(400)
+        .json({ error: 'User with this email does not exist.' });
+    }
+
+    const options = {
+      id: user._id,
+    };
+    const token = jwt.sign(options, secretOrKey2, { expiresIn: '20m' });
+
+    const data = {
+      from: 'noreply@naturego.com',
+      to: email,
+      subject: 'Reset Password Link',
+      html: `<h2>Please click the given link to reset your password.</h2><p>http://localhost:3000/resetpassword/${token}</p>`,
+    };
+
+    return user.updateOne({ resetLink: token }, function (err, success) {
+      if (err) {
+        return res.status(400).json({ error: 'Reset Password Link Error.' });
+      } else {
+        mg.messages().send(data, function (error, body) {
+          if (error) {
+            return res.json({
+              error: err.message,
+            });
+          }
+          return res.json({
+            message: 'Email has been sent, kindly follow the instrunctions',
+          });
+        });
+      }
+    });
+  });
+});
+
+// reset password route
+router.put('/resetpassword', (req, res) => {
+  const { resetLink, newPass } = req.body;
+
+  if (resetLink) {
+    jwt.verify(resetLink, secretOrKey2, function (err, decodedData) {
+      if (err) {
+        return res.status(401).json({
+          error: 'Incorrect token or it is expired',
+        });
+      }
+      User.findOne({ resetLink }, async (err, user) => {
+        if (err || !user) {
+          return res
+            .status(400)
+            .json({ error: 'User with this token does not exist.' });
+        }
+
+        // generate new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPass, salt);
+
+        const obj = {
+          password: hashedPassword,
+          resetLink: '',
+        };
+
+        user = _.extend(user, obj);
+        user.save((err, result) => {
+          if (err) {
+            return res.status(400).json({ error: 'reset password error' });
+          } else {
+            return res
+              .status(200)
+              .json({ message: 'Your password has been changed. ' });
+          }
+        });
+      });
+    });
+  } else {
+    return res.send.status(401).json({ error: 'Authentication error!' });
+  }
+});
 
 // Add Saved Image to a spot
 // router.post('/saved', async (req, res) => {

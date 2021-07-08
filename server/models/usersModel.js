@@ -29,7 +29,12 @@ const UserSchema = new mongoose.Schema(
     favoritePics: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     savedPics: [savedPicSchema],
     login: Boolean,
+    resetLink: {
+      data: String,
+      default: '',
+    },
   },
+
   { timestamps: true }
 );
 module.exports = mongoose.model('User', UserSchema);

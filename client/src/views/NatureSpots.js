@@ -45,6 +45,7 @@ const useStyle = makeStyles((theme) => ({
   marginTop: {
     marginTop: theme.spacing(2),
   },
+  marginBottom: { marginBottom: theme.spacing(10) },
   textWidth: {
     width: 150,
   },
@@ -133,6 +134,7 @@ export default function NatureSpots() {
         alignItems="center"
         justify="center"
         style={{ minHeight: '100vh' }}
+        className={classes.marginBottom}
       >
         <Grid item xs={12}>
           <ReactMapGL
