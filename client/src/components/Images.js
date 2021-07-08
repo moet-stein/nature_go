@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from 'react';
+import NoUploads from '../img/nouploads.gif';
 import UserHeader from './UserHeader';
 import FavSav from './FavSav';
 import Masonry from 'react-masonry-css';
 import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { PicsArrContext } from '../context/PicsArrContext';
@@ -54,6 +56,14 @@ export default function Images() {
           );
         })}
       </Masonry>
+      {picturesArr.length == 0 && (
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography color="secondary" variant="h4">
+            No Uploads Yet
+          </Typography>
+          <img alt="nofavorites" src={NoUploads} width="250" />
+        </Box>
+      )}
     </Box>
   );
 }

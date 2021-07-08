@@ -3,9 +3,14 @@ import { AuthContext } from '../context/AuthContext';
 import { MyPicFavPicContext } from '../context/MyPicFavPicContext';
 import { FavSavContext } from '../context/FavSavContext';
 import ImgsWithProp from '../components/ImgsWithProp';
+import NoUploads from '../img/nouploads.gif';
+import NoFavs from '../img/nofavorites.gif';
 import axios from 'axios';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import teal from '@material-ui/core/colors/teal';
+import { Link } from 'react-router-dom';
 
 export default function MyPageImages({ showFavPics }) {
   const { userInfo } = useContext(AuthContext);
@@ -55,14 +60,56 @@ export default function MyPageImages({ showFavPics }) {
     <div>
       {!showFavPics && (
         <Box mt={3}>
-          <Typography variant="h5">My Nature Pics</Typography>
+          <Typography variant="h5" style={{ color: teal[900] }}>
+            My Nature Pics
+          </Typography>
           <ImgsWithProp picsArr={myPicsArr} />
         </Box>
       )}
+      {!showFavPics && myPicsArr.length == 0 && (
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography color="secondary" variant="h4">
+            No Uploads Yet
+          </Typography>
+          <img alt="nomypics" src={NoUploads} width="250" />
+          <Link style={{ textDecoration: 'none' }} to="/naturespots">
+            <Button variant="contained" color="secondary">
+              Find
+            </Button>
+          </Link>
+          <Box mt={1}>
+            <Typography variant="body2" color="secondary">
+              Find or Create Naturespot <br /> to upload your own pictures
+            </Typography>
+          </Box>
+        </Box>
+      )}
+
       {showFavPics && (
         <Box mt={3}>
-          <Typography variant="h5">Favorites</Typography>
+          <Typography variant="h5" style={{ color: teal[900] }}>
+            Favorites
+          </Typography>
           <ImgsWithProp picsArr={favPicsArr} />
+        </Box>
+      )}
+
+      {showFavPics && favPicsArr.length == 0 && (
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography color="secondary" variant="h4">
+            No Favorites Yet
+          </Typography>
+          <img alt="nofavorites" src={NoFavs} width="250" />
+          <Link style={{ textDecoration: 'none' }} to="/naturespots">
+            <Button variant="contained" color="secondary">
+              Find
+            </Button>
+          </Link>
+          <Box mt={1}>
+            <Typography variant="body2" color="secondary">
+              Find Naturespot <br /> to like others' pictures
+            </Typography>
+          </Box>
         </Box>
       )}
     </div>

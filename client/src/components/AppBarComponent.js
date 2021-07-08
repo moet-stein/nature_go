@@ -18,6 +18,7 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import grey from '@material-ui/core/colors/grey';
+import teal from '@material-ui/core/colors/teal';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { FavSavContext } from '../context/FavSavContext';
@@ -145,9 +146,11 @@ export default function AppBarComponent() {
           )}
         </Box>
         {isUserThere ? (
-          <Typography>Hello {userInfo.username}</Typography>
+          <Typography style={{ color: teal[800] }}>
+            Hello {userInfo.username}
+          </Typography>
         ) : (
-          <Typography>Hello👋</Typography>
+          <Typography style={{ color: teal[800] }}>Hello👋</Typography>
         )}
       </Box>
       <Divider />
@@ -260,17 +263,29 @@ export default function AppBarComponent() {
             </Drawer>
             <Box>
               {active === 'naturespots' && (
-                <Typography variant="h6" className={classes.title}>
+                <Typography
+                  variant="h6"
+                  className={classes.title}
+                  style={{ color: teal[900] }}
+                >
                   Nature Spots
                 </Typography>
               )}
               {active === 'mypage' && (
-                <Typography variant="h6" className={classes.title}>
+                <Typography
+                  variant="h6"
+                  className={classes.title}
+                  style={{ color: teal[900] }}
+                >
                   My Page
                 </Typography>
               )}
               {active === 'savedtomatch' && (
-                <Typography variant="h6" className={classes.title}>
+                <Typography
+                  variant="h6"
+                  className={classes.title}
+                  style={{ color: teal[900] }}
+                >
                   Saved Pics
                 </Typography>
               )}
