@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AppBarComponent from '../components/AppBarComponent';
 import NatureSpotsListCards from '../components/NatureSpotsListCards';
 import axios from 'axios';
@@ -103,7 +103,7 @@ export default function NatureSpots() {
       user: userInfo._id,
       title,
       desc,
-      rating,
+      rating: 0,
       lat: newSpot.lat,
       long: newSpot.long,
     };
@@ -117,6 +117,10 @@ export default function NatureSpots() {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    console.log(natureSpots);
+  }, []);
 
   return (
     <React.Fragment>
@@ -272,14 +276,14 @@ export default function NatureSpots() {
                       onChange={(e) => setDesc(e.target.value)}
                     />
 
-                    <label className={classes.label}>Rating</label>
+                    {/* <label className={classes.label}>Rating</label>
                     <Rating
                       name="simple-controlled"
                       value={rating}
                       onChange={(event, newValue) => {
                         setRating(newValue);
                       }}
-                    />
+                    /> */}
 
                     <Button
                       className={classes.marginTop}

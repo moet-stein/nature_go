@@ -14,6 +14,28 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Update rating number
+router.post('/updaterating', async (req, res) => {
+  const { natId, averageRating } = req.body;
+  try {
+    const updatedRating = await NatureSpot.updateOne(
+      {
+        _id: natId,
+      },
+      {
+        $set: {
+          rating: averageRating,
+        },
+      }
+    ).exec();
+
+    res.status(200).json(updatedRating);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 // **************************GET*************************//
 // Get all spots
 router.get('/', async (req, res) => {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../context/AuthContext';
 import { CommentsContext } from '../context/CommentsContext';
+import { NatureSpotsContext } from '../context/NatureSpotsContext';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -28,6 +29,9 @@ export default function CommentForm({ spot }) {
     writeReview,
     setWriteReview,
   } = useContext(CommentsContext);
+  const { natureSpots, setNatureSpots, setNewAdded } = useContext(
+    NatureSpotsContext
+  );
 
   const submitForm = async () => {
     console.log(review, rating, userInfo._id, spot._id);
@@ -38,6 +42,8 @@ export default function CommentForm({ spot }) {
       rating: rating,
     };
     const newComment = await axios.post('/comments/newcomment', body);
+
+    //   Add new comment to the array in context
     const newComToShow = {
       naturespot: spot._id,
       author: {
@@ -53,6 +59,8 @@ export default function CommentForm({ spot }) {
       [...oldArr.reverse(), newComToShow].reverse()
     );
     const newArr = [...commentsArr, newComToShow];
+
+    //   get average rating
     const getAve = () => {
       return Number(
         (
@@ -62,6 +70,23 @@ export default function CommentForm({ spot }) {
     };
     console.log(getAve());
     await setAvarageRating(getAve());
+
+    //   Update naturespot rating
+    const updateRat = {
+      natId: spot._id,
+      averageRating: getAve(),
+    };
+    const updatedRating = await axios.post(
+      '/naturespots/updaterating',
+      updateRat
+    );
+
+    // update rating in naturespots context (so that user can see updated rating when going back to the page (without fetching ))
+    const indexNat = natureSpots.findIndex((s) => s._id === spot._id);
+    let newSpotsArr = [...natureSpots];
+    newSpotsArr[indexNat].rating = getAve();
+    await setNatureSpots(newSpotsArr);
+
     await setWriteReview(false);
   };
 

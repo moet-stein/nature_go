@@ -14,6 +14,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import CreateIcon from '@material-ui/icons/Create';
 import blue from '@material-ui/core/colors/blue';
 import { CommentsContext } from '../context/CommentsContext';
+import { NatureSpotsContext } from '../context/NatureSpotsContext';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UpdateForm({ comment, index }) {
   const classes = useStyles();
+  let { spotId } = useParams();
   const [oldReview, setOldReview] = useState(comment.comment);
   const [review, setReview] = useState(comment.comment);
   const [oldRating, setOldRating] = useState(comment.rating);
@@ -50,6 +53,9 @@ export default function UpdateForm({ comment, index }) {
     writeUpdate,
     setWriteUpdate,
   } = useContext(CommentsContext);
+  const { natureSpots, setNatureSpots, setNewAdded } = useContext(
+    NatureSpotsContext
+  );
 
   //   const handleOpen = () => {
   //     setWriteUpdate(true);
@@ -86,12 +92,24 @@ export default function UpdateForm({ comment, index }) {
         newRating: rating,
       };
       const newComment = await axios.post('/comments/updatecomment', body);
+
+      // update rating in naturespot data
+      const updateRat = {
+        natId: spotId,
+        averageRating: getAve(),
+      };
+      const updatedRating = await axios.post(
+        '/naturespots/updaterating',
+        updateRat
+      );
+
+      // update rating in naturespots context (so that user can see updated rating when going back to the page (without fetching ))
+      const indexNat = natureSpots.findIndex((s) => s._id === spotId);
+      let newSpotsArr = [...natureSpots];
+      newSpotsArr[indexNat].rating = getAve();
+      await setNatureSpots(newSpotsArr);
     }
     setWriteUpdate(false);
-
-    console.log(commentsArr);
-    console.log(review);
-    console.log(rating);
   };
 
   return (

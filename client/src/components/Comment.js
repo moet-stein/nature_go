@@ -13,6 +13,8 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CreateIcon from '@material-ui/icons/Create';
 import { AuthContext } from '../context/AuthContext';
 import { CommentsContext } from '../context/CommentsContext';
+import { NatureSpotsContext } from '../context/NatureSpotsContext';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   small: {
@@ -29,7 +31,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Comment({ comment, index }) {
   const classes = useStyles();
+  let { spotId } = useParams();
   const { userInfo } = useContext(AuthContext);
+  const { natureSpots, setNatureSpots, setNewAdded } = useContext(
+    NatureSpotsContext
+  );
   const {
     commentsArr,
     setCommentsArr,
@@ -61,6 +67,12 @@ export default function Comment({ comment, index }) {
       createdAt: comment.createdAt,
     };
     const res = await axios.post('/comments/deletecomment', body);
+
+    // update rating in naturespots context (so that user can see updated rating when going back to the page (without fetching ))
+    const indexNat = natureSpots.findIndex((s) => s._id === spotId);
+    let newSpotsArr = [...natureSpots];
+    newSpotsArr[indexNat].rating = newAve;
+    await setNatureSpots(newSpotsArr);
   };
 
   const handleOpen = () => {
