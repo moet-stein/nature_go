@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import NoReview from '../img/noreview.gif';
 import Comment from './Comment';
 import UpdateForm from './UpdateForm';
 import CommentForm from './CommentForm';
@@ -8,8 +9,10 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import amber from '@material-ui/core/colors/amber';
 import CreateIcon from '@material-ui/icons/Create';
 import CloseIcon from '@material-ui/icons/Close';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import { CommentsContext } from '../context/CommentsContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RevContents({ spot }) {
   const classes = useStyles();
-  const [ratingValue, setRatingValue] = useState(4.2);
   const [loading, setLoading] = useState(true);
   const {
     commentsArr,
@@ -31,6 +33,7 @@ export default function RevContents({ spot }) {
     setWriteReview,
     clickedIndex,
   } = useContext(CommentsContext);
+  const [ratingValue, setRatingValue] = useState(avarageRating);
 
   const openWriteReview = () => {
     writeReview ? setWriteReview(false) : setWriteReview(true);
@@ -45,6 +48,7 @@ export default function RevContents({ spot }) {
     const average = sumRating / res.data.length;
     setAvarageRating(Number(average.toFixed(1)));
     setLoading(false);
+    console.log(avarageRating);
   }, []);
   return (
     <div>
@@ -56,15 +60,17 @@ export default function RevContents({ spot }) {
           <Typography color="primary" variant="body2">
             {spot.title}
           </Typography>
-          <Box display="flex">
-            <Rating
-              precision={0.1}
-              name="read-only"
-              value={ratingValue}
-              readOnly
-            />
-            <Typography color="secondary">{avarageRating}</Typography>
-          </Box>
+          {!loading && commentsArr.length > 0 && (
+            <Box display="flex">
+              <Rating
+                precision={0.1}
+                name="read-only"
+                value={avarageRating}
+                readOnly
+              />
+              <Typography color="secondary">{avarageRating}</Typography>
+            </Box>
+          )}
         </Box>
 
         <Box className={classes.new}>
@@ -98,13 +104,36 @@ export default function RevContents({ spot }) {
                 <Comment key={comment._id} comment={comment} index={index} />
               </Box>
             ))}
-          {!loading && commentsArr && (
+          {!loading && commentsArr.length > 0 && (
             <React.Fragment>
               <UpdateForm
                 comment={commentsArr[clickedIndex]}
                 index={clickedIndex}
               />
             </React.Fragment>
+          )}
+          {!loading && commentsArr.length == 0 && (
+            <Box
+              display="flex"
+              alignItems="center"
+              flexDirection="column"
+              mt={1}
+            >
+              <Box ml={17} mb={2}>
+                <ArrowUpwardIcon style={{ color: amber[400], fontSize: 60 }} />
+              </Box>
+              <Typography color="secondary" variant="h4">
+                No Reviews Yet
+              </Typography>
+              <Box mt={2}>
+                <Typography color="secondary" variant="h5">
+                  Write a new review!
+                </Typography>
+              </Box>
+              <Box>
+                <img alt="no reviews" src={NoReview} width="250" />
+              </Box>
+            </Box>
           )}
         </React.Fragment>
       )}
