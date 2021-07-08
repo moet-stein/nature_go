@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Comment from './Comment';
+import UpdateForm from './UpdateForm';
 import CommentForm from './CommentForm';
 import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
@@ -28,6 +29,7 @@ export default function RevContents({ spot }) {
     setAvarageRating,
     writeReview,
     setWriteReview,
+    clickedIndex,
   } = useContext(CommentsContext);
 
   const openWriteReview = () => {
@@ -91,11 +93,19 @@ export default function RevContents({ spot }) {
         <React.Fragment>
           {!loading &&
             commentsArr &&
-            commentsArr.map((comment) => (
-              <Box mt={4}>
-                <Comment key={comment._id} comment={comment} />
+            commentsArr.map((comment, index) => (
+              <Box mt={4} key={comment._id}>
+                <Comment key={comment._id} comment={comment} index={index} />
               </Box>
             ))}
+          {!loading && commentsArr && (
+            <React.Fragment>
+              <UpdateForm
+                comment={commentsArr[clickedIndex]}
+                index={clickedIndex}
+              />
+            </React.Fragment>
+          )}
         </React.Fragment>
       )}
 

@@ -32,6 +32,30 @@ router.post('/deletecomment', async (req, res) => {
   }
 });
 
+// update comment
+router.post('/updatecomment', async (req, res) => {
+  const { oldReview, oldRating, createdAt, newReview, newRating } = req.body;
+  try {
+    const updatedComment = await Comment.updateOne(
+      {
+        comment: oldReview,
+        rating: oldRating,
+      },
+      {
+        $set: {
+          comment: newReview,
+          rating: newRating,
+        },
+      }
+    ).exec();
+
+    res.status(200).json(updatedComment);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 // ***************************GET*********************
 
 // get comments for the naturespot

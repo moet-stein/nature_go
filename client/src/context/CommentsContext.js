@@ -8,6 +8,7 @@ const initCommentsContext = {
   avarageRating: null,
   writeReview: false,
   writeUpdate: false,
+  clickedIndex: 0,
 };
 // 3. create context
 export const CommentsContext = createContext(initCommentsContext);
@@ -27,6 +28,9 @@ export const CommentsProvider = ({ children }) => {
   const [writeUpdate, setWriteUpdate] = useState(
     initCommentsContext.writeUpdate
   );
+  const [clickedIndex, setClickedIndex] = useState(
+    initCommentsContext.clickedIndex
+  );
 
   return (
     <CommentsContext.Provider
@@ -41,6 +45,8 @@ export const CommentsProvider = ({ children }) => {
         setWriteReview,
         writeUpdate,
         setWriteUpdate,
+        clickedIndex,
+        setClickedIndex,
       }}
     >
       {children}

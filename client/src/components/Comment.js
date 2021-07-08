@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Comment({ comment }) {
+export default function Comment({ comment, index }) {
   const classes = useStyles();
   const { userInfo } = useContext(AuthContext);
   const {
@@ -39,6 +39,8 @@ export default function Comment({ comment }) {
     setWriteReview,
     writeUpdate,
     setWriteUpdate,
+    clickedIndex,
+    setClickedIndex,
   } = useContext(CommentsContext);
 
   const handleDelete = async () => {
@@ -63,6 +65,8 @@ export default function Comment({ comment }) {
 
   const handleOpen = () => {
     setWriteUpdate(true);
+    setClickedIndex(index);
+    console.log(index, comment.comment, comment.rating);
   };
 
   return (
@@ -94,7 +98,7 @@ export default function Comment({ comment }) {
       {comment.author._id === userInfo._id && (
         <Box display="flex" justifyContent="flex-end">
           <CreateIcon style={{ color: blue[400] }} onClick={handleOpen} />
-          {writeUpdate && <UpdateForm comment={comment} />}
+          {/* <UpdateForm comment={comment} index={index} /> */}
           <Box className={classes.marginIcon}>
             <DeleteOutlineIcon
               style={{ color: grey[400] }}
