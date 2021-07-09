@@ -15,7 +15,7 @@ const mailgun = require('mailgun-js');
 const DOMAIN = 'sandbox53fe7162191a4212be7ee0862b0b235d.mailgun.org';
 const mg = mailgun({ apiKey: process.env.MAILGUN_API, domain: DOMAIN });
 const _ = require('lodash');
-const User = require('../models/UsersModel');
+const User = require('../models/usersModel');
 
 // SIGNUP //
 // http://localhost:5000/users/

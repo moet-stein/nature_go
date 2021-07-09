@@ -33,7 +33,7 @@ app.use(cors());
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
 
-app.use('/users', userRoute);
+app.use('/api/users', userRoute);
 app.use('/api/naturespots', natureSpotRoute);
 app.use('/api/images', imageRoute);
 app.use('/api/comments', commentRoute);
