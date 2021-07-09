@@ -61,7 +61,9 @@ export default function Images() {
           <Typography color="secondary" variant="h4">
             No Uploads Yet
           </Typography>
-          <img alt="nofavorites" src={NoUploads} width="250" />
+          <Box mb={10}>
+            <img alt="nofavorites" src={NoUploads} width="250" />
+          </Box>
         </Box>
       )}
     </Box>

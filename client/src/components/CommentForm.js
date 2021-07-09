@@ -68,7 +68,6 @@ export default function CommentForm({ spot }) {
         ).toFixed(1)
       );
     };
-    console.log(getAve());
     await setAvarageRating(getAve());
 
     //   Update naturespot rating

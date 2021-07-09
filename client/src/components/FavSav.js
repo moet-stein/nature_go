@@ -34,7 +34,6 @@ export default function FavSav({ pic }) {
     matchedSaveIdArr,
     setMatchedSaveIdArr,
     matchedMyPicIdArr,
-    setMatchedMyPicIdArr,
   } = useContext(FavSavContext);
   const { picturesArr, setPicturesArr } = useContext(PicsArrContext);
   const { myPicsArr, setMyPicsArr, favPicsArr, setFavPicsArr } = useContext(
@@ -96,12 +95,10 @@ export default function FavSav({ pic }) {
   };
 
   const handleFavSav = (picUrl, kind) => {
-    console.log(pic);
     let removeRoute, addRoute, arr, setArr, picObjArr;
     // When detailed page => picturesArr
     // WHen mypage (on favorite (myPics cannot be liked or saved))  => favPicsArr
     picObjArr = picturesArr.length > 0 ? picturesArr : favPicsArr;
-    console.log(picObjArr);
 
     //   Depending on favorite icon or save icon, routes and arr to be manipulated are different
     if (kind === 'favorite') {
@@ -175,7 +172,6 @@ export default function FavSav({ pic }) {
       setArr((oldArray) => [...oldArray, picUrl]);
 
       let picObjIndex = picObjArr.findIndex((obj) => obj.url == picUrl);
-      console.log(picObjArr, picObjIndex);
 
       if (arr === matchedFavIdArr) {
         picObjArr[picObjIndex].likes += 1;
@@ -186,9 +182,6 @@ export default function FavSav({ pic }) {
   };
 
   const handleDelete = async () => {
-    console.log('delete clicked');
-    console.log(pic);
-    console.log(pic.url);
     if (location.pathname.includes('/mypage')) {
       setMyPicsArr(myPicsArr.filter((p) => p.url !== pic.url));
     } else {
@@ -201,7 +194,6 @@ export default function FavSav({ pic }) {
       natureSpotId: pic.naturespot,
     };
     const res = await axios.post('/images/deletemypic', body);
-    console.log(res);
   };
 
   return (

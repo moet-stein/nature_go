@@ -6,9 +6,6 @@ import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 export default function SavLink({ pic, spot }) {
-  useEffect(() => {
-    console.log(spot);
-  }, []);
   return (
     <Link
       to={{

@@ -62,7 +62,6 @@ export default function UploadButton({ natureId, userInfo }) {
     };
     await setPicturesArr((oldArr) => [...oldArr, newPostObj].reverse());
     await setMatchedMyPicIdArr((oldArr) => [...oldArr, url]);
-    console.log(postReq.data.newImage);
   };
 
   const submitFile = async () => {
@@ -101,7 +100,7 @@ export default function UploadButton({ natureId, userInfo }) {
   return (
     <div className={classes.root}>
       {!preview && userInfo && Object.keys(userInfo).length !== 0 && (
-        <React.Fragment>
+        <Box mt={5}>
           <input
             accept="image/*"
             style={{ display: 'none' }}
@@ -120,7 +119,7 @@ export default function UploadButton({ natureId, userInfo }) {
               Upload
             </Button>
           </label>
-        </React.Fragment>
+        </Box>
       )}
       {preview && (
         <Box m={3}>

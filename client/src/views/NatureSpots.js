@@ -119,10 +119,6 @@ export default function NatureSpots() {
     }
   };
 
-  useEffect(() => {
-    console.log(natureSpots);
-  }, []);
-
   return (
     <React.Fragment>
       {' '}
@@ -145,7 +141,7 @@ export default function NatureSpots() {
             onDblClick={handleAddClick}
             // transitionDuration="50"
           >
-            <Geocoder
+            {/* <Geocoder
               mapboxApiAccessToken={mapBoxToken}
               onSelected={(viewport) => onSelected(viewport)}
               viewport={viewport}
@@ -153,7 +149,7 @@ export default function NatureSpots() {
               value=""
               position="top-left"
               // queryParams={params}
-            />
+            /> */}
             {natureSpots.map((spot) => (
               <div key={spot._id}>
                 <Marker
@@ -209,7 +205,12 @@ export default function NatureSpots() {
                       </Box>
                       <label className={classes.label}>Rating</label>
                       <Box component="fieldset" borderColor="transparent">
-                        <Rating name="read-only" value={spot.rating} readOnly />
+                        <Rating
+                          name="read-only"
+                          value={spot.rating}
+                          readOnly
+                          precision={0.1}
+                        />
                       </Box>
                       <label className={classes.label}>Infomation</label>
                       <Box>

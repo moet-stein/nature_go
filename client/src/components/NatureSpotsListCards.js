@@ -49,7 +49,6 @@ export default function NatureSpotsListCards({ natureSpots }) {
   };
 
   useEffect(() => {
-    console.log(natureSpots);
     setFilteredArr(natureSpots);
     setLoading(false);
   }, []);

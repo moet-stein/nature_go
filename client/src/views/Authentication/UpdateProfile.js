@@ -202,16 +202,18 @@ export default function UpdateProfile() {
                   type="file"
                   onChange={(e) => handleFile(e)}
                 />
-                <label htmlFor="raised-button-file">
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    component="span"
-                    startIcon={<PhotoCamera />}
-                  >
-                    Change
-                  </Button>
-                </label>
+                {!showCancel && (
+                  <label htmlFor="raised-button-file">
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      component="span"
+                      startIcon={<PhotoCamera />}
+                    >
+                      Change
+                    </Button>
+                  </label>
+                )}
                 {showCancel && (
                   <Box m={2}>
                     <Button

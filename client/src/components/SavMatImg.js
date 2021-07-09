@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import SavLink from './SavLink';
+import axios from 'axios';
 import SavFooter from './SavFooter';
 import { SavedArrContext } from '../context/SavedArrContext';
 import { makeStyles } from '@material-ui/core';
@@ -31,13 +32,16 @@ export default function SavMatImg({ pic, index }) {
   const classes = useStyles();
   const { spotsArr } = useContext(SavedArrContext);
   const [yourPic, setYourPic] = useState(false);
+  const [spot, setSpot] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const togglePics = () => {
     yourPic ? setYourPic(false) : setYourPic(true);
   };
-  useEffect(() => {
-    console.log(pic);
-    console.log(spotsArr[index]);
+  useEffect(async () => {
+    const res = await axios.get(`/naturespots/${pic.natureSpotId}`);
+    setSpot(res.data);
+    setLoading(false);
   }, []);
 
   return (
@@ -50,7 +54,7 @@ export default function SavMatImg({ pic, index }) {
             alignItems="center"
             ml={2}
           >
-            {/* <SavLink pic={pic} spot={spotsArr[index]} /> */}
+            {!loading && spot && <SavLink pic={pic} spot={spot} />}
           </Box>
         </Paper>
 

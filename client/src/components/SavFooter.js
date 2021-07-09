@@ -80,11 +80,9 @@ export default function SavFooter({ saved }) {
         item._id == saved._id ? { ...item, matchedImage: url } : item
       )
     );
-    console.log(postReq.data.newImage);
   };
 
   const submitFile = async () => {
-    console.log(file);
     try {
       if (!fileToSend) {
         throw new Error('Select a file first!');

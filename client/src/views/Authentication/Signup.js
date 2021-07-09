@@ -84,11 +84,9 @@ export default function Signup() {
   const history = useHistory();
 
   const handleFile = async (event) => {
-    console.log(file === DefaultAvatar);
     setShowCancel(true);
     setFile(URL.createObjectURL(event.target.files[0]));
     setFileToSend(event.target.files);
-    console.log(event.target.files);
   };
 
   const resetAvatar = () => {
@@ -185,7 +183,7 @@ export default function Signup() {
               <Room className={classes.avatar} color="secondary" />
             </Box>
           </Box>
-          {error && <Alert severity="error">{error}</Alert>}
+
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -207,14 +205,16 @@ export default function Signup() {
                     onChange={(e) => handleFile(e)}
                   />
                   <label htmlFor="raised-button-file">
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      component="span"
-                      startIcon={<PhotoCamera />}
-                    >
-                      Upload
-                    </Button>
+                    {!showCancel && (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        component="span"
+                        startIcon={<PhotoCamera />}
+                      >
+                        Upload
+                      </Button>
+                    )}
                   </label>
                   {showCancel && (
                     <Box m={2}>
@@ -227,9 +227,23 @@ export default function Signup() {
                       </Button>
                     </Box>
                   )}
-                  <Typography>Upload your Profile Pic</Typography>
+                  {!showCancel && (
+                    <Box>
+                      <Typography>Upload your Profile Pic</Typography>
+                    </Box>
+                  )}
                 </Box>
               </Grid>
+              {error && (
+                <Box
+                  ml={10}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Alert severity="error">{error}</Alert>
+                </Box>
+              )}
               <Grid item xs={12}>
                 <TextField
                   InputProps={{

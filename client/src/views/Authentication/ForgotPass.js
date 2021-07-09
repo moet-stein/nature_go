@@ -51,7 +51,6 @@ export default function ForgotPass() {
       const body = { email: email };
       const res = await axios.put('/users/forgotpassword', body);
       setSent(true);
-      console.log(res.data);
     } catch (err) {
       console.log(err);
       setError(`Email does not exist`);

@@ -44,8 +44,6 @@ export default function MyPageImages({ showFavPics }) {
     setMyPicsArr(res.data.myPics);
     setFavPicsArr(res.data.favoritePics);
 
-    console.log(res.data, userData.savedPics);
-
     setMatchedSaveIdArr(
       res.data.favoritePics
         .map((pic) => pic.url)

@@ -80,10 +80,9 @@ export default function UpdateForm({ comment, index }) {
           ).toFixed(1)
         );
       };
-      console.log(getAve());
+
       await setAvarageRating(getAve());
 
-      console.log(comment.createdAt, oldReview);
       const body = {
         oldReview: oldReview,
         oldRating: oldRating,

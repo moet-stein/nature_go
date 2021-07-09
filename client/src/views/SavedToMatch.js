@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { SavedArrContext } from '../context/SavedArrContext';
 import axios from 'axios';
@@ -33,11 +33,13 @@ export default function SavedToMatch() {
     const userId = userInfo._id || userData._id;
     const res = await axios.get(`/users/savedpics/${userId}`);
     await setSavedArr(res.data.savedPics);
-    console.log(res.data.savedPics);
-    res.data.savedPics.forEach(async (s) => {
-      const res = await axios.get(`/naturespots/${s.natureSpotId}`);
-      return setSpotsArr((old) => [...old, res.data]);
-    });
+
+    // await setSpotsArr(res.data.savedPics.map());
+    // await res.data.savedPics.forEach(async (s) => {
+    //   const res = await axios.get(`/naturespots/${s.natureSpotId}`);
+    //   console.log(res.data);
+    //   return setSpotsArr((old) => [...old, res.data]);
+    // });
   }, []);
 
   return (

@@ -66,7 +66,8 @@ export default function SpotDetails() {
   });
 
   const longDesc = spot.desc.length > 200 ? true : false;
-  const displayDesc = spot.desc.slice(0, 200) + '...';
+  const displayDesc =
+    spot.desc.length > 100 ? spot.desc.slice(0, 100) + '...' : spot.desc;
 
   const showMoreDesc = () => {
     hideDesc ? setHideDesc(false) : setHideDesc(true);
@@ -180,23 +181,25 @@ export default function SpotDetails() {
                 </Typography>
               )}
 
-              <Box mt={12} className={classes.noPadding}>
-                {hideDesc ? (
-                  <IconButton onClick={showMoreDesc}>
-                    <ArrowDownwardIcon fontSize="small" />
-                    <Typography className={classes.maxW} variant="body2">
-                      See more
-                    </Typography>
-                  </IconButton>
-                ) : (
-                  <IconButton onClick={showMoreDesc}>
-                    <ArrowUpwardIcon fontSize="small" />
-                    <Typography className={classes.maxW} variant="body2">
-                      Hide
-                    </Typography>
-                  </IconButton>
-                )}
-              </Box>
+              {displayDesc.length > 100 && (
+                <Box mt={12} className={classes.noPadding}>
+                  {hideDesc ? (
+                    <IconButton onClick={showMoreDesc}>
+                      <ArrowDownwardIcon fontSize="small" />
+                      <Typography className={classes.maxW} variant="body2">
+                        See more
+                      </Typography>
+                    </IconButton>
+                  ) : (
+                    <IconButton onClick={showMoreDesc}>
+                      <ArrowUpwardIcon fontSize="small" />
+                      <Typography className={classes.maxW} variant="body2">
+                        Hide
+                      </Typography>
+                    </IconButton>
+                  )}
+                </Box>
+              )}
             </Box>
           </Box>
         </Grid>

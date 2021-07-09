@@ -168,18 +168,23 @@ export default function Signup() {
                   variant="body2"
                   style={{ textDecoration: 'none' }}
                 >
-                  <Typography className={classes.textColor} variant="h6">
-                    No account yet? Signup
-                  </Typography>
+                  <Box m={2}>
+                    <Typography className={classes.textColor} variant="h6">
+                      No account yet? Signup
+                    </Typography>
+                  </Box>
                 </Link>
                 <Link
                   to="/forgotpass"
                   variant="body2"
                   style={{ textDecoration: 'none' }}
                 >
-                  <Typography className={classes.textColor} variant="h6">
-                    Forgot Password?
-                  </Typography>
+                  {' '}
+                  <Box m={2}>
+                    <Typography className={classes.textColor} variant="h6">
+                      Forgot Password?
+                    </Typography>
+                  </Box>
                 </Link>
               </Grid>
 

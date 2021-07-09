@@ -14,6 +14,8 @@ import CreateIcon from '@material-ui/icons/Create';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import { CommentsContext } from '../context/CommentsContext';
+import { AuthContext } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   new: {
@@ -24,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RevContents({ spot }) {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
+  const { userInfo } = useContext(AuthContext);
   const {
     commentsArr,
     setCommentsArr,
@@ -37,7 +40,6 @@ export default function RevContents({ spot }) {
 
   const openWriteReview = () => {
     writeReview ? setWriteReview(false) : setWriteReview(true);
-    console.log('write review');
   };
 
   useEffect(async () => {
@@ -48,8 +50,8 @@ export default function RevContents({ spot }) {
     const average = sumRating / res.data.length;
     setAvarageRating(Number(average.toFixed(1)));
     setLoading(false);
-    console.log(avarageRating);
   }, []);
+
   return (
     <div>
       <Box display="flex" justifyContent="space-around">
@@ -73,27 +75,29 @@ export default function RevContents({ spot }) {
           )}
         </Box>
 
-        <Box className={classes.new}>
-          {!writeReview ? (
-            <Button
-              color="secondary"
-              variant="outlined"
-              startIcon={<CreateIcon />}
-              onClick={openWriteReview}
-            >
-              <Typography variant="body2">New</Typography>
-            </Button>
-          ) : (
-            <Button
-              color="secondary"
-              variant="outlined"
-              startIcon={<CloseIcon />}
-              onClick={openWriteReview}
-            >
-              <Typography variant="body2">Cancel</Typography>
-            </Button>
-          )}
-        </Box>
+        {userInfo && Object.keys(userInfo).length !== 0 && (
+          <Box className={classes.new}>
+            {!writeReview ? (
+              <Button
+                color="secondary"
+                variant="outlined"
+                startIcon={<CreateIcon />}
+                onClick={openWriteReview}
+              >
+                <Typography variant="body2">New</Typography>
+              </Button>
+            ) : (
+              <Button
+                color="secondary"
+                variant="outlined"
+                startIcon={<CloseIcon />}
+                onClick={openWriteReview}
+              >
+                <Typography variant="body2">Cancel</Typography>
+              </Button>
+            )}
+          </Box>
+        )}
       </Box>
       {!writeReview && (
         <React.Fragment>
@@ -119,9 +123,13 @@ export default function RevContents({ spot }) {
               flexDirection="column"
               mt={1}
             >
-              <Box ml={17} mb={2}>
-                <ArrowUpwardIcon style={{ color: amber[400], fontSize: 60 }} />
-              </Box>
+              {userInfo && Object.keys(userInfo).length !== 0 && (
+                <Box ml={17} mb={2}>
+                  <ArrowUpwardIcon
+                    style={{ color: amber[400], fontSize: 60 }}
+                  />
+                </Box>
+              )}
               <Typography color="secondary" variant="h4">
                 No Reviews Yet
               </Typography>
@@ -133,6 +141,15 @@ export default function RevContents({ spot }) {
               <Box>
                 <img alt="no reviews" src={NoReview} width="250" />
               </Box>
+              {userInfo && Object.keys(userInfo).length == 0 && (
+                <Link to="/login" style={{ textDecoration: 'none' }}>
+                  <Box mt={2}>
+                    <Button variant="outlined" color="secondary">
+                      Login
+                    </Button>
+                  </Box>
+                </Link>
+              )}
             </Box>
           )}
         </React.Fragment>

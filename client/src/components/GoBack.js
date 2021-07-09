@@ -2,6 +2,7 @@ import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
+import green from '@material-ui/core/colors/green';
 const useStyles = makeStyles((theme) => ({
   marginFlex: {
     marginTop: theme.spacing(2),
@@ -23,7 +24,11 @@ const GoBack = () => {
 
   return (
     <div className={classes.marginFlex}>
-      <ArrowBackIcon fontSize="large" onClick={goBack} />
+      <ArrowBackIcon
+        style={{ color: green[500] }}
+        fontSize="large"
+        onClick={goBack}
+      />
     </div>
   );
 };

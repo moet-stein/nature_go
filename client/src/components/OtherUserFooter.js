@@ -90,12 +90,12 @@ export default function OtherUserFooter({ pic, index }) {
           i === index ? { ...item, matching: updatedArr } : item
         )
       );
-      console.log(
-        updatedArr,
-        havMatPicArr.map((item, i) =>
-          i === index ? { ...item, matching: updatedArr } : item
-        )
-      );
+      // console.log(
+      //   updatedArr,
+      //   havMatPicArr.map((item, i) =>
+      //     i === index ? { ...item, matching: updatedArr } : item
+      //   )
+      // );
       setToggleGive(true);
       const body = {
         getBackFrom: otherUserId,

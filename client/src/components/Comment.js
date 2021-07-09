@@ -78,7 +78,6 @@ export default function Comment({ comment, index }) {
   const handleOpen = () => {
     setWriteUpdate(true);
     setClickedIndex(index);
-    console.log(index, comment.comment, comment.rating);
   };
 
   return (

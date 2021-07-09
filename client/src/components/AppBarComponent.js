@@ -19,6 +19,7 @@ import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import grey from '@material-ui/core/colors/grey';
 import teal from '@material-ui/core/colors/teal';
+import green from '@material-ui/core/colors/green';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { FavSavContext } from '../context/FavSavContext';
@@ -51,7 +52,6 @@ export default function AppBarComponent() {
     left: false,
   });
   const [active, setActive] = useState('');
-  // const [isUserThere, setIsUserThere] = useState(false);
   const { userInfo, setUserInfo, isUserThere, setIsUserThere } = useContext(
     AuthContext
   );
@@ -97,7 +97,6 @@ export default function AppBarComponent() {
       setActive('savedtomatch');
       setSelectedIndex(2);
     }
-    console.log(userInfo instanceof Array, userInfo);
 
     const token = window.localStorage.getItem('token');
     const getUserInfo = async () => {
@@ -111,7 +110,6 @@ export default function AppBarComponent() {
         await setFavIdArr(res.data.favoritePics);
         await setSavIdArr(res.data.savedPics);
         setIsUserThere(true);
-        console.log("I'm res.data from AppbarComponent", res.data);
       }
     };
 
@@ -252,7 +250,7 @@ export default function AppBarComponent() {
               aria-label="menu"
               onClick={toggleDrawer('left', true)}
             >
-              <MenuIcon />
+              <MenuIcon style={{ color: green[900] }} />
             </IconButton>
             <Drawer
               anchor="left"

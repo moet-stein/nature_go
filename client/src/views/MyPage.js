@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBarComponent from '../components/AppBarComponent';
 import ProfileSection from '../components/ProfileSection';
 import MyPageImages from '../components/MyPageImages';
-import Images from '../components/Images';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,7 +10,14 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
+import green from '@material-ui/core/colors/green';
 import { AuthContext } from '../context/AuthContext';
+
+const useStyles = makeStyles(() => ({
+  color: {
+    color: green[600],
+  },
+}));
 
 const IOSSwitch = withStyles((theme) => ({
   root: {
@@ -71,6 +77,7 @@ export default function MyPage() {
   const [myPicsArr, setMyPicsArr] = useState([]);
   const [favPicsArr, setFavPicsArr] = useState([]);
   const { userInfo } = useContext(AuthContext);
+  const classes = useStyles();
 
   const handleChange = (event) => {
     setFavMyPics(event.target.checked);
@@ -86,7 +93,7 @@ export default function MyPage() {
         <FormGroup>
           <Grid component="label" container alignItems="center" spacing={1}>
             <Grid item>
-              <Typography>My Pics</Typography>
+              <Typography color="primary">My Pics</Typography>
             </Grid>
             <Grid item>
               <FormControlLabel
@@ -98,6 +105,7 @@ export default function MyPage() {
                   />
                 }
                 label="Favorites"
+                className={classes.color}
               />
             </Grid>
           </Grid>
