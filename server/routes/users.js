@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const User = require('../models/UsersModel');
@@ -11,7 +12,6 @@ const passport = require('passport');
 const LocalStorage = require('node-localstorage').LocalStorage,
   localStorage = new LocalStorage('./scratch');
 // mailgun
-require('dotenv').config();
 const mailgun = require('mailgun-js');
 const DOMAIN = 'sandbox53fe7162191a4212be7ee0862b0b235d.mailgun.org';
 const mg = mailgun({ apiKey: process.env.MAILGUN_API, domain: DOMAIN });
