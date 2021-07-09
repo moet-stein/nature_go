@@ -17,6 +17,8 @@ import Signup from './views/Authentication/Signup';
 import Login from './views/Authentication/Login';
 import UpdateProfile from './views/Authentication/UpdateProfile';
 import ConfirmReg from './views/Authentication/ConfirmReg';
+import ForgotPass from './views/Authentication/ForgotPass';
+import ResetPass from './views/Authentication/ResetPass';
 import { AuthProvider } from './context/AuthContext';
 import { NatureSpotsProvider } from './context/NatureSpotsContext';
 import { MarkerProvider } from './context/MarkerContext';
@@ -89,7 +91,6 @@ function App() {
                                 path="/otheruser/:otherUserId"
                                 children={<OtherUser />}
                               />
-
                               {/* Authentication */}
                               <Route
                                 exact
@@ -102,6 +103,17 @@ function App() {
                                 path="/confirmregister"
                                 children={<ConfirmReg />}
                               />
+                              <Route
+                                exact
+                                path="/forgotpass"
+                                children={<ForgotPass />}
+                              />
+                              <Route
+                                exact
+                                path="/resetpassword/:token"
+                                children={<ResetPass />}
+                              />
+
                               <PrivateRoute
                                 exact
                                 path="/updateprofile/:id"

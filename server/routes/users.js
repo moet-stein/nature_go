@@ -82,7 +82,8 @@ router.post('/login', async (req, res) => {
       bcrypt.compare(password, user.password, function (err, result) {
         console.log(result, 'result');
         if (err) {
-          res.send(err);
+          console.log(err);
+          res.status(400).json({ errors: err });
         }
         if (result) {
           const options = {

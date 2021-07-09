@@ -80,6 +80,9 @@ export default function Signup() {
     try {
       const res = await axios.post('/users/login', user);
       window.localStorage.setItem('token', res.data.token);
+      if (res.data.token == undefined) {
+        return setError(`Password is wrong`);
+      }
       setError(``);
       setLoading(true);
       history.push('/naturespots');
@@ -169,22 +172,33 @@ export default function Signup() {
                     No account yet? Signup
                   </Typography>
                 </Link>
+                <Link
+                  to="/forgotpass"
+                  variant="body2"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Typography className={classes.textColor} variant="h6">
+                    Forgot Password?
+                  </Typography>
+                </Link>
               </Grid>
 
               <Grid item>
-                <Link
-                  to="/"
-                  className={classes.flex}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    startIcon={<HomeIcon />}
+                <Box>
+                  <Link
+                    to="/"
+                    className={classes.flex}
+                    style={{ textDecoration: 'none' }}
                   >
-                    Home
-                  </Button>
-                </Link>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      startIcon={<HomeIcon />}
+                    >
+                      Home
+                    </Button>
+                  </Link>
+                </Box>
               </Grid>
             </Grid>
           </form>
