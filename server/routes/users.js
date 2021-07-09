@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const User = require('../models/UsersModel');
 // const User = require('../UsersModel');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
@@ -16,6 +15,7 @@ const mailgun = require('mailgun-js');
 const DOMAIN = 'sandbox53fe7162191a4212be7ee0862b0b235d.mailgun.org';
 const mg = mailgun({ apiKey: process.env.MAILGUN_API, domain: DOMAIN });
 const _ = require('lodash');
+const User = require('../models/UsersModel');
 
 // SIGNUP //
 // http://localhost:5000/users/
