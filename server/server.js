@@ -3,12 +3,12 @@ const express = require('express');
 const db = require('./keys').mongoURI;
 const mongoose = require('mongoose');
 const cors = require('cors');
-const userRoute = require('./routes/users');
-const natureSpotRoute = require('./routes/naturespots');
-const imageRoute = require('./routes/images');
-const commentRoute = require('./routes/comments');
+// const userRoute = require('./routes/users');
+// const natureSpotRoute = require('./routes/naturespots');
+// const imageRoute = require('./routes/images');
+// const commentRoute = require('./routes/comments');
 const passport = require('passport');
-const awsRoute = require('./routes/aws');
+// const awsRoute = require('./routes/aws');
 const { jwtStrategy } = require('./passport');
 
 // initialize express app
