@@ -33,11 +33,17 @@ app.use(cors());
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
 
-app.use('/api/users', userRoute);
-app.use('/api/naturespots', natureSpotRoute);
-app.use('/api/images', imageRoute);
-app.use('/api/comments', commentRoute);
-app.use('/api/aws', awsRoute);
+// app.use('/api/users', userRoute);
+// app.use('/api/naturespots', natureSpotRoute);
+// app.use('/api/images', imageRoute);
+// app.use('/api/comments', commentRoute);
+// app.use('/api/aws', awsRoute);
+
+app.use('/api/users', require('./routes/users'));
+app.use('/api/naturespots', require('./routes/naturespots'));
+app.use('/api/images', require('./routes/images'));
+app.use('/api/comments', require('./routes/comments'));
+app.use('/api/aws', require('./routes/aws'));
 
 app.listen(port, () => {
   console.log('Server is running on ' + port + 'port');
