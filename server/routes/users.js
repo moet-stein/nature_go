@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/UsersModel');
-const NatureSpot = require('../models/NatureSpotsModel');
-const catchAsync = require('../utils/catchAsync');
-const users = require('../controllers/users');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const secretOrKey = require('../keys').secretOrKey;
