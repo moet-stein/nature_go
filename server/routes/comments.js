@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Comment = require('../models/CommentsModel');
-const NatureSpot = require('../models/NatureSpotsModel');
-const Image = require('../models/ImagesModel');
+const Comment = require('../models/commentsModel');
+const NatureSpot = require('../models/natureSpotsModel');
+const Image = require('../models/imagesModel');
 
 // post new comment
 router.post('/newcomment', async (req, res) => {
