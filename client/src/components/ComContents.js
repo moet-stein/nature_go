@@ -36,7 +36,6 @@ export default function RevContents({ spot }) {
     setWriteReview,
     clickedIndex,
   } = useContext(CommentsContext);
-  const [ratingValue, setRatingValue] = useState(avarageRating);
 
   const openWriteReview = () => {
     writeReview ? setWriteReview(false) : setWriteReview(true);
