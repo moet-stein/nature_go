@@ -1,15 +1,5 @@
 const mongoose = require('mongoose');
 
-// const naturePicSchema = new mongoose.Schema(
-//   {
-//     url: String,
-//     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-//     likes: Number,
-//     saved: Number,
-//   },
-//   { timestamps: true }
-// );
-
 const NatureSpotSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
