@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/usersModel');
-const NatureSpot = require('../models/naturespotsModel');
 const Image = require('../models/imagesModel');
+const NatureSpot = require('../models/naturespotsModel');
 
 // Add Image to a spot
 router.post('/uploadimage', async (req, res) => {
