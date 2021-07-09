@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const NatureSpot = require('../models/NatureSpotsModel');
+const NatureSpot = require('../models/natureSpotsModel');
 
 // Create spot
 router.post('/', async (req, res) => {
