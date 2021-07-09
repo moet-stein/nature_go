@@ -12,6 +12,7 @@ import Image from '../../img/landing_pic.png';
 import HomeIcon from '@material-ui/icons/Home';
 import Alert from '@material-ui/lab/Alert';
 import { Link, useParams } from 'react-router-dom';
+const serverURL = require('../../config').serverURL;
 
 const useStyles = makeStyles(() => ({
   background: {
@@ -54,7 +55,7 @@ export default function ForgotPass() {
         return setError('Passwords do not match.');
       }
       const body = { resetLink: token, newPass: newPass };
-      const res = await axios.put('/users/resetpassword', body);
+      const res = await axios.put(serverURL + '/users/resetpassword', body);
       setError('');
       setSent(true);
       console.log(res.data);

@@ -12,6 +12,7 @@ import Image from '../../img/landing_pic.png';
 import HomeIcon from '@material-ui/icons/Home';
 import Alert from '@material-ui/lab/Alert';
 import { Link } from 'react-router-dom';
+const serverURL = require('../../config').serverURL;
 
 const useStyles = makeStyles(() => ({
   background: {
@@ -49,7 +50,7 @@ export default function ForgotPass() {
   const handleSubmit = async () => {
     try {
       const body = { email: email };
-      const res = await axios.put('/users/forgotpassword', body);
+      const res = await axios.put(serverURL + '/users/forgotpassword', body);
       setSent(true);
     } catch (err) {
       console.log(err);

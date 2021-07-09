@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -41,7 +42,10 @@ export default function CommentForm({ spot }) {
       comment: review,
       rating: rating,
     };
-    const newComment = await axios.post('/comments/newcomment', body);
+    const newComment = await axios.post(
+      serverURL + '/comments/newcomment',
+      body
+    );
 
     //   Add new comment to the array in context
     const newComToShow = {
@@ -76,7 +80,7 @@ export default function CommentForm({ spot }) {
       averageRating: getAve(),
     };
     const updatedRating = await axios.post(
-      '/naturespots/updaterating',
+      serverURL + '/naturespots/updaterating',
       updateRat
     );
 

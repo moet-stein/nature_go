@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const db = require('./keys').mongoURI;
 const mongoose = require('mongoose');
@@ -9,7 +10,6 @@ const commentRoute = require('./routes/comments');
 const passport = require('passport');
 const awsRoute = require('./routes/aws');
 const { jwtStrategy } = require('./passport');
-require('dotenv').config();
 
 // initialize express app
 const app = express();

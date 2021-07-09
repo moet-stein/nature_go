@@ -17,6 +17,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Typography from '@material-ui/core/Typography';
 import { useLocation } from 'react-router-dom';
+const serverURL = require('../config').serverURL;
 
 const useStyle = makeStyles(() => ({
   action: {
@@ -140,7 +141,7 @@ export default function FavSav({ pic }) {
         };
       }
 
-      const postReq = await axios.post(`/images/${route}`, body);
+      const postReq = await axios.post(serverURL + `/images/${route}`, body);
     };
 
     // arr.includes(picUrl), that means arr includes the id: already liked or saved => make it remove on clicke
@@ -193,7 +194,7 @@ export default function FavSav({ pic }) {
       userId: userInfo._id,
       natureSpotId: pic.naturespot,
     };
-    const res = await axios.post('/images/deletemypic', body);
+    const res = await axios.post(serverURL + '/images/deletemypic', body);
   };
 
   return (

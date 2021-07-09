@@ -15,6 +15,7 @@ import { AuthContext } from '../context/AuthContext';
 import { CommentsContext } from '../context/CommentsContext';
 import { NatureSpotsContext } from '../context/NatureSpotsContext';
 import { useParams } from 'react-router-dom';
+const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
   small: {
@@ -66,7 +67,7 @@ export default function Comment({ comment, index }) {
       comment: comment.comment,
       createdAt: comment.createdAt,
     };
-    const res = await axios.post('/comments/deletecomment', body);
+    const res = await axios.post(serverURL + '/comments/deletecomment', body);
 
     // update rating in naturespots context (so that user can see updated rating when going back to the page (without fetching ))
     const indexNat = natureSpots.findIndex((s) => s._id === spotId);

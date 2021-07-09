@@ -17,6 +17,7 @@ import Container from '@material-ui/core/Container';
 // import { useAuth } from '../context/AuthContext';
 import Alert from '@material-ui/lab/Alert';
 import { Link, useHistory } from 'react-router-dom';
+const serverURL = require('../../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -102,7 +103,7 @@ export default function Signup() {
       }
       const formData = new FormData();
       formData.append('file', fileToSend[0]);
-      const res = await axios.post(`/aws/upload`, formData, {
+      const res = await axios.post(serverURL + `/aws/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -135,7 +136,7 @@ export default function Signup() {
     };
 
     try {
-      await axios.post('/users/register', newUser);
+      await axios.post(serverURL + '/users/register', newUser);
       setError(``);
       setLoading(true);
       console.log('signup form submitted');

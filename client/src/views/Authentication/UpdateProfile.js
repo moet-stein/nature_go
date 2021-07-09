@@ -13,6 +13,7 @@ import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+const serverURL = require('../../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -85,7 +86,7 @@ export default function UpdateProfile() {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      const res = await axios.get('/users/profile', config);
+      const res = await axios.get(serverURL + '/users/profile', config);
       setUser(res.data);
       setFile(res.data.avatarUrl);
       setFileToSend(res.data.avatarUrl);
@@ -119,7 +120,7 @@ export default function UpdateProfile() {
       }
       const formData = new FormData();
       formData.append('file', fileToSend[0]);
-      const res = await axios.post(`/aws/upload`, formData, {
+      const res = await axios.post(serverURL + `/aws/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -156,7 +157,7 @@ export default function UpdateProfile() {
     };
 
     try {
-      await axios.post('/users/updateprofile', updatedUser);
+      await axios.post(serverURL + '/users/updateprofile', updatedUser);
       setError(``);
       setLoading(true);
       console.log('profile updated');

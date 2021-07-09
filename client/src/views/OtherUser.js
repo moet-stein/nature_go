@@ -10,6 +10,7 @@ import { OtherUserContext } from '../context/OtherUserContext';
 import { AuthContext } from '../context/AuthContext';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+const serverURL = require('../config').serverURL;
 
 export default function OtherUser() {
   const { otherUserId } = useParams();
@@ -29,7 +30,7 @@ export default function OtherUser() {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      const res = await axios.get('/users/profile', config);
+      const res = await axios.get(serverURL + '/users/profile', config);
       setUserInfo(res.data);
       await setUserId(res.data._id);
     }
@@ -41,7 +42,10 @@ export default function OtherUser() {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      const res = await axios.get(`/users/otheruser/${otherUserId}`, config);
+      const res = await axios.get(
+        serverURL + `/users/otheruser/${otherUserId}`,
+        config
+      );
 
       setOtherUser(res.data);
       setHavMatPicArr(

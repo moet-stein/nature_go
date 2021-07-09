@@ -15,6 +15,7 @@ import Rating from '@material-ui/lab/Rating';
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import { AuthContext } from '../context/AuthContext';
 import { SavedArrContext } from '../context/SavedArrContext';
+const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles(() => ({
   flex: {
@@ -58,7 +59,7 @@ export default function SavFooter({ saved }) {
       userId: userInfo._id,
       origUrl: saved.originalImage,
     };
-    const postReq = await axios.post(`/images/removesaved`, body);
+    const postReq = await axios.post(serverURL + `/images/removesaved`, body);
   };
 
   const handleFile = async (event) => {
@@ -74,7 +75,7 @@ export default function SavFooter({ saved }) {
       user: userInfo._id,
       picId: saved._id,
     };
-    const postReq = await axios.post(`/users/uploadmatching`, body);
+    const postReq = await axios.post(serverURL + `/users/uploadmatching`, body);
     await setSavedArr(
       savedArr.map((item) =>
         item._id == saved._id ? { ...item, matchedImage: url } : item
@@ -89,7 +90,7 @@ export default function SavFooter({ saved }) {
       }
       const formData = new FormData();
       formData.append('file', fileToSend[0]);
-      const res = await axios.post(`/aws/upload`, formData, {
+      const res = await axios.post(serverURL + `/aws/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

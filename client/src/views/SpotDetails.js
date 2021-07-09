@@ -18,6 +18,7 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { AuthContext } from '../context/AuthContext';
 import { FavSavContext } from '../context/FavSavContext';
 import { PicsArrContext } from '../context/PicsArrContext';
+const serverURL = require('../config').serverURL;
 
 const mapBoxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -79,7 +80,7 @@ export default function SpotDetails() {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      const res = await axios.get(`/users/profile`, config);
+      const res = await axios.get(serverURL + `/users/profile`, config);
       setUserInfo(res.data);
       return res.data;
     }
@@ -92,7 +93,7 @@ export default function SpotDetails() {
       setHideDesc(true);
     }
     setNaturespot(spot._id);
-    const res = await axios.get(`/images/${spot._id}`);
+    const res = await axios.get(serverURL + `/images/${spot._id}`);
     await setPicturesArr(res.data.reverse());
     await setPicsIdArr(res.data.map((p) => p.url));
 

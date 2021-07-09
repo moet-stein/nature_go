@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
+const serverURL = require('../config').serverURL;
+
 export default function SavedToMatch() {
   const { userInfo } = useContext(AuthContext);
   const { savedArr, setSavedArr, spotsArr, setSpotsArr } = useContext(
@@ -23,7 +25,7 @@ export default function SavedToMatch() {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      const res = await axios.get('/users/profile', config);
+      const res = await axios.get(serverURL + '/users/profile', config);
       return res.data;
     }
   };
@@ -31,7 +33,7 @@ export default function SavedToMatch() {
   useEffect(async () => {
     const userData = await getUserInfo();
     const userId = userInfo._id || userData._id;
-    const res = await axios.get(`/users/savedpics/${userId}`);
+    const res = await axios.get(serverURL + `/users/savedpics/${userId}`);
     await setSavedArr(res.data.savedPics);
 
     // await setSpotsArr(res.data.savedPics.map());

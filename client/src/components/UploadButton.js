@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { PicsArrContext } from '../context/PicsArrContext';
 import { FavSavContext } from '../context/FavSavContext';
+const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +54,7 @@ export default function UploadButton({ natureId, userInfo }) {
       natureId: natureId,
       authorId: userInfo._id,
     };
-    const postReq = await axios.post(`/images/uploadimage`, body);
+    const postReq = await axios.post(serverURL + `/images/uploadimage`, body);
     const newPostObj = postReq.data.newImage;
     newPostObj.author = {
       avatarUrl: userInfo.avatarUrl,
@@ -71,7 +72,7 @@ export default function UploadButton({ natureId, userInfo }) {
       }
       const formData = new FormData();
       formData.append('file', fileToSend[0]);
-      const res = await axios.post(`/aws/upload`, formData, {
+      const res = await axios.post(serverURL + `/aws/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

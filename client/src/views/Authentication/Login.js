@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import teal from '@material-ui/core/colors/teal';
 import { Link, useHistory } from 'react-router-dom';
+const serverURL = require('../../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -78,7 +79,7 @@ export default function Signup() {
       password: passwordRef.current.value,
     };
     try {
-      const res = await axios.post('/users/login', user);
+      const res = await axios.post(serverURL + '/users/login', user);
       window.localStorage.setItem('token', res.data.token);
       if (res.data.token == undefined) {
         return setError(`Password is wrong`);

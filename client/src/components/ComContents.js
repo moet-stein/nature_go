@@ -16,6 +16,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import { CommentsContext } from '../context/CommentsContext';
 import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
   new: {
@@ -42,7 +43,7 @@ export default function RevContents({ spot }) {
   };
 
   useEffect(async () => {
-    const res = await axios.get(`/comments/${spot._id}`);
+    const res = await axios.get(serverURL + `/comments/${spot._id}`);
     await setCommentsArr(res.data.reverse());
     console.log(res.data);
     const sumRating = res.data.map((c) => c.rating).reduce((a, b) => a + b, 0);

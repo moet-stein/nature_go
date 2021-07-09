@@ -6,6 +6,7 @@ const initNatureSpotsContext = {
   natureSpots: [],
   newAdded: false,
 };
+const serverURL = require('../config').serverURL;
 // 3. create context
 export const NatureSpotsContext = createContext(initNatureSpotsContext);
 
@@ -19,7 +20,7 @@ export const NatureSpotsProvider = ({ children }) => {
   useEffect(() => {
     const getNatureSpots = async () => {
       try {
-        const res = await axios.get('/naturespots');
+        const res = await axios.get(serverURL + '/naturespots');
         setNatureSpots(res.data);
         console.log('naturespotscontext', res.data);
       } catch (err) {

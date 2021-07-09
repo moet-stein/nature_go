@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import teal from '@material-ui/core/colors/teal';
 import { Link } from 'react-router-dom';
+const serverURL = require('../config').serverURL;
 
 export default function MyPageImages({ showFavPics }) {
   const { userInfo } = useContext(AuthContext);
@@ -31,7 +32,7 @@ export default function MyPageImages({ showFavPics }) {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      const res = await axios.get('/users/profile', config);
+      const res = await axios.get(serverURL + '/users/profile', config);
 
       return res.data;
     }
@@ -40,7 +41,7 @@ export default function MyPageImages({ showFavPics }) {
   useEffect(async () => {
     const userData = await getUserInfo();
     const userId = userInfo._id || userData._id;
-    const res = await axios.get(`/users/myfavpics/${userId}`);
+    const res = await axios.get(serverURL + `/users/myfavpics/${userId}`);
     setMyPicsArr(res.data.myPics);
     setFavPicsArr(res.data.favoritePics);
 

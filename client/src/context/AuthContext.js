@@ -3,6 +3,7 @@
 // 1. import the modules
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+const serverURL = require('../config').serverURL;
 // 2. initialize the context
 const initAuthContext = {
   userInfo: [],
@@ -25,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         const config = {
           headers: { Authorization: `Bearer ${token}` },
         };
-        const res = await axios.get('/users/profile', config);
+        const res = await axios.get(serverURL + '/users/profile', config);
         setUserInfo(res.data);
         console.log("I'm res.data from AuthContext", res.data);
       }

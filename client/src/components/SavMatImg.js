@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
+const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles(() => ({
   cardWidth: {
@@ -39,7 +40,7 @@ export default function SavMatImg({ pic, index }) {
     yourPic ? setYourPic(false) : setYourPic(true);
   };
   useEffect(async () => {
-    const res = await axios.get(`/naturespots/${pic.natureSpotId}`);
+    const res = await axios.get(serverURL + `/naturespots/${pic.natureSpotId}`);
     setSpot(res.data);
     setLoading(false);
   }, []);

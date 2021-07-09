@@ -13,6 +13,7 @@ import blue from '@material-ui/core/colors/blue';
 import { AuthContext } from '../context/AuthContext';
 import { OtherUserContext } from '../context/OtherUserContext';
 import { useParams } from 'react-router-dom';
+const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles(() => ({
   flex: {
@@ -79,7 +80,7 @@ export default function OtherUserFooter({ pic, index }) {
         userToGive: userInfo._id,
         savPicId: picId,
       };
-      const postReq = await axios.post(`/users/givematching`, body);
+      const postReq = await axios.post(serverURL + `/users/givematching`, body);
     } else {
       const updatedArr = havMatPicArr[index].matching.filter(
         (id) => id !== userInfo._id
@@ -102,7 +103,10 @@ export default function OtherUserFooter({ pic, index }) {
         userToGetBack: userInfo._id,
         savPicId: picId,
       };
-      const postReq = await axios.post(`/users/getbackmatching`, body);
+      const postReq = await axios.post(
+        serverURL + `/users/getbackmatching`,
+        body
+      );
     }
   };
 

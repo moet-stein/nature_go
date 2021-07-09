@@ -13,6 +13,7 @@ import Fade from '@material-ui/core/Fade';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+const serverURL = require('../config').serverURL;
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -43,7 +44,7 @@ export default function PicModal({ pic }) {
 
   const handleOpen = async (id) => {
     setOpen(true);
-    const res = await axios.get(`/naturespots/${id}`);
+    const res = await axios.get(serverURL + `/naturespots/${id}`);
     setSpot(res.data);
   };
 

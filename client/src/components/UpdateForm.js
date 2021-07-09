@@ -16,6 +16,7 @@ import blue from '@material-ui/core/colors/blue';
 import { CommentsContext } from '../context/CommentsContext';
 import { NatureSpotsContext } from '../context/NatureSpotsContext';
 import { useParams } from 'react-router-dom';
+const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -90,7 +91,10 @@ export default function UpdateForm({ comment, index }) {
         newReview: review,
         newRating: rating,
       };
-      const newComment = await axios.post('/comments/updatecomment', body);
+      const newComment = await axios.post(
+        serverURL + '/comments/updatecomment',
+        body
+      );
 
       // update rating in naturespot data
       const updateRat = {
@@ -98,7 +102,7 @@ export default function UpdateForm({ comment, index }) {
         averageRating: getAve(),
       };
       const updatedRating = await axios.post(
-        '/naturespots/updaterating',
+        serverURL + '/naturespots/updaterating',
         updateRat
       );
 

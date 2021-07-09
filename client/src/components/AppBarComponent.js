@@ -24,6 +24,7 @@ import { Link, useLocation, useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { FavSavContext } from '../context/FavSavContext';
 import { PicsArrContext } from '../context/PicsArrContext';
+const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +82,7 @@ export default function AppBarComponent() {
     setIsUserThere(false);
     window.localStorage.removeItem('token');
     history.push('/');
-    await axios.post('/users/logout', user);
+    await axios.post(serverURL + '/users/logout', user);
   };
 
   useEffect(() => {
@@ -105,7 +106,7 @@ export default function AppBarComponent() {
         const config = {
           headers: { Authorization: `Bearer ${token}` },
         };
-        const res = await axios.get('/users/profile', config);
+        const res = await axios.get(serverURL + '/users/profile', config);
         setUserInfo(res.data);
         await setFavIdArr(res.data.favoritePics);
         await setSavIdArr(res.data.savedPics);

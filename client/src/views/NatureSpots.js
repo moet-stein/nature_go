@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { NatureSpotsContext } from '../context/NatureSpotsContext';
 import { MarkerContext } from '../context/MarkerContext';
+const serverURL = require('../config').serverURL;
 
 const mapBoxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -110,7 +111,7 @@ export default function NatureSpots() {
     };
 
     try {
-      const res = await axios.post('/naturespots', newSpotPost);
+      const res = await axios.post(serverURL + '/naturespots', newSpotPost);
       setNatureSpots([...natureSpots, res.data]);
       setNewAdded(true);
       setNewSpot(null);
