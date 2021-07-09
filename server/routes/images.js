@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/usersModel');
-const NatureSpot = require('../models/natureSpotsModel');
+const NatureSpot = require('../models/naturespotsModel');
 const Image = require('../models/imagesModel');
 
 // Add Image to a spot
