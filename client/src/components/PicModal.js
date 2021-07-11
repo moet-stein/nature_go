@@ -17,8 +17,8 @@ const serverURL = require('../config').serverURL;
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
-    '&:hover': { boxShadow: '-1px 10px 29px 0px rgba(0,0,0,0.8)' },
+    width: '500px',
+    '&:hover': { boxShadow: '-1px 10px 29px 0px rgba(0,0,0,0.3)' },
   },
   media: {
     height: 0,
@@ -34,6 +34,11 @@ const useStyle = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[3],
     padding: theme.spacing(2, 4, 3),
+  },
+  '@media only screen and (max-width: 600px)': {
+    root: {
+      width: '300px',
+    },
   },
 }));
 
@@ -74,38 +79,41 @@ export default function PicModal({ pic }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <Link
-              to={{
-                pathname: `/details/${pic.naturespot._id}`,
-                state: {
-                  spot,
-                },
-              }}
-              style={{ textDecoration: 'none' }}
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
             >
-              <Box m={2}>
-                <Button variant="outlined" color="secondary">
-                  <Typography id="transition-modal-title" variant="h4">
-                    {pic.naturespot.title}
-                  </Typography>
-                  <ArrowForwardIcon />
-                </Button>
-              </Box>
-            </Link>
+              <Link
+                to={{
+                  pathname: `/details/${pic.naturespot._id}`,
+                  state: {
+                    spot,
+                  },
+                }}
+                style={{ textDecoration: 'none' }}
+              >
+                <Box m={2}>
+                  <Button variant="outlined" color="secondary">
+                    <Typography id="transition-modal-title" variant="h4">
+                      {pic.naturespot.title}
+                    </Typography>
+                    <ArrowForwardIcon />
+                  </Button>
+                </Box>
+              </Link>
 
-            <Card key={pic._id} className={classes.root}>
-              {'author' in pic && <UserHeader pic={pic} />}
+              <Card key={pic._id} className={classes.root}>
+                {'author' in pic && <UserHeader pic={pic} />}
 
-              <CardMedia
-                className={classes.media}
-                image={pic.url}
-                onClick={() => handleOpen(pic.naturespot._id)}
-              />
-              {/* <CardContent>
-                {' '}
-                <Typography variant="h5">{pic.naturespot.title}</Typography>
-              </CardContent> */}
-            </Card>
+                <CardMedia
+                  className={classes.media}
+                  image={pic.url}
+                  onClick={() => handleOpen(pic.naturespot._id)}
+                />
+              </Card>
+            </Box>
           </div>
         </Fade>
       </Modal>

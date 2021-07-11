@@ -180,106 +180,116 @@ export default function UpdateProfile() {
   return (
     <React.Fragment>
       <GoBack />
-      <Typography>Update Profile</Typography>
-      {error && <Alert severity="error">{error}</Alert>}
-      {!loading && (
-        <form className={classes.form} onSubmit={handleSubmit} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Box
-                mb={2}
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-              >
-                <Box>
-                  <img className={classes.media} src={file} />
-                </Box>
-                <input
-                  accept="image/*"
-                  style={{ display: 'none' }}
-                  id="raised-button-file"
-                  multiple
-                  type="file"
-                  onChange={(e) => handleFile(e)}
-                />
-                {!showCancel && (
-                  <label htmlFor="raised-button-file">
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      component="span"
-                      startIcon={<PhotoCamera />}
-                    >
-                      Change
-                    </Button>
-                  </label>
-                )}
-                {showCancel && (
-                  <Box m={2}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={resetAvatar}
-                    >
-                      Cancel
-                    </Button>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Typography color="secondary" variant="h4">
+          Update Profile
+        </Typography>
+
+        {error && <Alert severity="error">{error}</Alert>}
+        {!loading && (
+          <form className={classes.form} onSubmit={handleSubmit} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Box
+                  mb={2}
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                >
+                  <Box>
+                    <img className={classes.media} src={file} />
                   </Box>
-                )}
+                  <input
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    multiple
+                    type="file"
+                    onChange={(e) => handleFile(e)}
+                  />
+                  {!showCancel && (
+                    <label htmlFor="raised-button-file">
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        component="span"
+                        startIcon={<PhotoCamera />}
+                      >
+                        Change
+                      </Button>
+                    </label>
+                  )}
+                  {showCancel && (
+                    <Box m={2}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={resetAvatar}
+                      >
+                        Cancel
+                      </Button>
+                    </Box>
+                  )}
+                </Box>
+              </Grid>
+              <Box m={2}>
+                <Typography color="secondary">
+                  Leave Blank if no changes
+                </Typography>
               </Box>
+              <Grid item xs={12}>
+                <Box ml={2} display="flex" justifyContent="flex-start">
+                  <Typography color="primary">{user.username}</Typography>
+                </Box>
+                <TextField
+                  InputProps={{
+                    classes: { notchedOutline: classes.specialOutline },
+                  }}
+                  autoComplete="uname"
+                  name="userName"
+                  variant="outlined"
+                  fullWidth
+                  id="userName"
+                  label="Username"
+                  autoFocus
+                  inputRef={userNameRef}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Box ml={2} display="flex" justifyContent="flex-start">
+                  <Typography color="primary">{user.email}</Typography>
+                </Box>
+                <TextField
+                  InputProps={{
+                    classes: { notchedOutline: classes.specialOutline },
+                  }}
+                  variant="outlined"
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  inputRef={emailRef}
+                />
+              </Grid>
             </Grid>
-            <Box m={2}>
-              <Typography color="secondary">
-                Leave Blank if no changes
-              </Typography>
-            </Box>
-            <Grid item xs={12}>
-              <Box ml={2} display="flex" justifyContent="flex-start">
-                <Typography color="primary">{user.username}</Typography>
-              </Box>
-              <TextField
-                InputProps={{
-                  classes: { notchedOutline: classes.specialOutline },
-                }}
-                autoComplete="uname"
-                name="userName"
-                variant="outlined"
-                fullWidth
-                id="userName"
-                label="Username"
-                autoFocus
-                inputRef={userNameRef}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Box ml={2} display="flex" justifyContent="flex-start">
-                <Typography color="primary">{user.email}</Typography>
-              </Box>
-              <TextField
-                InputProps={{
-                  classes: { notchedOutline: classes.specialOutline },
-                }}
-                variant="outlined"
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                inputRef={emailRef}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            className={classes.submit}
-            disabled={loading}
-          >
-            Update
-          </Button>
-        </form>
-      )}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              className={classes.submit}
+              disabled={loading}
+            >
+              Update
+            </Button>
+          </form>
+        )}
+      </Box>
     </React.Fragment>
   );
 }

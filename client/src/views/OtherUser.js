@@ -10,6 +10,8 @@ import { OtherUserContext } from '../context/OtherUserContext';
 import { AuthContext } from '../context/AuthContext';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import orange from '@material-ui/core/colors/orange';
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 const serverURL = require('../config').serverURL;
 
 export default function OtherUser() {
@@ -77,6 +79,22 @@ export default function OtherUser() {
       <AppBarComponent />
       <GoBack />
       {otherUser && <OtherUserProfile otherUser={otherUser} />}
+      {otherUser && (
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography color="secondary" variant="h4" width="350px">
+            {otherUser.username}'s saved & matching pics
+          </Typography>
+
+          <Box width="300px" mt={2}>
+            <Typography color="primary" variant="body2">
+              If you think the original and matching pic are taken at the same
+              place in the naturespot, give your vote to it
+              <SentimentVerySatisfiedIcon style={{ color: orange[500] }} />
+            </Typography>
+          </Box>
+        </Box>
+      )}
+
       <Box display="flex" flexWrap="wrap" justifyContent="center">
         {havMatPicArr &&
           havMatPicArr.map((pic, index) => (

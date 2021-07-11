@@ -5,16 +5,19 @@ import { PicsArrContext } from '../context/PicsArrContext';
 import UserHeader from './UserHeader';
 import PicModal from './PicModal';
 import FavSav from './FavSav';
-import Masonry from 'react-masonry-css';
-import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 
 const useStyle = makeStyles(() => ({
   root: {
-    maxWidth: 345,
+    width: '300px',
     '&:hover': { boxShadow: '-1px 10px 29px 0px rgba(0,0,0,0.8)' },
+  },
+  '@media only screen and (max-width: 600px)': {
+    root: {
+      width: '160px',
+    },
   },
 }));
 
@@ -24,11 +27,6 @@ export default function ImgsWithProp({ picsArr }) {
   const { setPicsIdArr } = useContext(PicsArrContext);
   const { favPicsArr } = useContext(MyPicFavPicContext);
 
-  const breakpoints = {
-    default: 3,
-    1100: 4,
-    700: 2,
-  };
   useEffect(() => {
     if (picsArr == favPicsArr) {
       setPicsIdArr(picsArr.map((pic) => pic.url));
@@ -37,22 +35,23 @@ export default function ImgsWithProp({ picsArr }) {
   }, []);
 
   return (
-    <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
-      <Masonry
-        breakpointCols={breakpoints}
-        className={moduleClasses.myMasonryGrid}
-        columnClassName={moduleClasses.myMasonryGridColumn}
-      >
-        {picsArr.map((pic) => {
-          return (
+    <Box
+      display="flex"
+      flexWrap="wrap"
+      justifyContent="center"
+      alignItems="center"
+    >
+      {picsArr.map((pic) => {
+        return (
+          <Box m={1}>
             <Card key={pic._id} className={classes.root}>
               {'author' in pic && <UserHeader pic={pic} />}
               <PicModal pic={pic} />
               <FavSav pic={pic} />
             </Card>
-          );
-        })}
-      </Masonry>
+          </Box>
+        );
+      })}
     </Box>
   );
 }

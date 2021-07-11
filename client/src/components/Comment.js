@@ -14,7 +14,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import { AuthContext } from '../context/AuthContext';
 import { CommentsContext } from '../context/CommentsContext';
 import { NatureSpotsContext } from '../context/NatureSpotsContext';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 const serverURL = require('../config').serverURL;
 
 const useStyles = makeStyles((theme) => ({
@@ -84,16 +84,23 @@ export default function Comment({ comment, index }) {
   return (
     <Box>
       <Box display="flex">
-        <Avatar
-          alt={comment.author.username}
-          src={comment.author.avatarUrl}
-          className={classes.small}
-        />
-        <Box ml={1}>
-          <Typography color="secondary" variant="body2">
-            {comment.author.username}
-          </Typography>
-        </Box>
+        <Link
+          style={{ textDecoration: 'none' }}
+          to={`/otheruser/${comment.author._id}`}
+        >
+          <Box display="flex">
+            <Avatar
+              alt={comment.author.username}
+              src={comment.author.avatarUrl}
+              className={classes.small}
+            />
+            <Box ml={1}>
+              <Typography color="secondary" variant="body2">
+                {comment.author.username}
+              </Typography>
+            </Box>
+          </Box>
+        </Link>
         <Box ml={2} display="flex">
           <StarRateIcon style={{ color: amber[600] }} />
           <Typography color="secondary" variant="body2">

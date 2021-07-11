@@ -2,8 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import NoUploads from '../img/nouploads.gif';
 import UserHeader from './UserHeader';
 import FavSav from './FavSav';
-import Masonry from 'react-masonry-css';
-import moduleClasses from './styles/Images.module.css';
 import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +12,7 @@ import { AuthContext } from '../context/AuthContext';
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    width: '200px',
+    width: '400px',
   },
   media: {
     height: 0,
@@ -32,23 +30,11 @@ export default function Images() {
   const { picturesArr } = useContext(PicsArrContext);
   const { userInfo } = useContext(AuthContext);
 
-  const breakpoints = {
-    default: 3,
-    1100: 4,
-    700: 2,
-  };
-
   useEffect(() => {
     console.log(userInfo);
   }, []);
 
   return (
-    // <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
-    //   <Masonry
-    //     breakpointCols={breakpoints}
-    //     className={moduleClasses.myMasonryGrid}
-    //     columnClassName={moduleClasses.myMasonryGridColumn}
-    //   >
     <React.Fragment>
       <Box
         display="flex"
@@ -81,6 +67,5 @@ export default function Images() {
         </Box>
       )}
     </React.Fragment>
-    // </Box>
   );
 }

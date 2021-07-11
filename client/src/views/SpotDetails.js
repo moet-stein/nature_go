@@ -23,7 +23,7 @@ const mapBoxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const useStyles = makeStyles(() => ({
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
     width: '100vw',
     height: '100vh',
   },
