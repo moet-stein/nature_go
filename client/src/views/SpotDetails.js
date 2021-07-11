@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import Room from '@material-ui/icons/Room';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -36,6 +35,14 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  '@media only screen and (max-width: 800px)': {
+    center: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   },
 }));
 
@@ -131,83 +138,71 @@ export default function SpotDetails() {
     <div className={classes.root}>
       <AppBarComponent />
       <GoBack />
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography color="secondary" variant="h3">
-            {spot.title}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Box className={classes.center} mt={2}>
-            <ReactMapGL
-              {...viewport}
-              mapboxApiAccessToken={mapBoxToken}
-              onViewportChange={(nextViewport) => setViewport(nextViewport)}
-              mapStyle="mapbox://styles/moepii/ckppic7c80e3b17pdh4k1pfvk"
-              transitionDuration="50"
-            >
-              <Marker
-                latitude={spot.lat}
-                longitude={spot.long}
-                offsetLeft={-viewport.zoom * 1.5}
-                offsetTop={-viewport.zoom * 3}
-              >
-                <Room
-                  style={{
-                    fontSize: viewport.zoom * 3,
-                    color: 'tomato',
-                    cursor: 'pointer',
-                  }}
-                  // onClick={() => handleMarkerClick(spot._id, spot.lat, spot.long)}
-                />
-              </Marker>
-            </ReactMapGL>
-          </Box>
-        </Grid>
-
+      <Box mb={2}>
+        <Typography color="secondary" variant="h3">
+          {spot.title}
+        </Typography>
+      </Box>
+      <Box className={classes.center} m={2}>
+        <ReactMapGL
+          {...viewport}
+          mapboxApiAccessToken={mapBoxToken}
+          onViewportChange={(nextViewport) => setViewport(nextViewport)}
+          mapStyle="mapbox://styles/moepii/ckppic7c80e3b17pdh4k1pfvk"
+          transitionDuration="50"
+        >
+          <Marker
+            latitude={spot.lat}
+            longitude={spot.long}
+            offsetLeft={-viewport.zoom * 1.5}
+            offsetTop={-viewport.zoom * 3}
+          >
+            <Room
+              style={{
+                fontSize: viewport.zoom * 3,
+                color: 'tomato',
+                cursor: 'pointer',
+              }}
+              // onClick={() => handleMarkerClick(spot._id, spot.lat, spot.long)}
+            />
+          </Marker>
+        </ReactMapGL>
         <Box m={2}>
           <Comments spot={spot} />
         </Box>
+        <Box className={classes.boxWidth}>
+          {hideDesc ? (
+            <Typography className={classes.maxW} variant="body2">
+              {displayDesc}
+            </Typography>
+          ) : (
+            <Typography className={classes.maxW} variant="body2">
+              {spot.desc}
+            </Typography>
+          )}
 
-        <Grid item xs={12}>
-          <Box className={classes.center}>
-            <Box className={classes.boxWidth}>
+          {displayDesc.length > 100 && (
+            <Box className={classes.noPadding}>
               {hideDesc ? (
-                <Typography className={classes.maxW} variant="body2">
-                  {displayDesc}
-                </Typography>
+                <IconButton onClick={showMoreDesc}>
+                  <ArrowDownwardIcon fontSize="small" />
+                  <Typography className={classes.maxW} variant="body2">
+                    See more
+                  </Typography>
+                </IconButton>
               ) : (
-                <Typography className={classes.maxW} variant="body2">
-                  {spot.desc}
-                </Typography>
-              )}
-
-              {displayDesc.length > 100 && (
-                <Box mt={12} className={classes.noPadding}>
-                  {hideDesc ? (
-                    <IconButton onClick={showMoreDesc}>
-                      <ArrowDownwardIcon fontSize="small" />
-                      <Typography className={classes.maxW} variant="body2">
-                        See more
-                      </Typography>
-                    </IconButton>
-                  ) : (
-                    <IconButton onClick={showMoreDesc}>
-                      <ArrowUpwardIcon fontSize="small" />
-                      <Typography className={classes.maxW} variant="body2">
-                        Hide
-                      </Typography>
-                    </IconButton>
-                  )}
-                </Box>
+                <IconButton onClick={showMoreDesc}>
+                  <ArrowUpwardIcon fontSize="small" />
+                  <Typography className={classes.maxW} variant="body2">
+                    Hide
+                  </Typography>
+                </IconButton>
               )}
             </Box>
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <UploadButton natureId={spot._id} userInfo={userInfo} />
-        </Grid>
-      </Grid>
+          )}
+        </Box>
+      </Box>
+      <UploadButton natureId={spot._id} userInfo={userInfo} />
       {!loading && <Images />}
     </div>
   );

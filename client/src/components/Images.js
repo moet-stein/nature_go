@@ -14,11 +14,16 @@ import { AuthContext } from '../context/AuthContext';
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width: '200px',
   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  '@media only screen and (max-width: 600px)': {
+    root: {
+      width: '160px',
+    },
   },
 }));
 
@@ -38,24 +43,33 @@ export default function Images() {
   }, []);
 
   return (
-    <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
-      <Masonry
-        breakpointCols={breakpoints}
-        className={moduleClasses.myMasonryGrid}
-        columnClassName={moduleClasses.myMasonryGridColumn}
+    // <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }} m={2}>
+    //   <Masonry
+    //     breakpointCols={breakpoints}
+    //     className={moduleClasses.myMasonryGrid}
+    //     columnClassName={moduleClasses.myMasonryGridColumn}
+    //   >
+    <React.Fragment>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        alignItems="center"
       >
         {picturesArr.map((pic) => {
           return (
-            <Card key={pic._id} className={classes.root}>
-              <UserHeader pic={pic} />
-              <CardMedia className={classes.media} image={pic.url} />
-              {userInfo && Object.keys(userInfo).length !== 0 && (
-                <FavSav pic={pic} />
-              )}
-            </Card>
+            <Box m={1}>
+              <Card key={pic._id} className={classes.root}>
+                <UserHeader pic={pic} />
+                <CardMedia className={classes.media} image={pic.url} />
+                {userInfo && Object.keys(userInfo).length !== 0 && (
+                  <FavSav pic={pic} />
+                )}
+              </Card>
+            </Box>
           );
         })}
-      </Masonry>
+      </Box>
       {picturesArr.length == 0 && (
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography color="secondary" variant="h4">
@@ -66,6 +80,7 @@ export default function Images() {
           </Box>
         </Box>
       )}
-    </Box>
+    </React.Fragment>
+    // </Box>
   );
 }
