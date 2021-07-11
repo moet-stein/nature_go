@@ -77,10 +77,12 @@ export default function OtherUser() {
       <AppBarComponent />
       <GoBack />
       {otherUser && <OtherUserProfile otherUser={otherUser} />}
-      {havMatPicArr &&
-        havMatPicArr.map((pic, index) => (
-          <OtherUserImg pic={pic} index={index} />
-        ))}
+      <Box display="flex" flexWrap="wrap" justifyContent="center">
+        {havMatPicArr &&
+          havMatPicArr.map((pic, index) => (
+            <OtherUserImg pic={pic} index={index} />
+          ))}
+      </Box>
       {havMatPicArr && havMatPicArr.length === 0 && (
         <Box>
           <Typography variant="h4" color="secondary">
