@@ -138,7 +138,7 @@ export default function NatureSpots() {
             {...viewport}
             mapboxApiAccessToken={mapBoxToken}
             onViewportChange={(nextViewport) => setViewport(nextViewport)}
-            // mapStyle="mapbox://styles/moepii/ckppic7c80e3b17pdh4k1pfvk"
+            mapStyle="mapbox://styles/moepii/ckppic7c80e3b17pdh4k1pfvk"
             onDblClick={handleAddClick}
             // transitionDuration="50"
           >
