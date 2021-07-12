@@ -195,9 +195,9 @@ router.put('/forgotpassword', (req, res) => {
 
     let url;
 
-    const getUrl = (token) => {
+    http: const getUrl = (token) => {
       if (process.env.PORT === 'https://nature-go-app.herokuapp.com/') {
-        url = `https://cors-anywhere.herokuapp.com/http://${url}/resetpassword/${token}`;
+        url = `http://nature-go.netlify.app/resetpassword//${token}`;
       } else {
         url = `http://localhost:3000/resetpassword/${token}`;
       }
