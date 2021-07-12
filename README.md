@@ -12,7 +12,6 @@ nature-go.netlify.app
 <p align="center">
  MERN (MongoDB, Express, React, Node) stack App
 </p>
----
 
 ### Summary
 
@@ -23,6 +22,8 @@ Find / share your favorite nature spots and enjoy green pictures gallery.
 
 If you login, you can like, save others' pictures, and upload matching picture of your own
 to the saved ones. Vote for other users' matching pictures!
+
+---
 
 <!-- PROJECT LOGO -->
 <br/>
@@ -35,63 +36,39 @@ to the saved ones. Vote for other users' matching pictures!
 ### Create a Nature spot
 
 <p align="center">
-    <img src="./RMimgs/create.gif" alt="Create" >
+    <img src="./RMimgs/create.gif" alt="Create" width="200" height="350">
 </p>
 <br>
 
-<!-- ### Main
-
-Search by term, decide number of result, check recipes ingerdients. If you are logged in, you can bookmark recipe and save it for later by clicking on the heart.
-<p align="center">
-  <a href="https://your-recipe.netlify.app/">
-    <img src="./gif/main.gif" alt="main page" >
-  </a>
-</p>
-<br> -->
-
-<!-- ### Go to Recipe
-
-On the back of each picture there is a link to a detailed recipe.
+### Write reviews
 
 <p align="center">
-  <a href="https://your-recipe.netlify.app/">
-    <img src="./gif/recipe.gif" alt="detailed recipe" >
-  </a>
+    <img src="./RMimgs/reviews.gif" alt="Create" width="200" height="350">
 </p>
 <br>
 
-### Login -->
-<!--
-Login to see your saved recipes, and chat with other users.
+### Like & Save others' pictures
 
 <p align="center">
-  <a href="https://your-recipe.netlify.app/">
-    <img src="./gif/login.png" alt="login" >
-  </a>
+    <!-- <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> -->
 </p>
-<br> -->
+<br>
 
-<!-- ### My Recipes
-
-The collection of your favorite recipes.
+### Upload your matching picture to a saved picture
 
 <p align="center">
-  <a href="https://your-recipe.netlify.app/">
-    <img src="./gif/myrecipe.png" alt="my recipes" >
-  </a>
+    <!-- <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> -->
 </p>
-<br> -->
+<br>
 
-<!-- ### Chat
-
-You can chat with other users.
+### Vote others' matching picture
 
 <p align="center">
-  <a href="https://your-recipe.netlify.app/">
-    <img src="./gif/chat.png" alt="chat" >
-  </a>
+    <!-- <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> -->
 </p>
-<br> -->
+<br>
+
+---
 
 # Getting Started with Create React App
 
