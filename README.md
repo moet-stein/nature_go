@@ -1,16 +1,16 @@
 # Nature Go
 
+### Available as mobile app & on desktop size
+
   <a href="https://nature-go.netlify.app/">
 nature-go.netlify.app
   </a>
 <br/>
 <!-- PROJECT LOGO -->
 <br/>
-<!-- <p align="center">
-  <a href="https://your-recipe.netlify.app/">
-    <img src="./gif/logo.png" alt="Logo" >
-  </a>
-</p> -->
+<p align="center">
+    <img src="./RMimgs/home.png" alt="Home" >
+</p>
 
 <!-- <p align="center">
  SASS, React Hooks, Firebase Firestore,
