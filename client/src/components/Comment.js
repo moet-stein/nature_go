@@ -34,9 +34,7 @@ export default function Comment({ comment, index }) {
   const classes = useStyles();
   let { spotId } = useParams();
   const { userInfo } = useContext(AuthContext);
-  const { natureSpots, setNatureSpots, setNewAdded } = useContext(
-    NatureSpotsContext
-  );
+  const { natureSpots, setNatureSpots } = useContext(NatureSpotsContext);
   const {
     commentsArr,
     setCommentsArr,
