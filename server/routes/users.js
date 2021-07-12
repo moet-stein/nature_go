@@ -193,7 +193,7 @@ router.put('/forgotpassword', (req, res) => {
     const transporter = nodemailer.createTransport(smtpData);
 
     const url =
-      `http://nature-go.netlify.app/resetpassword//${token}` ||
+      `http://nature-go.netlify.app/resetpassword/${token}` ||
       `http://localhost:3000/resetpassword/${token}`;
 
     // setup e-mail data with unicode symbols
