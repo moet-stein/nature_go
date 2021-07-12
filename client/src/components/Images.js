@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import NoUploads from '../img/nouploads.gif';
 import UserHeader from './UserHeader';
 import FavSav from './FavSav';
@@ -10,7 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { PicsArrContext } from '../context/PicsArrContext';
 import { AuthContext } from '../context/AuthContext';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles(() => ({
   root: {
     width: '400px',
   },
@@ -30,10 +30,6 @@ export default function Images() {
   const { picturesArr } = useContext(PicsArrContext);
   const { userInfo } = useContext(AuthContext);
 
-  useEffect(() => {
-    console.log(userInfo);
-  }, []);
-
   return (
     <React.Fragment>
       <Box
@@ -44,7 +40,7 @@ export default function Images() {
       >
         {picturesArr.map((pic) => {
           return (
-            <Box m={1}>
+            <Box m={1} key={pic._id}>
               <Card key={pic._id} className={classes.root}>
                 <UserHeader pic={pic} />
                 <CardMedia className={classes.media} image={pic.url} />

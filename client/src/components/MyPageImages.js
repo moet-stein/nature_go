@@ -69,7 +69,7 @@ export default function MyPageImages({ showFavPics }) {
       {!showFavPics && (
         <React.Fragment>
           {myPicsArr.length !== 0 ? (
-            <Box m={1}>
+            <Box mt={1}>
               <Typography variant="h5" style={{ color: teal[900] }}>
                 My Nature Pics
               </Typography>

@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AppBarComponent() {
   const classes = useStyles();
   const location = useLocation();
+  const [loading, setLoading] = useState(true);
   const [state, setState] = useState({
     left: false,
   });
@@ -56,11 +57,7 @@ export default function AppBarComponent() {
   const { userInfo, setUserInfo, isUserThere, setIsUserThere } = useContext(
     AuthContext
   );
-  const {
-    setFavIdArr,
-
-    setSavIdArr,
-  } = useContext(FavSavContext);
+  const { setFavIdArr, setSavIdArr } = useContext(FavSavContext);
   const { fetch } = useContext(PicsArrContext);
   const history = useHistory();
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -72,7 +69,6 @@ export default function AppBarComponent() {
     ) {
       return;
     }
-
     setState({ ...state, [anchor]: open });
   };
 
@@ -86,35 +82,29 @@ export default function AppBarComponent() {
   };
 
   useEffect(() => {
-    if (location.pathname === '/naturespots') {
-      setActive('naturespots');
-      setSelectedIndex(0);
-    }
-    if (location.pathname.includes('/mypage')) {
-      setActive('mypage');
-      setSelectedIndex(1);
-    }
-    if (location.pathname.includes('/savedtomatch')) {
-      setActive('savedtomatch');
-      setSelectedIndex(2);
-    }
+    const setAppBar = async () => {
+      if (location.pathname === '/naturespots') {
+        setActive('naturespots');
+        setSelectedIndex(0);
+      }
+      if (location.pathname.includes('/mypage')) {
+        setActive('mypage');
+        setSelectedIndex(1);
+      }
+      if (location.pathname.includes('/savedtomatch')) {
+        setActive('savedtomatch');
+        setSelectedIndex(2);
+      }
 
-    const token = window.localStorage.getItem('token');
-    const getUserInfo = async () => {
-      console.log(isUserThere);
-      if (token !== null) {
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const res = await axios.get(serverURL + '/users/profile', config);
-        setUserInfo(res.data);
-        await setFavIdArr(res.data.favoritePics);
-        await setSavIdArr(res.data.savedPics);
+      if (userInfo) {
+        await setFavIdArr(userInfo.favoritePics);
+        await setSavIdArr(userInfo.savedPics);
         setIsUserThere(true);
+        setLoading(false);
       }
     };
 
-    getUserInfo();
+    setAppBar();
   }, [fetch]);
 
   const list = (anchor) => (
@@ -240,93 +230,81 @@ export default function AppBarComponent() {
   );
 
   return (
-    <div>
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={toggleDrawer('left', true)}
-            >
-              <MenuIcon style={{ color: green[900] }} />
-            </IconButton>
-            <Drawer
-              anchor="left"
-              open={state['left']}
-              onClose={toggleDrawer('left', false)}
-            >
-              {list('left')}
-            </Drawer>
-            <Box>
-              {active === 'naturespots' && (
-                <Box display="flex">
+    <React.Fragment>
+      {!loading && (
+        <div className={classes.root}>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer('left', true)}
+              >
+                <MenuIcon style={{ color: green[900] }} />
+              </IconButton>
+              <Drawer
+                anchor="left"
+                open={state['left']}
+                onClose={toggleDrawer('left', false)}
+              >
+                {list('left')}
+              </Drawer>
+              <Box>
+                {active === 'naturespots' && (
+                  <Box display="flex">
+                    <Typography
+                      variant="h6"
+                      className={classes.title}
+                      style={{ color: teal[900] }}
+                    >
+                      Nature Spots
+                    </Typography>
+                    <Box ml={6} mt={1}>
+                      {isUserThere ? (
+                        <Typography
+                          variant="body2"
+                          className={classes.title}
+                          style={{ color: teal[900] }}
+                        >
+                          Double click the map to create a new spot
+                        </Typography>
+                      ) : (
+                        <Typography
+                          variant="body2"
+                          className={classes.title}
+                          style={{ color: teal[900] }}
+                        >
+                          Login to create a new spot
+                        </Typography>
+                      )}
+                    </Box>
+                  </Box>
+                )}
+                {active === 'mypage' && (
                   <Typography
                     variant="h6"
                     className={classes.title}
                     style={{ color: teal[900] }}
                   >
-                    Nature Spots
+                    My Page
                   </Typography>
-                  <Box ml={6} mt={1}>
-                    {isUserThere ? (
-                      <Typography
-                        variant="body2"
-                        className={classes.title}
-                        style={{ color: teal[900] }}
-                      >
-                        Double click the map to create a new spot
-                      </Typography>
-                    ) : (
-                      <Typography
-                        variant="body2"
-                        className={classes.title}
-                        style={{ color: teal[900] }}
-                      >
-                        Login to create a new spot
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
-              )}
-              {active === 'mypage' && (
-                <Typography
-                  variant="h6"
-                  className={classes.title}
-                  style={{ color: teal[900] }}
-                >
-                  My Page
-                </Typography>
-              )}
-              {active === 'savedtomatch' && (
-                <Typography
-                  variant="h6"
-                  className={classes.title}
-                  style={{ color: teal[900] }}
-                >
-                  Saved Pics
-                </Typography>
-              )}
-            </Box>
-
-            {/* {userInfo ? (
-              <Button size="small">
-                <Typography variant="h6" color="inherit">
-                  Logout
-                </Typography>
-              </Button>
-            ) : (
-              <Link style={{ textDecoration: 'none' }} to="/login">
-                <Typography variant="h6" color="inherit">
-                  Login
-                </Typography>
-              </Link>
-            )} */}
-          </Toolbar>
-        </AppBar>
-      </div>
-    </div>
+                )}
+                {active === 'savedtomatch' && (
+                  <Typography
+                    variant="h6"
+                    className={classes.title}
+                    style={{ color: teal[900] }}
+                  >
+                    Saved Pics
+                  </Typography>
+                )}
+              </Box>
+            </Toolbar>
+          </AppBar>
+        </div>
+      )}
+    </React.Fragment>
   );
 }

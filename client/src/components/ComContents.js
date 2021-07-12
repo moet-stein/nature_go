@@ -116,7 +116,7 @@ export default function RevContents({ spot }) {
               />
             </React.Fragment>
           )}
-          {!loading && commentsArr.length == 0 && (
+          {!loading && commentsArr.length === 0 && (
             <Box
               display="flex"
               alignItems="center"
@@ -141,7 +141,7 @@ export default function RevContents({ spot }) {
               <Box>
                 <img alt="no reviews" src={NoReview} width="250" />
               </Box>
-              {userInfo && Object.keys(userInfo).length == 0 && (
+              {userInfo && Object.keys(userInfo).length === 0 && (
                 <Link to="/login" style={{ textDecoration: 'none' }}>
                   <Box mt={2}>
                     <Button variant="outlined" color="secondary">

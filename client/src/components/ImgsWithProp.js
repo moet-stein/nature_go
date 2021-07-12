@@ -43,7 +43,7 @@ export default function ImgsWithProp({ picsArr }) {
     >
       {picsArr.map((pic) => {
         return (
-          <Box m={1}>
+          <Box key={pic._id} m={1}>
             <Card key={pic._id} className={classes.root}>
               {'author' in pic && <UserHeader pic={pic} />}
               <PicModal pic={pic} />

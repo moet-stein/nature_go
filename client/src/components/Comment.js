@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
-import UpdateForm from './UpdateForm';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -38,13 +37,8 @@ export default function Comment({ comment, index }) {
   const {
     commentsArr,
     setCommentsArr,
-    avarageRating,
     setAvarageRating,
-    writeReview,
-    setWriteReview,
-    writeUpdate,
     setWriteUpdate,
-    clickedIndex,
     setClickedIndex,
   } = useContext(CommentsContext);
 
@@ -115,7 +109,6 @@ export default function Comment({ comment, index }) {
       {comment.author._id === userInfo._id && (
         <Box display="flex" justifyContent="flex-end">
           <CreateIcon style={{ color: blue[400] }} onClick={handleOpen} />
-          {/* <UpdateForm comment={comment} index={index} /> */}
           <Box className={classes.marginIcon}>
             <DeleteOutlineIcon
               style={{ color: grey[400] }}
