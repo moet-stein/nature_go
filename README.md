@@ -1,3 +1,96 @@
+# Nature Go
+
+  <a href="https://nature-go.netlify.app/">
+nature-go.netlify.app
+  </a>
+<br/>
+<!-- PROJECT LOGO -->
+<br/>
+<!-- <p align="center">
+  <a href="https://your-recipe.netlify.app/">
+    <img src="./gif/logo.png" alt="Logo" >
+  </a>
+</p> -->
+
+<!-- <p align="center">
+ SASS, React Hooks, Firebase Firestore,
+</p> -->
+
+---
+
+### Summary
+
+Do you want to find nice nature spots in Berlin?
+Here gathers a lot of healing green pictures shared with nature lovers!
+
+Find / share your favorite nature spots with others!
+
+If you login, you can like, save others' pictures, and upload matching picture of your own
+to the saved ones. Vote for other users' matching pictures!
+
+<!-- ### Menu
+
+<p align="center">
+  <a href="https://your-recipe.netlify.app/">
+    <img src="./gif/menu.png" alt="menu" >
+  </a>
+</p>
+<br> -->
+
+<!-- ### Main
+
+Search by term, decide number of result, check recipes ingerdients. If you are logged in, you can bookmark recipe and save it for later by clicking on the heart.
+<p align="center">
+  <a href="https://your-recipe.netlify.app/">
+    <img src="./gif/main.gif" alt="main page" >
+  </a>
+</p>
+<br> -->
+
+<!-- ### Go to Recipe
+
+On the back of each picture there is a link to a detailed recipe.
+
+<p align="center">
+  <a href="https://your-recipe.netlify.app/">
+    <img src="./gif/recipe.gif" alt="detailed recipe" >
+  </a>
+</p>
+<br>
+
+### Login -->
+<!--
+Login to see your saved recipes, and chat with other users.
+
+<p align="center">
+  <a href="https://your-recipe.netlify.app/">
+    <img src="./gif/login.png" alt="login" >
+  </a>
+</p>
+<br> -->
+
+<!-- ### My Recipes
+
+The collection of your favorite recipes.
+
+<p align="center">
+  <a href="https://your-recipe.netlify.app/">
+    <img src="./gif/myrecipe.png" alt="my recipes" >
+  </a>
+</p>
+<br> -->
+
+<!-- ### Chat
+
+You can chat with other users.
+
+<p align="center">
+  <a href="https://your-recipe.netlify.app/">
+    <img src="./gif/chat.png" alt="chat" >
+  </a>
+</p>
+<br> -->
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
