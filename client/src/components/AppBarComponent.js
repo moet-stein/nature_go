@@ -270,23 +270,25 @@ export default function AppBarComponent() {
                   >
                     Nature Spots
                   </Typography>
-                  {isUserThere ? (
-                    <Typography
-                      variant="body2"
-                      className={classes.title}
-                      style={{ color: teal[900] }}
-                    >
-                      Double click the map to create a new spot
-                    </Typography>
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      className={classes.title}
-                      style={{ color: teal[900] }}
-                    >
-                      Login to create a new spot
-                    </Typography>
-                  )}
+                  <Box ml={6} mt={1}>
+                    {isUserThere ? (
+                      <Typography
+                        variant="body2"
+                        className={classes.title}
+                        style={{ color: teal[900] }}
+                      >
+                        Double click the map to create a new spot
+                      </Typography>
+                    ) : (
+                      <Typography
+                        variant="body2"
+                        className={classes.title}
+                        style={{ color: teal[900] }}
+                      >
+                        Login to create a new spot
+                      </Typography>
+                    )}
+                  </Box>
                 </Box>
               )}
               {active === 'mypage' && (

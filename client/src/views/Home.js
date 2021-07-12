@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
     background: ` linear-gradient(
       rgba(0, 0, 0, 0.55), 
       rgba(0, 0, 0, 0.55)
-    ),url(${TreePic})`,
+    ),url("https://naturego.s3.amazonaws.com/bucketFolder/1626098611678.png")`,
     backgroundSize: 'cover',
     height: '100vh',
     color: '#f5f5f5',

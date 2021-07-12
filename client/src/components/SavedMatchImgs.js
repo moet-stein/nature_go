@@ -24,7 +24,7 @@ export default function SavedMatchImgs({ savedArr }) {
   return (
     <React.Fragment>
       <Box m={2} display="flex" flexDirection="column" alignItems="center">
-        <Typography color="secondary" variant="h5">
+        <Typography color="secondary" variant="h6">
           Upload a matching pic to the saved pics!
         </Typography>
         <Box display="flex">

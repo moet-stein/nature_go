@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     background: ` linear-gradient(
       rgba(255, 255, 255, 0.7), 
       rgba(255, 255, 255, 0.7)
-    ),url(${Image})`,
+    ),url("https://naturego.s3.amazonaws.com/bucketFolder/1626098611678.png")`,
     backgroundSize: 'cover',
     // height: '100vh',
     // color: '#f5f5f5',
