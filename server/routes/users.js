@@ -192,16 +192,18 @@ router.put('/forgotpassword', (req, res) => {
     };
     const transporter = nodemailer.createTransport(smtpData);
 
-    let url;
+    const url =
+      `http://nature-go.netlify.app/resetpassword//${token}` ||
+      `http://localhost:3000/resetpassword/${token}`;
 
-    const getUrl = (token) => {
-      if (process.env.PORT === 'https://nature-go-app.herokuapp.com/') {
-        url = `http://nature-go.netlify.app/resetpassword//${token}`;
-      } else {
-        url = `http://localhost:3000/resetpassword/${token}`;
-      }
-    };
-    getUrl(token);
+    // const getUrl = (token) => {
+    //   if (process.env.PORT === 'https://nature-go-app.herokuapp.com/') {
+    //     url = `http://nature-go.netlify.app/resetpassword//${token}`;
+    //   } else {
+    //     url = `http://localhost:3000/resetpassword/${token}`;
+    //   }
+    // };
+    // getUrl(token);
 
     // setup e-mail data with unicode symbols
     const mailOptions = {
