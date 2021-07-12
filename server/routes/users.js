@@ -17,7 +17,6 @@ const LocalStorage = require('node-localstorage').LocalStorage,
 // const _ = require('lodash');
 // nodemailer
 const nodemailer = require('nodemailer');
-const url = 'nature-go.netlify.app' || 'localhost:3000';
 
 const User = require('../models/usersModel');
 
@@ -194,13 +193,23 @@ router.put('/forgotpassword', (req, res) => {
     };
     const transporter = nodemailer.createTransport(smtpData);
 
+    let url;
+
+    const getUrl = (token) => {
+      if (process.env.PORT === 'https://nature-go-app.herokuapp.com/') {
+        url = `https://cors-anywhere.herokuapp.com/http://${url}/resetpassword/${token}`;
+      } else {
+        url = `http://localhost:3000/resetpassword/${token}`;
+      }
+    };
+
     // setup e-mail data with unicode symbols
-    var mailOptions = {
+    const mailOptions = {
       from: '"Nature Go" <noreply@naturego.com>', // sender address
       to: email, // list of receivers
       subject: 'Nature Go: Reset Password Link', // Subject line
       text: 'Reset your password', // plaintext body
-      html: `<h2>Please click the given link to reset your password.</h2><p>https://cors-anywhere.herokuapp.com/http://${url}/resetpassword/${token}</p>`, // html body
+      html: `<h2>Please click the given link to reset your password.</h2><p>{url}</p>`, // html body
     };
     console.log(url);
 
