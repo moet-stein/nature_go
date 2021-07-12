@@ -1,43 +1,43 @@
 # Nature Go
 
+## Nature spots on a map & Sharing nature pictures
+
 ### Available as mobile app & on desktop size
 
   <a href="https://nature-go.netlify.app/">
 nature-go.netlify.app
   </a>
 <br/>
-<!-- PROJECT LOGO -->
-<br/>
+
 <p align="center">
-    <img src="./RMimgs/home.png" alt="Home" width="200" height="350" >
-     <img src="./RMimgs/signup.png" alt="Signup" width="200" height="350" >
-      <img src="./RMimgs/login.png" alt="Login" width="200" height="350" >
+ MERN (MongoDB, Express, React, Node) stack App
 </p>
-
-<!-- <p align="center">
- SASS, React Hooks, Firebase Firestore,
-</p> -->
-
 ---
 
 ### Summary
 
 Do you want to find nice nature spots in Berlin?
-Here gathers a lot of healing green pictures shared with nature lovers!
+Here gathers a lot of healing green pictures shared by nature lovers!
 
-Find / share your favorite nature spots with others!
+Find / share your favorite nature spots and enjoy green pictures gallery.
 
 If you login, you can like, save others' pictures, and upload matching picture of your own
 to the saved ones. Vote for other users' matching pictures!
 
-<!-- ### Menu
+<!-- PROJECT LOGO -->
+<br/>
+<p align="center">
+    <img src="./RMimgs/home.png" alt="Home" width="200" height="350" >
+    <img src="./RMimgs/signup.png" alt="Signup" width="200" height="350" >
+    <img src="./RMimgs/login.png" alt="Login" width="200" height="350" >
+</p>
+
+### Create a Nature spot
 
 <p align="center">
-  <a href="https://your-recipe.netlify.app/">
-    <img src="./gif/menu.png" alt="menu" >
-  </a>
+    <img src="./RMimgs/create.gif" alt="Create" >
 </p>
-<br> -->
+<br>
 
 <!-- ### Main
 
