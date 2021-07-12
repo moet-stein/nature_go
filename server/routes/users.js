@@ -14,7 +14,7 @@ const LocalStorage = require('node-localstorage').LocalStorage,
 // const mailgun = require('mailgun-js');
 // const DOMAIN = 'sandbox53fe7162191a4212be7ee0862b0b235d.mailgun.org';
 // const mg = mailgun({ apiKey: process.env.MAILGUN_API, domain: DOMAIN });
-// const _ = require('lodash');
+const _ = require('lodash');
 // nodemailer
 const nodemailer = require('nodemailer');
 
@@ -202,6 +202,7 @@ router.put('/forgotpassword', (req, res) => {
         url = `http://localhost:3000/resetpassword/${token}`;
       }
     };
+    getUrl(token);
 
     // setup e-mail data with unicode symbols
     const mailOptions = {
@@ -209,7 +210,7 @@ router.put('/forgotpassword', (req, res) => {
       to: email, // list of receivers
       subject: 'Nature Go: Reset Password Link', // Subject line
       text: 'Reset your password', // plaintext body
-      html: `<h2>Please click the given link to reset your password.</h2><p>{url}</p>`, // html body
+      html: `<h2>Please click the given link to reset your password.</h2><p>${url}</p>`, // html body
     };
     console.log(url);
 
@@ -271,6 +272,7 @@ router.put('/resetpassword', (req, res) => {
         };
 
         user = _.extend(user, obj);
+
         user.save((err, result) => {
           if (err) {
             return res.status(400).json({ error: 'reset password error' });
