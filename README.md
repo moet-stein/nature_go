@@ -36,7 +36,10 @@ to the saved ones. Vote for other users' matching pictures!
 ### Create a Nature spot
 
 <p align="center">
-    <img src="./RMimgs/create.gif" alt="Create" width="200" height="350">
+    <!-- <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> -->
+    <video width="200" controls autoplay>
+        <source src="./RMimgs/create.mov" type="video/mp4">
+    </video>
 </p>
 <br>
 
