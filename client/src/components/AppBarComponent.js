@@ -262,13 +262,22 @@ export default function AppBarComponent() {
             </Drawer>
             <Box>
               {active === 'naturespots' && (
-                <Typography
-                  variant="h6"
-                  className={classes.title}
-                  style={{ color: teal[900] }}
-                >
-                  Nature Spots
-                </Typography>
+                <Box display="flex">
+                  <Typography
+                    variant="h6"
+                    className={classes.title}
+                    style={{ color: teal[900] }}
+                  >
+                    Nature Spots
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    className={classes.title}
+                    style={{ color: teal[900] }}
+                  >
+                    Login and double click the map to create a new spot
+                  </Typography>
+                </Box>
               )}
               {active === 'mypage' && (
                 <Typography
