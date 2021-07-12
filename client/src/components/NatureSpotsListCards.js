@@ -43,7 +43,7 @@ export default function NatureSpotsListCards({ natureSpots }) {
 
   const handleSearch = (e) => {
     const filArr = natureSpots.filter((s) =>
-      s.title.toLowerCase().includes(e.target.value)
+      s.title.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredArr(filArr);
   };
