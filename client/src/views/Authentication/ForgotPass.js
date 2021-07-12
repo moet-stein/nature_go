@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
   },
   boxSize: {
     width: '350px',
-    height: '400px',
+    height: '500px',
     borderRadius: '10px',
     backgroundColor: '#f4f4f4',
   },
@@ -38,6 +38,14 @@ const useStyles = makeStyles(() => ({
   teal900: {
     color: teal[900],
     fontWeight: 'bold',
+  },
+  '@media only screen and (max-width: 600px)': {
+    boxSize: {
+      width: '350px',
+      height: '400px',
+      borderRadius: '10px',
+      backgroundColor: '#f4f4f4',
+    },
   },
 }));
 
@@ -66,7 +74,7 @@ export default function ForgotPass() {
             <Avatar alt="logo" src={Logo} />
           </Box>
           <Box mt={3} ml={2}>
-            <Typography className={classes.teal900} variant="h2">
+            <Typography className={classes.teal900} variant="h3">
               Nature Go
             </Typography>
           </Box>

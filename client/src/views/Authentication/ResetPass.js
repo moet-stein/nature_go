@@ -58,7 +58,6 @@ export default function ForgotPass() {
       const res = await axios.put(serverURL + '/users/resetpassword', body);
       setError('');
       setSent(true);
-      console.log(res.data);
     } catch (err) {
       console.log(err);
       setError(`Email does not exist`);
@@ -73,7 +72,7 @@ export default function ForgotPass() {
             <Avatar alt="logo" src={Logo} />
           </Box>
           <Box mt={3} ml={2}>
-            <Typography className={classes.teal900} variant="h2">
+            <Typography className={classes.teal900} variant="h3">
               Nature Go
             </Typography>
           </Box>
@@ -86,7 +85,7 @@ export default function ForgotPass() {
         {!sent && (
           <React.Fragment>
             <Box mt={3}>
-              <Typography color="secondary" variant="h3">
+              <Typography color="secondary" variant="h5">
                 Reset Password
               </Typography>
             </Box>
@@ -138,9 +137,9 @@ export default function ForgotPass() {
             </Box>
           </React.Fragment>
         )}
-        {sent && error.length > 0 && (
+        {sent && error.length === 0 && (
           <Box mt={10}>
-            <Typography variant="h3" color="secondary">
+            <Typography variant="h4" color="secondary">
               Successfully Updated!
             </Typography>
 

@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     // color: '#f5f5f5',
   },
+
   paper: {
     display: 'flex',
     flexDirection: 'column',
@@ -98,117 +99,119 @@ export default function Signup() {
     <div className={classes.background}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <div className={classes.paper}>
-          <Box display="flex">
-            <Box mr={3}>
-              <img alt="logo" className={classes.avatar} src={Logo} />
+        <Box className={classes.boxSize}>
+          <div className={classes.paper}>
+            <Box display="flex">
+              <Box mr={3}>
+                <img alt="logo" className={classes.avatar} src={Logo} />
+              </Box>
+              <Box mt={3} mr={2}>
+                <Typography
+                  fontWeight="fontWeightBold"
+                  component="h1"
+                  variant="h2"
+                  color="secondary"
+                >
+                  Login
+                </Typography>
+              </Box>
+              <Box>
+                <Room className={classes.avatar} color="secondary" />
+              </Box>
             </Box>
-            <Box mt={3} mr={2}>
-              <Typography
-                fontWeight="fontWeightBold"
-                component="h1"
-                variant="h2"
-                color="secondary"
+
+            {error && <Alert severity="error">{error}</Alert>}
+            <form className={classes.form} onSubmit={handleSubmit} noValidate>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    InputProps={{
+                      classes: { notchedOutline: classes.specialOutline },
+                    }}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    inputRef={emailRef}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    InputProps={{
+                      classes: { notchedOutline: classes.specialOutline },
+                    }}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    inputRef={passwordRef}
+                    id="password"
+                    autoComplete="current-password"
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                className={classes.submit}
+                disabled={loading}
               >
                 Login
-              </Typography>
-            </Box>
-            <Box>
-              <Room className={classes.avatar} color="secondary" />
-            </Box>
-          </Box>
-
-          {error && <Alert severity="error">{error}</Alert>}
-          <form className={classes.form} onSubmit={handleSubmit} noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  InputProps={{
-                    classes: { notchedOutline: classes.specialOutline },
-                  }}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  inputRef={emailRef}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  InputProps={{
-                    classes: { notchedOutline: classes.specialOutline },
-                  }}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  inputRef={passwordRef}
-                  id="password"
-                  autoComplete="current-password"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              className={classes.submit}
-              disabled={loading}
-            >
-              Login
-            </Button>
-            <Grid container justify="flex-end">
-              <Grid item xs={12}>
-                <Link
-                  to="/signup"
-                  variant="body2"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Box m={2}>
-                    <Typography className={classes.textColor} variant="h6">
-                      No account yet? Signup
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link
-                  to="/forgotpass"
-                  variant="body2"
-                  style={{ textDecoration: 'none' }}
-                >
-                  {' '}
-                  <Box m={2}>
-                    <Typography className={classes.textColor} variant="h6">
-                      Forgot Password?
-                    </Typography>
-                  </Box>
-                </Link>
-              </Grid>
-
-              <Grid item>
-                <Box>
+              </Button>
+              <Grid container justify="flex-end">
+                <Grid item xs={12}>
                   <Link
-                    to="/"
-                    className={classes.flex}
+                    to="/signup"
+                    variant="body2"
                     style={{ textDecoration: 'none' }}
                   >
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      startIcon={<HomeIcon />}
-                    >
-                      Home
-                    </Button>
+                    <Box m={2}>
+                      <Typography className={classes.textColor} variant="h6">
+                        No account yet? Signup
+                      </Typography>
+                    </Box>
                   </Link>
-                </Box>
+                  <Link
+                    to="/forgotpass"
+                    variant="body2"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    {' '}
+                    <Box m={2}>
+                      <Typography className={classes.textColor} variant="h6">
+                        Forgot Password?
+                      </Typography>
+                    </Box>
+                  </Link>
+                </Grid>
+
+                <Grid item>
+                  <Box>
+                    <Link
+                      to="/"
+                      className={classes.flex}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        startIcon={<HomeIcon />}
+                      >
+                        Home
+                      </Button>
+                    </Link>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </div>
+            </form>
+          </div>
+        </Box>
       </Container>
     </div>
   );

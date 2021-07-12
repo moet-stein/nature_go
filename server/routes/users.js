@@ -11,10 +11,14 @@ const passport = require('passport');
 const LocalStorage = require('node-localstorage').LocalStorage,
   localStorage = new LocalStorage('./scratch');
 // mailgun
-const mailgun = require('mailgun-js');
-const DOMAIN = 'sandbox53fe7162191a4212be7ee0862b0b235d.mailgun.org';
-const mg = mailgun({ apiKey: process.env.MAILGUN_API, domain: DOMAIN });
-const _ = require('lodash');
+// const mailgun = require('mailgun-js');
+// const DOMAIN = 'sandbox53fe7162191a4212be7ee0862b0b235d.mailgun.org';
+// const mg = mailgun({ apiKey: process.env.MAILGUN_API, domain: DOMAIN });
+// const _ = require('lodash');
+// nodemailer
+const nodemailer = require('nodemailer');
+const url = 'nature-go.netlify.app' || 'localhost:3000';
+
 const User = require('../models/usersModel');
 
 // SIGNUP //
@@ -171,27 +175,60 @@ router.put('/forgotpassword', (req, res) => {
     };
     const token = jwt.sign(options, secretOrKey2, { expiresIn: '20m' });
 
-    const data = {
-      from: 'noreply@naturego.com',
-      to: email,
-      subject: 'Reset Password Link',
-      html: `<h2>Please click the given link to reset your password.</h2><p>http://localhost:3000/resetpassword/${token}</p>`,
+    // const data = {
+    //   from: 'noreply@naturego.com',
+    //   to: email,
+    //   subject: 'Reset Password Link',
+    //   html: `<h2>Please click the given link to reset your password.</h2><p>http://localhost:3000/resetpassword/${token}</p>`,
+    // };
+    // node mailer
+    const smtpData = {
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: process.env.GMAIL_ADDRESS,
+        pass: process.env.GMAIL_PASS,
+      },
     };
+    const transporter = nodemailer.createTransport(smtpData);
+
+    // setup e-mail data with unicode symbols
+    var mailOptions = {
+      from: '"Nature Go" <noreply@naturego.com>', // sender address
+      to: email, // list of receivers
+      subject: 'Nature Go: Reset Password Link', // Subject line
+      text: 'Reset your password', // plaintext body
+      html: `<h2>Please click the given link to reset your password.</h2><p>http://${url}/resetpassword/${token}</p>`, // html body
+    };
+    console.log(url);
 
     return user.updateOne({ resetLink: token }, function (err, success) {
       if (err) {
         return res.status(400).json({ error: 'Reset Password Link Error.' });
       } else {
-        mg.messages().send(data, function (error, body) {
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
             return res.json({
-              error: err.message,
+              error: error,
             });
           }
           return res.json({
             message: 'Email has been sent, kindly follow the instrunctions',
           });
         });
+        // mg.messages().send(data, function (error, body) {
+        //   if (error) {
+        //     return res.json({
+        //       error: err.message,
+        //     });
+        //   }
+        //   return res.json({
+        //     message: 'Email has been sent, kindly follow the instrunctions',
+        //   });
+        // });
       }
     });
   });
@@ -229,9 +266,7 @@ router.put('/resetpassword', (req, res) => {
           if (err) {
             return res.status(400).json({ error: 'reset password error' });
           } else {
-            return res
-              .status(200)
-              .json({ message: 'Your password has been changed. ' });
+            return res.json({ message: 'Your password has been changed. ' });
           }
         });
       });
@@ -241,30 +276,6 @@ router.put('/resetpassword', (req, res) => {
   }
 });
 
-// Add Saved Image to a spot
-// router.post('/saved', async (req, res) => {
-//   const { url, user, author, natureSpot } = req.body;
-//   try {
-//     const savePic = await User.updateOne(
-//       { _id: user },
-//       {
-//         $push: {
-//           savedPics: {
-//             url: url,
-//             natureSpot: natureSpot,
-//             author: author,
-//             matchedPic: '',
-//             matching: [],
-//           },
-//         },
-//       },
-//       { new: true, upsert: true }
-//     ).exec();
-//     res.status(200).json(savePic);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
 // matching photo (post route) for saved page
 router.post('/uploadmatching', async (req, res) => {
   const { user, picId, url } = req.body;
