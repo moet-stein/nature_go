@@ -37,7 +37,7 @@ to the saved ones. Vote for other users' matching pictures!
 
 <p align="center">
     <!-- <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> -->
-    <video width="200" controls autoplay>
+    <video width="200" height="350" controls autoplay>
         <source src="./RMimgs/create.mov" type="video/mp4">
     </video>
 </p>
