@@ -200,7 +200,7 @@ router.put('/forgotpassword', (req, res) => {
       to: email, // list of receivers
       subject: 'Nature Go: Reset Password Link', // Subject line
       text: 'Reset your password', // plaintext body
-      html: `<h2>Please click the given link to reset your password.</h2><p>http://${url}/resetpassword/${token}</p>`, // html body
+      html: `<h2>Please click the given link to reset your password.</h2><p>https://cors-anywhere.herokuapp.com/http://${url}/resetpassword/${token}</p>`, // html body
     };
     console.log(url);
 
