@@ -9,7 +9,7 @@ nature-go.netlify.app
 <!-- PROJECT LOGO -->
 <br/>
 <p align="center">
-    <img src="./RMimgs/home.png" alt="Home" >
+    <img src="./RMimgs/home.png" alt="Home" width="200" height="300" >
 </p>
 
 <!-- <p align="center">
