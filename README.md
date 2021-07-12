@@ -36,38 +36,35 @@ to the saved ones. Vote for other users' matching pictures!
 ### Create a Nature spot
 
 <p align="center">
-    <!-- <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> -->
-    <video width="200" height="350" controls autoplay>
-        <source src="./RMimgs/create.mov" type="video/mp4">
-    </video>
+    <img src="./RMimgs/create.gif" alt="Create" width="200" height="350">
 </p>
 <br>
 
 ### Write reviews
 
 <p align="center">
-    <img src="./RMimgs/reviews.gif" alt="Create" width="200" height="350">
+    <img src="./RMimgs/reviews.gif" alt="Reviews" width="200" height="350">
 </p>
 <br>
 
 ### Like & Save others' pictures
 
 <p align="center">
-    <!-- <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> -->
+    <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350">
 </p>
 <br>
 
 ### Upload your matching picture to a saved picture
 
 <p align="center">
-    <!-- <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> -->
+    <img src="./RMimgs/upload.gif" alt="Upload" width="200" height="350">
 </p>
 <br>
 
 ### Vote others' matching picture
 
 <p align="center">
-    <!-- <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> -->
+    <img src="./RMimgs/vote.gif" alt="Vote" width="200" height="350">
 </p>
 <br>
 
