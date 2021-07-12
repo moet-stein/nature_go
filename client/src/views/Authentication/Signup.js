@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     marginTop: theme.spacing(3),
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
     borderRadius: '30px',
   },
   form: {
@@ -65,8 +65,8 @@ const useStyles = makeStyles((theme) => ({
   media: {
     // height: 0,
     // paddingTop: '56.25%', // 16:9
-    width: '150px',
-    height: '150px',
+    width: '80px',
+    height: '80px',
     borderRadius: '50%',
   },
 }));

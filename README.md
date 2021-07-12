@@ -10,6 +10,8 @@ nature-go.netlify.app
 <br/>
 <p align="center">
     <img src="./RMimgs/home.png" alt="Home" width="200" height="350" >
+     <img src="./RMimgs/signup.png" alt="Signup" width="200" height="350" >
+      <img src="./RMimgs/login.png" alt="Login" width="200" height="350" >
 </p>
 
 <!-- <p align="center">
