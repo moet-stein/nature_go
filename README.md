@@ -35,19 +35,17 @@ to the saved ones. Vote for other users' matching pictures!
 
 ### Create a Nature spot / Write Reviews
 
-<p align="center">
 | Doble click the map to <br /> make a new spot after logging in!       |      Leave reviews on the created spots.<br /> Update / delete it.      |
 | --------------------------------------------------------------------- | :---------------------------------------------------------------------: |
 | <img src="./RMimgs/create.gif" alt="Create" width="200" height="350"> | <img src="./RMimgs/reviews.gif" alt="Reviews" width="200" height="350"> |
-</p>
+
+<br/>
 
 ### Like & Save / Upload a matching pic / Vote for others' matching pic
 
-<p align="center">
-| Click like and save others' pictures | Upload a matching pic <br/> if you actually went to the saved place <br/> and took a photo| Vote for others' matching pics <br/> if you think two pics are matching  |
-| ------------- |:-------------:| -----:|
-|  <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350">     | <img src="./RMimgs/upload.gif" alt="Upload" width="200" height="350"> |   <img src="./RMimgs/vote.gif" alt="Vote" width="200" height="350"> |
-</p>
+| Click like and save others' pictures                                          | Upload a matching pic <br/> if you actually went to the saved place <br/> and took a photo | Vote for others' matching pics <br/> if you think two pics are matching |
+| ----------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------: | ----------------------------------------------------------------------: |
+| <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350"> |           <img src="./RMimgs/upload.gif" alt="Upload" width="200" height="350">            |       <img src="./RMimgs/vote.gif" alt="Vote" width="200" height="350"> |
 
 ### Upload your matching picture to a saved picture
 
