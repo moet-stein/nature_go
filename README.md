@@ -35,10 +35,10 @@ to the saved ones. Vote for other users' matching pictures!
 
 ### Create a Nature spot / Write Reviews
 
-<p align="center">
-    <p>Doble click the map to <br /> make a new spot after logging in!</p>
-    <p>Leave reviews on the created spots.<br /> Update / delete it.</p>
-</p>
+<div style="text-align:center">
+    <h3>Doble click the map to <br /> make a new spot after logging in!</h3>
+    <h3>Leave reviews on the created spots.<br /> Update / delete it.</h3>
+</div>
 
 <p align="center"> 
     <img src="./RMimgs/create.gif" alt="Create" width="200" height="350">
