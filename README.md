@@ -47,19 +47,19 @@ to the saved ones. Vote for other users' matching pictures!
 
 ### Like & Save others' pictures
 
-<div align="center">
-    <p align="center">
-        <h2>Like & Save others' pictures </h2>
+<div style="display:flex;justify-content:center;align-items:center;">
+    <div>
+        <h3>Like & Save others' pictures</h3>
         <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350">
-    </p>
-    <p align="center">
-        <h2>Like & Save others' pictures </h2>
-        <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350">
-    </p>
-    <p align="center">
-        <h2>Like & Save others' pictures </h2>
-        <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350">
-    </p>
+    </div>
+     <div>
+        <h3>Upload your matching picture to a saved picture</h3>
+        <img src="./RMimgs/upload.gif" alt="Upload" width="200" height="350">
+    </div>
+     <div style="display:flex;justify-content:center;align-items:center;">
+        <h3>Vote others' matching picture</h3>
+         <img src="./RMimgs/vote.gif" alt="Vote" width="200" height="350">
+    </div>
 </div>
 <br>
 
