@@ -47,7 +47,12 @@ to the saved ones. Vote for other users' matching pictures!
 
 ### Like & Save others' pictures
 
+<div align="center">
 <p align="center">
+    <h2>Like & Save others' pictures </h2>
+    <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350">
+    <h2>Like & Save others' pictures </h2>
+    <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350">
     <h2>Like & Save others' pictures </h2>
     <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350">
 </p>
