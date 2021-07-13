@@ -35,6 +35,17 @@ to the saved ones. Vote for other users' matching pictures!
 
 ### Create a Nature spot / Write Reviews
 
+<section data-markdown>
+  <textarea data-template>
+    # Testing 
+    <div class="flex-container"><!-- .element: style="display: flex; flex-direction: row;" -->
+      <div>Item 1</div> <!-- .element: style="margin: 10px; padding: 20px;"-->
+      <div>Item 2</div> <!-- .element: style="margin: 10px; padding: 20px;"-->
+      <div>Item 3</div> <!-- .element: style="margin: 10px; padding: 20px;"-->
+    </div>
+  </textarea>
+</section>
+
 <div style="text-align:center">
     <h3>Doble click the map to <br /> make a new spot after logging in!</h3>
     <h3>Leave reviews on the created spots.<br /> Update / delete it.</h3>
