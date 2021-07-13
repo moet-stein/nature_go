@@ -36,8 +36,11 @@ to the saved ones. Vote for other users' matching pictures!
 ### Create a Nature spot / Write Reviews
 
 <p align="center">
-    <img src="./RMimgs/create.gif" alt="Create" width="200" height="350">
-     <img src="./RMimgs/reviews.gif" alt="Reviews" width="200" height="350">
+    <div>
+        <p>Create a new spot by double clicking th map after logging in</p>
+        <img src="./RMimgs/create.gif" alt="Create" width="200" height="350">
+    </div>
+    <img src="./RMimgs/reviews.gif" alt="Reviews" width="200" height="350">
 </p>
 
 ### Write reviews
