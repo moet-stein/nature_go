@@ -37,7 +37,7 @@ to the saved ones. Vote for other users' matching pictures!
 
 <p align="center">
     <div>
-        <p>Create a new spot by double clicking th map after logging in</p>
+        <p>Create a new spot by double <br> clicking the map after logging in</p>
         <img src="./RMimgs/create.gif" alt="Create" width="200" height="350">
     </div>
     <img src="./RMimgs/reviews.gif" alt="Reviews" width="200" height="350">
