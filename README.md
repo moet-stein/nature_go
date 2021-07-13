@@ -38,14 +38,12 @@ to the saved ones. Vote for other users' matching pictures!
 <p align="center">
     <img src="./RMimgs/create.gif" alt="Create" width="200" height="350">
 </p>
-<br>
 
 ### Write reviews
 
 <p align="center">
     <img src="./RMimgs/reviews.gif" alt="Reviews" width="200" height="350">
 </p>
-<br>
 
 ### Like & Save others' pictures
 
