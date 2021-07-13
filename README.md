@@ -33,10 +33,11 @@ to the saved ones. Vote for other users' matching pictures!
     <img src="./RMimgs/login.png" alt="Login" width="200" height="350" >
 </p>
 
-### Create a Nature spot
+### Create a Nature spot / Write Reviews
 
 <p align="center">
     <img src="./RMimgs/create.gif" alt="Create" width="200" height="350">
+     <img src="./RMimgs/reviews.gif" alt="Reviews" width="200" height="350">
 </p>
 
 ### Write reviews
