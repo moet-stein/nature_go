@@ -10,7 +10,11 @@ nature-go.netlify.app
 <br/>
 
 <p align="center">
- MERN (MongoDB, Express, React, Node) stack App
+ MERN (MongoDB, Express, React, Node) stack App<br/>
+ Project period: 4 weeks
+ <a href="https://aws.amazon.com/s3/">Pictures Upload: AWS S3 BUCKET</a>
+ <a href="https://nodemailer.com/usage/">Email Sending: Nodemailer</a>
+ <a href="http://visgl.github.io/react-map-gl/">Map: Mapbox (react-map-gl)</a>
 </p>
 
 ### Summary
@@ -46,20 +50,6 @@ to the saved ones. Vote for other users' matching pictures!
 | Click like and save others' pictures                                          | Upload a matching pic <br/> if you actually went to the saved place <br/> and took a photo | Vote for others' matching pics <br/> if you think two pics are matching |
 | ----------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------: | ----------------------------------------------------------------------: |
 | <img src="./RMimgs/likessaves.gif" alt="LikesSaves" width="200" height="350"> |           <img src="./RMimgs/upload.gif" alt="Upload" width="200" height="350">            |       <img src="./RMimgs/vote.gif" alt="Vote" width="200" height="350"> |
-
-### Upload your matching picture to a saved picture
-
-<p align="center">
-    <img src="./RMimgs/upload.gif" alt="Upload" width="200" height="350">
-</p>
-<br>
-
-### Vote others' matching picture
-
-<p align="center">
-    <img src="./RMimgs/vote.gif" alt="Vote" width="200" height="350">
-</p>
-<br>
 
 ---
 
