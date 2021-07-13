@@ -35,6 +35,12 @@ to the saved ones. Vote for other users' matching pictures!
 
 ### Create a Nature spot / Write Reviews
 
+| Tables        |      Are      |  Cool |
+| ------------- | :-----------: | ----: |
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      |   centered    |   $12 |
+| zebra stripes |   are neat    |    $1 |
+
 <p align="center">
     <div>Doble click the map to <br /> make a new spot after logging in!</div>
     <div>Leave reviews on the created spots.<br /> Update / delete it.</div>
