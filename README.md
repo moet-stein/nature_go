@@ -11,9 +11,9 @@ nature-go.netlify.app
 
 <p align="center">
  MERN (MongoDB, Express, React, Node) stack App<br/>
- Project period: 4 weeks
- <a href="https://aws.amazon.com/s3/">Pictures Upload: AWS S3 BUCKET</a>
- <a href="https://nodemailer.com/usage/">Email Sending: Nodemailer</a>
+ Project period: 4 weeks <br/>
+ <a href="https://aws.amazon.com/s3/">Pictures Upload: AWS S3 BUCKET</a><br/>
+ <a href="https://nodemailer.com/usage/">Email Sending: Nodemailer</a><br/>
  <a href="http://visgl.github.io/react-map-gl/">Map: Mapbox (react-map-gl)</a>
 </p>
 
