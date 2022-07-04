@@ -4,9 +4,6 @@
 
 ### Available as mobile app & on desktop size
 
-  <a href="https://nature-go.netlify.app/">
-nature-go.netlify.app
-  </a>
 <br/>
 
 <p align="center">
